@@ -1,0 +1,5 @@
+[
+{"title":"Lobby","isOfficial":true,"autojoin":true,"logTimes":true,"autoTruncate":true,"reportJoins":true,"batchJoins":0,"introMessage":"Welcome to Windstorm, please wait as we get everything settled! :3"},
+{"title":"Staff","isPrivate":true,"staffRoom":true,"staffAutojoin":true,"logTimes":true,"autoTruncate":true,"reportJoins":true,"batchJoins":0,"modjoin":"%"},
+{"title":"Upper Staff","isPrivate":true,"modjoin":"&","staffAutojoin":"&, ~","logTimes":true,"autoTruncate":true,"reportJoins":true,"batchJoins":0}
+]
