@@ -1173,6 +1173,38 @@ let Formats = [
 		},
 	},
 	{
+		name: "[Gen 7] Super Lobby Regular Bros",
+		desc: "Honestly, we got kind of jealous and just wanted to make this for ourselves.",
+		threads: [
+			`&bullet; <a href="https://www.youtube.com/watch?v=XlCs74cL0Ig">Introduction &amp; Roster</a>`,
+		],
+
+		mod: 'slrb',
+		team: 'randomStaffBros',
+		ruleset: ['HP Percentage Mod', 'Cancel Mod', 'Sleep Clause Mod'],
+		onBegin: function () {
+			this.add('raw|SUPER LOBBY REGULAR BROS <b>64</b>!!');
+			this.add('message', 'GET READY FOR THE NEXT BATTLE!');
+
+		},
+		onSwitchIn: function (pokemon) {
+			let name = toId(pokemon.illusion ? pokemon.illusion.name : pokemon.name);
+			if (this.getTemplate(name).exists) {
+				// Certain pokemon have volatiles named after their speciesid
+				// To prevent overwriting those, and to prevent accidentaly leaking
+				// that a pokemon is on a team through the onStart even triggering
+				// at the start of a match, users with pokemon names will need their
+				// statuse's to end in "user".
+				name += 'user';
+			}
+			// Add the mon's status effect to it as a volatile.
+			let status = this.getEffect(name);
+			if (status && status.exists) {
+				pokemon.addVolatile(name, pokemon);
+			}
+		},
+	},	
+	{
 		name: "[Gen 7] Challenge Cup 1v1",
 
 		mod: 'gen7',
