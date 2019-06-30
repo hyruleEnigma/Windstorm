@@ -59,12 +59,12 @@ class RandomStaffBrosTeams2 extends RandomTeams {
 				signatureMove: 'Sword Beam',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
 			},
-			'CJer✿': {
+			/*'CJer✿': {
 				species: 'Porygon', ability: 'Corrosion', item: 'Eviolite', gender: 'M',
 				moves: ['Recover', 'Substitute', 'Protect'],
 				signatureMove: 'CJer Seizure™',
 				evs: {hp: 4, spa: 252, spe: 252}, nature: 'Modest',
-			},
+			},*/
 			'BruceWee': {
 				species: 'Mewtwo', ability: 'Pressure', item: 'Leftovers', gender: 'M',
 				moves: ['Psystrike', 'Shadow Ball', 'Recover'],
