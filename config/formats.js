@@ -1188,7 +1188,7 @@ let Formats = [
 
 		},
 		onSwitchIn: function (pokemon) {
-			let name = toId(pokemon.illusion ? pokemon.illusion.name : pokemon.name);
+			let name = toID(pokemon.illusion ? pokemon.illusion.name : pokemon.name);
 			if (this.getTemplate(name).exists) {
 				// Certain pokemon have volatiles named after their speciesid
 				// To prevent overwriting those, and to prevent accidentaly leaking
