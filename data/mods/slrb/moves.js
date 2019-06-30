@@ -50,19 +50,19 @@ let BattleMovedex = {
 		pp: 15,
 		priority: 0,
 		onTryMovePriority: 100,
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, "Conversion", source);
 		},
-		onModifyMove: function (move, pokemon) {
+		onModifyMove(move, pokemon) {
 			let weaknesses = ['Fire','Water','Grass'];
 			let randomType = this.sample(weaknesses);
 			move.type = randomType;
 			this.add('-start', pokemon, 'typeadd', randomType);
 		},
-		onHit: function(target, source) {
+		onHit(target, source) {
 			this.add('-anim', source, "Spectral Thief", target);
 		},
 		secondary: null,
@@ -83,24 +83,18 @@ let BattleMovedex = {
 		priority: 0,
 		flags: {},
 		onTryMovePriority: 100,
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onModifyMove: function (move, pokemon) {
+		onModifyMove(move, pokemon) {
 			let thirdType = pokemon.types[pokemon.types.length-1];
 			move.type = thirdType;
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, 'Rock Polish', source);
 			this.add('-anim', source, 'Let\'s Snuggle Forever', target);
 		},
-		onHit: function () {
-			let messages = ["SPL players don't want you to know about this secret",
-				"North American player reveals the concerning secret how to make money with pokemon that will crack you up",
-				"10 amazing facts about Zarel you have never heard of",
-				"Veteran player shared his best team with a beginner - here's what happened after",
-				"Use these 3 simple methods to gain 200+ rating in 10 minutes"][this.random(5)];
-
+		onHit() {
 			this.add(`c|+fart|did someone say soup?`);
 		},
 		isZ: "fartiumz",
@@ -122,21 +116,20 @@ let BattleMovedex = {
 		priority: 0,
 		flags: {mirror: 1, protect: 1, contact: 1},
 		onTryMovePriority: 100,
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, 'Meteor Mash', target);
 		},
-		onAfterMove: function (pokemon) {
-			// Ensure Meloetta goes back to standard form after using the move
+		onAfterMove(pokemon) {
 			if (pokemon.happiness == 255) {
 				this.add('-activate', pokemon, 'ability: Bork');
 				this.boost({atk: 1}, pokemon, pokemon, 'move: Bork');
 				pokemon.happiness = pokemon.happiness - 1;
 			}
 		},
-		onAfterMoveSecondarySelf: function () {
+		onAfterMoveSecondarySelf() {
 			this.setWeather('sandstorm');
 		},
 		target: "normal",
@@ -156,13 +149,13 @@ let BattleMovedex = {
 		pp: 5,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, "Conversion", source);
 		},
-		onPrepareHit: function (target, source, move) {
+		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 			this.add('-anim', target, 'Extreme Evoboost', target);
 		},
@@ -192,12 +185,10 @@ let BattleMovedex = {
 		pp: 10,
 		priority: 0,
 		flags: {contact: 1, protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onHit: function (target, source, move) {
-			console.log(source.name);
-			source.name = "FARTON";
+		onHit(target, source, move) {
 			if (this.runEvent('DragOut', source, target, move)) {
 				if ((Math.floor(Math.random() * 100)+1)<50) {
 					target.forceSwitchFlag = true;
@@ -212,7 +203,7 @@ let BattleMovedex = {
 	"swordbeam": {
 		accuracy: true,
 		basePower: 275,
-		basePowerCallback: function (pokemon, target, move) {
+		basePowerCallback(pokemon, target, move) {
 			if (pokemon.hp !== pokemon.maxhp) return move.basePower * 0.5;
 			return move.basePower;
 		},
@@ -224,10 +215,10 @@ let BattleMovedex = {
 		pp: 5,
 		flags: {protect: 1, mirror: 1, distance: 1},
 		onTryMovePriority: 100,
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			if(source.hp !== source.maxhp) {return false;}
 			this.add('-anim', source, 'Searing Sunraze Smash', target);
 		},
@@ -271,16 +262,16 @@ let BattleMovedex = {
 		pp: 10,
         priority: 0,
         flags: {protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source, move) {
+		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 		},
-		onModifyMove: function () {
+		onModifyMove() {
 			this.setTerrain('mistyterrain');
 		},
-		onHit: function (pokemon) {
+		onHit(pokemon) {
 			pokemon.cureStatus();
 		},
 		target: "normal",
@@ -301,13 +292,13 @@ let BattleMovedex = {
 		pp: 5,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source, move) {
+		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 		},
-		onAfterMoveSecondarySelf: function (target) {
+		onAfterMoveSecondarySelf(target) {
 			let stats = [];
 			for (let stat in target.boosts) {
 				// @ts-ignore
@@ -342,13 +333,13 @@ let BattleMovedex = {
 		pp: 10,
 		priority: -6,
 		flags: {contact: 1, protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source, move) {
+		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 		},
-		onEffectiveness: function (typeMod, type, move) {
+		onEffectiveness(typeMod, type, move) {
 			if (move.type !== 'Electric') return;
 			let target = this.activeTarget;
 			if (!target) return; // avoid crashing when called from a chat plugin
@@ -376,13 +367,13 @@ let BattleMovedex = {
 		pp: 5,
 		priority: 0,
 		flags: {contact: 1, protect: 1, mirror: 1, punch: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, 'Meteor Mash', target);
 		},
-		onAfterMoveSecondarySelf: function (pokemon, target, move) {
+		onAfterMoveSecondarySelf(pokemon, target, move) {
 			if (!target || target.fainted || target.hp <= 0) this.boost({spe: 2}, pokemon, pokemon, move);
 		},
 		target: "normal",
@@ -401,10 +392,10 @@ let BattleMovedex = {
 		pp: 5,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source, move) {
+		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 		},
 		self: {
@@ -430,10 +421,10 @@ let BattleMovedex = {
 		pp: 10,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source, move) {
+		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 		},
 		self: {
@@ -458,10 +449,10 @@ let BattleMovedex = {
 		pp: 10,
 		priority: 0,
 		flags: {protect: 1, mirror: 1, punch: 1, heal: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source, move) {
+		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 		},
 		drain: [1, 2],
@@ -482,10 +473,10 @@ let BattleMovedex = {
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
 		onTryMovePriority: 100,
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, "Defog", target);
 		},
 		self: {
@@ -508,17 +499,17 @@ let BattleMovedex = {
 		name: "Infinite Abyss",
 		isNonstandard: true,
 		pp: 5,
-		onModifyMove: function (move) {
+		onModifyMove(move) {
 			if (!this.pseudoWeather.trickroom) {
 				move.pseudoWeather = 'trickroom';
 			}
 		},
 		flags: {protect: 1, mirror: 1},
 		onTryMovePriority: 100,
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, "Coil", source);
 			this.add('-anim', source, "Extreme Evoboost", source);
 		},
@@ -543,13 +534,13 @@ let BattleMovedex = {
 		pp: 5,
 		priority: 0,
 		flags: {contact: 1, protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, "Coil", source);
 		},
-		onModifyMove: function (move, pokemon) {
+		onModifyMove(move, pokemon) {
 			 var allies = pokemon.side.pokemon.filter(ally => ally === pokemon || !ally.fainted && !ally.status);
 			if (allies.length == 1) {
 				if ((Math.floor(Math.random() * 100)+1)<61) {
@@ -580,13 +571,13 @@ let BattleMovedex = {
 		pp: 5,
 		priority: 0,
 		flags: {contact: 1, protect: 1, mirror: 1},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source) {
+		onPrepareHit(target, source) {
 			this.add('-anim', source, "Coil", source);
 		},
-		onModifyMove: function (move, pokemon) {
+		onModifyMove(move, pokemon) {
 			this.setWeather('sunnyday');
 		},
 		secondary: null,
@@ -637,13 +628,13 @@ let BattleMovedex = {
 			atk: 2,
 			spa: 2,
 		},
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit: function (target, source, move) {
+		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 		},
-		beforeTurnCallback: function (pokemon) {
+		beforeTurnCallback(pokemon) {
 			pokemon.addVolatile('lEffect');
 		},
 		secondary: null,
@@ -665,12 +656,12 @@ let BattleMovedex = {
 		pp: 10,
 		priority: 0,
 		flags: {snatch: 1, heal: 1},
-		onTryMove: function (pokemon) {
+		onTryMove(pokemon) {
 			if (pokemon.hp < pokemon.maxhp && pokemon.status !== 'slp' && !pokemon.hasAbility('comatose')) return;
 			this.add('-fail', pokemon);
 			return null;
 		},
-		onHit: function (target) {
+		onHit(target) {
 			if (!target.setStatus('slp')) return false;
 			target.statusData.time = 1;
 			target.statusData.startTime = 1;
@@ -701,12 +692,12 @@ let BattleMovedex = {
 		effect: {
 			noCopy: true,
 			duration: 3,
-			onHit: function (pokemon) {
+			onHit(pokemon) {
 				pokemon.addVolatile('torment');
 				pokemon.addVolatile('taunt');
 				//pokemon.addVolatile('confusion');
 			},
-			onStart: function (pokemon) {
+			onStart(pokemon) {
 				this.add('-start', pokemon, 'Torment');
 				if (target.activeTurns && !this.willMove(target)) {
 					this.effectData.duration++;
@@ -714,11 +705,11 @@ let BattleMovedex = {
 				this.add('-start', pokemon, 'move: Taunt');
 			},
 			onResidualOrder: 12,
-			onEnd: function (pokemon) {
+			onEnd(pokemon) {
 				this.add('-end', pokemon, 'Torment');
 				this.add('-end', pokemon, 'move: Taunt');
 			},
-			onDisableMove: function (pokemon) {
+			onDisableMove(pokemon) {
 				if (pokemon.lastMove && pokemon.lastMove.id !== 'struggle') pokemon.disableMove(pokemon.lastMove.id);
 				for (const moveSlot of pokemon.moveSlots) {
 					if (this.getMove(moveSlot.id).category === 'Status') {
@@ -728,7 +719,7 @@ let BattleMovedex = {
 			},
 		},
 		onTryMovePriority: 100,
-		onTryMove: function () {
+		onTryMove() {
 			this.attrLastMove('[still]');
 		},
 		status: 'tox',
