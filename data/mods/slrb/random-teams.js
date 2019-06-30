@@ -16,9 +16,9 @@
  * @property {boolean=} shiny
  */
 
-const RandomTeams = require('../../data/random-teams');
+const RandomTeams = require('../../random-teams');
 
-class RandomStaffBrosTeams2 extends RandomTeams {
+class RandomStaffBrosTeams extends RandomTeams {
 	randomStaffBrosTeam() {
 		/** @type {PokemonSet[]} */
 		let team = [];
@@ -228,4 +228,4 @@ class RandomStaffBrosTeams2 extends RandomTeams {
 	}
 }
 
-module.exports = RandomStaffBrosTeams2;
+module.exports = RandomStaffBrosTeams;
