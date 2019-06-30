@@ -154,7 +154,7 @@ class RandomStaffBrosTeams2 extends RandomTeams {
 				moves: ['Calm Mind', 'Moonlight', 'Heal Bell'],
 				signatureMove: 'Hyperlink',
 				evs: {hp: 248, spa: 8, def: 252}, nature: 'Bold',
-			},*/
+			},
 			'AFKrchasTL': {
 				species: 'Lilligant', ability: 'AFK', item: 'Life Orb', gender: 'F',
 				moves: ['Seed Flare', 'Stun Spore', 'Quiver Dance'],
