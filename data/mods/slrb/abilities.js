@@ -155,12 +155,12 @@ let BattleAbilities = {
 			pokemon.happiness = 255;
 		},
 		onModifySpe: function (spe, pokemon) {
-			if (this.isWeather('sandstorm')) {
+			if (this.field.isWeather('sandstorm')) {
 				return this.chainModify(1.5);
 			}
 		},
 		onModifyDef: function (def) {
-			if (this.isWeather('sandstorm')) {
+			if (this.field.isWeather('sandstorm')) {
 				return this.chainModify(1.5);
 			}
 		},
