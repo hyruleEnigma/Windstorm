@@ -579,7 +579,7 @@ let BattleMovedex = {
 			this.add('-anim', source, "Coil", source);
 		},
 		onModifyMove(move, pokemon) {
-			this.setWeather('sunnyday');
+			this.field.setWeather('sunnyday');
 		},
 		secondary: null,
 		target: "normal",
