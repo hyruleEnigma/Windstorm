@@ -131,7 +131,7 @@ let BattleMovedex = {
 			}
 		},
 		onAfterMoveSecondarySelf() {
-			this.setWeather('sandstorm');
+			this.field.setWeather('sandstorm');
 		},
 		target: "normal",
 		type: "Normal",
