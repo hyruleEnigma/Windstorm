@@ -47,11 +47,11 @@ let BattleItems = {
 		onResidualOrder: 5,
 		onResidualSubOrder: 2,
 		onResidual: function (pokemon) {
-			if (this.isTerrain('grassyterrain')) return;
+			if (this.field.isTerrain('grassyterrain')) return;
 			this.heal(pokemon.maxhp / 16);
 		},
 		onTerrain: function (pokemon) {
-			if (!this.isTerrain('grassyterrain')) return;
+			if (!this.field.isTerrain('grassyterrain')) return;
 			this.heal(pokemon.maxhp / 16);
 		},
 		gen: 2,
