@@ -190,11 +190,8 @@ let BattleMovedex = {
 			this.attrLastMove('[still]');
 		},
 		onHit(target, source, move) {
-			if (this.runEvent('DragOut', source, target, move)) {
-				if ((Math.floor(Math.random() * 100)+1)<50) {
-					target.forceSwitchFlag = true;
-				}
-				
+			if (this.random(2) === 0) {
+				target.forceSwitchFlag = true;
 			}
 		},
 		target: "normal",
