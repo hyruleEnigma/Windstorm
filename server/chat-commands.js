@@ -475,7 +475,7 @@ const commands = {
 		user.avatar = avatar;
 		let avatarUrl = avatar.startsWith('#') ? `trainers-custom/${avatar.slice(1)}.png` : `trainers/${avatar}.png`;
 		if (!parts[1]) {
-			this.sendReply(`Avatar changed to:\n|raw|<img src="//play.pokemonshowdown.com/sprites/${avatarUrl}" alt="${avatar}" width="80" height="80" />`);
+			this.sendReply(`Avatar changed to:\n|raw|<img src="//${Config.routes.client}/sprites/${avatarUrl}" alt="${avatar}" width="80" height="80" />`);
 		}
 	},
 	avatarhelp: [`/avatar [avatar number 1 to 293] - Change your trainer sprite.`],
@@ -657,11 +657,16 @@ const commands = {
 	status(target, room, user, connection, cmd) {
 		if (!this.canTalk()) return;
 		if (!target) return this.parse('/help status');
-		target = Chat.namefilter(target, user);
-		if (!target) return;
+		target = Chat.namefilter(target, user, true);
+		if (!target) return user.popup("Your status contains a banned word.");
 
-		user.status = `(Online) ${target}`;
-		user.updateIdentity();
+		let statusType = '(Online)';
+		// Should work even if users use /status with a message containing ()
+		if (user.status && user.status.includes('(') && user.status.includes(')')) {
+			statusType = user.status.slice(0, user.status.indexOf(')') + 1);
+		}
+
+		user.setStatus(`${statusType} ${target}`);
 		this.sendReply(`Your status has been set to: ${target}`);
 	},
 	statushelp: [`/status [note] - Sets a short note as your status, visible when users click your username.`],
@@ -670,11 +675,10 @@ const commands = {
 	busy(target, room, user) {
 		if (!this.canTalk()) return;
 
-		let message = Chat.namefilter(target, user);
+		let message = Chat.namefilter(target, user, true);
+		if (!message && target) return user.popup("Your status contains a banned word.");
 
-		const busyMessage = `(Busy)${message ? ` ${message}` : ''}`;
-		user.status = busyMessage;
-		user.updateIdentity();
+		user.setStatus(`(Busy)${message ? ` ${message}` : ''}`);
 		this.parse('/blockpms');
 		this.parse('/blockchallenges');
 		this.sendReply("You are now marked as busy.");
@@ -695,8 +699,8 @@ const commands = {
 			awayType = `${awayType[0].toUpperCase()}${awayType.slice(1)}`;
 		}
 		if (target) {
-			awayMessage = Chat.namefilter(target, user);
-			if (!awayMessage) return;
+			awayMessage = Chat.namefilter(target, user, true);
+			if (!awayMessage) return user.popup("Your status contains a banned word.");
 		}
 
 		awayMessage = `(${awayType})${awayMessage ? ` ${awayMessage}` : ''}`;
@@ -710,6 +714,22 @@ const commands = {
 	unaway: 'back',
 	unafk: 'back',
 	back(target, room, user) {
+		if (target) {
+			// Clearing another user's status
+			let reason = this.splitTarget(target);
+			let targetUser = this.targetUser;
+			if (!targetUser) return this.errorReply(`User '${target}' not found.`);
+			if (!targetUser.status) return this.errorReply(`${targetUser.name} does not have a status set.`);
+			if (!this.can('forcerename', targetUser)) return false;
+
+			let bracketIndex = targetUser.status.indexOf(')');
+			const status = targetUser.status.slice(bracketIndex + 2);
+			this.privateModAction(`(${targetUser.name}'s status "${status}" was cleared by ${user.name}${reason ? `: ${reason}` : ``})`);
+			this.globalModlog('CLEARSTATUS', targetUser, `from ${status} by ${user.name}${reason ? `: ${reason}` : ``}`);
+			targetUser.clearStatus();
+			targetUser.popup(`${user.name} has cleared your status for being inappropriate${reason ? `: ${reason}` : '.'}`);
+			return;
+		}
 		if (!user.status) return;
 		const statusType = user.isAway() ? 'away' : user.status.startsWith('(Busy)') ? 'busy' : null;
 		user.clearStatus();
@@ -852,7 +872,7 @@ const commands = {
 			modjoin: parent ? null : '+',
 			parentid: parent,
 			auth: {},
-			introMessage: `<div style="text-align: center"><table style="margin:auto;"><tr><td><img src="//play.pokemonshowdown.com/fx/groupchat.png" width=120 height=100></td><td><h2>${titleMsg}</h2><p>Follow the <a href="/rules">Pokémon Showdown Global Rules</a>!<br>Don't be disruptive to the rest of the site.</p></td></tr></table></div>`,
+			introMessage: `<div style="text-align: center"><table style="margin:auto;"><tr><td><img src="//${Config.routes.client}/fx/groupchat.png" width=120 height=100></td><td><h2>${titleMsg}</h2><p>Follow the <a href="/rules">Pokémon Showdown Global Rules</a>!<br>Don't be disruptive to the rest of the site.</p></td></tr></table></div>`,
 			staffMessage: `<p>Groupchats are temporary rooms, and will expire if there hasn't been any activity in 40 minutes.</p><p>You can invite new users using <code>/invite</code>. Be careful with who you invite!</p><p>Commands: <button class="button" name="send" value="/roomhelp">Room Management</button> | <button class="button" name="send" value="/roomsettings">Room Settings</button> | <button class="button" name="send" value="/tournaments help">Tournaments</button></p><p>As creator of this groupchat, <u>you are entirely responsible for what occurs in this chatroom</u>. Global rules apply at all times.</p><p>If this room is used to break global rules or disrupt other areas of the server, <strong>you as the creator will be held accountable and punished</strong>.</p>`,
 		});
 		if (targetRoom) {
@@ -1746,7 +1766,7 @@ const commands = {
 		if (!target) return this.parse('/help join');
 		if (target.startsWith('http://')) target = target.slice(7);
 		if (target.startsWith('https://')) target = target.slice(8);
-		if (target.startsWith('play.pokemonshowdown.com/')) target = target.slice(25);
+		if (target.startsWith(`${Config.routes.client}/`)) target = target.slice(Config.routes.client.length + 1);
 		if (target.startsWith('psim.us/')) target = target.slice(8);
 		user.tryJoinRoom(target, connection).then(ret => {
 			if (ret === Rooms.RETRY_AFTER_LOGIN) {
@@ -2824,7 +2844,7 @@ const commands = {
 		if (!reason) {
 			return this.errorReply(`Battle bans require a reason.`);
 		}
-		const includesUrl = reason.includes('.pokemonshowdown.com/'); // lgtm [js/incomplete-url-substring-sanitization]
+		const includesUrl = reason.includes(`.${Config.routes.root}/`); // lgtm [js/incomplete-url-substring-sanitization]
 		if (!room.battle && !includesUrl && cmd !== 'forcebattleban') {
 			 return this.errorReply(`Battle bans require a battle replay if used outside of a battle; if the battle has expired, use /forcebattleban.`);
 		}
@@ -3426,15 +3446,24 @@ const commands = {
 		logRoom.roomlog(`${user.name} used /slowlockdown`);
 	},
 
-	endlockdown(target, room, user) {
+	crashfixed: 'endlockdown',
+	endlockdown(target, room, user, connection, cmd) {
 		if (!this.can('lockdown')) return false;
 
 		if (!Rooms.global.lockdown) {
 			return this.errorReply("We're not under lockdown right now.");
 		}
+		if (Rooms.global.lockdown !== true && cmd === 'crashfixed') {
+			return this.errorReply('/crashfixed - There is no active crash.');
+		}
+
+		let message = cmd === 'crashfixed' ? `<div class="broadcast-green"><b>We fixed the crash without restarting the server!</b></div>` : `<div class="broadcast-green"><b>The server restart was canceled.</b></div>`;
 		if (Rooms.global.lockdown === true) {
 			for (const curRoom of Rooms.rooms.values()) {
-				if (curRoom.id !== 'global') curRoom.addRaw(`<div class="broadcast-green"><b>The server restart was canceled.</b></div>`).update();
+				if (curRoom.id !== 'global') curRoom.addRaw(message).update();
+			}
+			for (const user of Users.users.values()) {
+				user.send(`|pm|~|${user.group}${user.name}|/raw ${message}`);
 			}
 		} else {
 			this.sendReply("Preparation for the server shutdown was canceled.");
@@ -3444,6 +3473,10 @@ const commands = {
 		const logRoom = Rooms('staff') || room;
 		logRoom.roomlog(`${user.name} used /endlockdown`);
 	},
+	endlockdownhelp: [
+		`/endlockdown - Cancels the server restart and takes the server out of lockdown state. Requires: ~`,
+		`/crashfixed - Ends the active lockdown caused by a crash without the need of a restart. Requires: ~`,
+	],
 
 	emergency(target, room, user) {
 		if (!this.can('lockdown')) return false;
@@ -3620,22 +3653,6 @@ const commands = {
 		this.sendReply(`Rebuilt.`);
 		Chat.updateServerLock = false;
 	},
-
-	crashfixed(target, room, user) {
-		if (Rooms.global.lockdown !== true) {
-			return this.errorReply('/crashfixed - There is no active crash.');
-		}
-		if (!this.can('hotpatch')) return false;
-
-		Rooms.global.lockdown = false;
-		if (Rooms.lobby) {
-			Rooms.lobby.modchat = false;
-			Rooms.lobby.addRaw(`<div class="broadcast-green"><b>We fixed the crash without restarting the server!</b><br />You may resume talking in the Lobby and starting new battles.</div>`).update();
-		}
-		const logRoom = Rooms('staff') || room;
-		logRoom.roomlog(`${user.name} used /crashfixed`);
-	},
-	crashfixedhelp: [`/crashfixed - Ends the active lockdown caused by a crash without the need of a restart. Requires: ~`],
 
 	memusage: 'memoryusage',
 	memoryusage(target) {
@@ -4321,7 +4338,7 @@ const commands = {
 		let format = originalFormat.effectType === 'Format' ? originalFormat : Dex.getFormat('[Gen 7] Pokebank Anything Goes');
 		if (format.effectType !== 'Format') return this.popupReply("Please provide a valid format.");
 
-		TeamValidatorAsync(format.id).validateTeam(user.team).then(result => {
+		TeamValidatorAsync.get(format.id).validateTeam(user.team).then(result => {
 			let matchMessage = (originalFormat === format ? "" : `The format '${originalFormat.name}' was not found.`);
 			if (result.charAt(0) === '1') {
 				connection.popup(`${(matchMessage ? matchMessage + "\n\n" : "")}Your team is valid for ${format.name}.`);
@@ -4505,7 +4522,7 @@ const commands = {
 		} else if (!target) {
 			this.sendReply("COMMANDS: /msg, /reply, /logout, /challenge, /search, /rating, /whois, /user, /report, /join, /leave, /makegroupchat, /userauth, /roomauth");
 			this.sendReply("BATTLE ROOM COMMANDS: /savereplay, /hideroom, /inviteonly, /invite, /timer, /forfeit");
-			this.sendReply("OPTION COMMANDS: /nick, /avatar, /ignore, /away, /back, /timestamps, /highlight, /showjoins, /hidejoins, /blockchallenges, /blockpms");
+			this.sendReply("OPTION COMMANDS: /nick, /avatar, /ignore, /status, /away, /busy, /back, /timestamps, /highlight, /showjoins, /hidejoins, /blockchallenges, /blockpms");
 			this.sendReply("INFORMATIONAL/RESOURCE COMMANDS: /groups, /faq, /rules, /intro, /formatshelp, /othermetas, /analysis, /punishments, /calc, /git, /cap, /roomhelp, /roomfaq (replace / with ! to broadcast. Broadcasting requires: + % @ # & ~)");
 			this.sendReply("DATA COMMANDS: /data, /dexsearch, /movesearch, /itemsearch, /learn, /statcalc, /effectiveness, /weakness, /coverage, /randommove, /randompokemon (replace / with ! to broadcast. Broadcasting requires: + % @ # & ~)");
 			if (user.group !== Config.groupsranking[0]) {

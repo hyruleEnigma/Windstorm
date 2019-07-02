@@ -906,7 +906,8 @@ class User extends Chat.MessageContext {
 				this.permalocked = userid;
 				Punishments.lock(this, Date.now() + PERMALOCK_CACHE_TIME, userid, `Permalocked as ${name}`);
 			} else if (userType === '6') {
-				Punishments.ban(this, Date.now() + PERMALOCK_CACHE_TIME, userid, `Permabanned as ${name}`);
+				Punishments.lock(this, Date.now() + PERMALOCK_CACHE_TIME, userid, `Permabanned as ${name}`);
+				this.disconnectAll();
 			}
 		}
 		if (Users.isTrusted(userid)) {
@@ -1377,7 +1378,7 @@ class User extends Chat.MessageContext {
 	joinRoom(roomid, connection = null) {
 		const room = Rooms(roomid);
 		if (!room) throw new Error(`Room not found: ${roomid}`);
-		this.clearStatus();
+		if (this.isAway()) this.clearStatus();
 		if (!connection) {
 			for (const curConnection of this.connections) {
 				// only join full clients, not pop-out single-room
@@ -1413,7 +1414,7 @@ class User extends Chat.MessageContext {
 		if (!this.inRooms.has(room.id)) {
 			return false;
 		}
-		this.clearStatus();
+		if (this.isAway()) this.clearStatus();
 		for (const curConnection of this.connections) {
 			if (connection && curConnection !== connection) continue;
 			if (curConnection.inRooms.has(room.id)) {
@@ -1580,7 +1581,6 @@ class User extends Chat.MessageContext {
 	 */
 	setAway(message) {
 		this.setStatus(`!${message}`);
-		this.updateIdentity();
 	}
 	clearStatus() {
 		if (!this.status) return;
@@ -1625,10 +1625,10 @@ function pruneInactive(threshold) {
 	let now = Date.now();
 	for (const user of users.values()) {
 		const awayTimer = user.can('lock') ? STAFF_IDLE_TIMER : IDLE_TIMER;
-		let bypass = user.can('bypassafktimer') || Array.from(user.inRooms).some(room => user.can('bypassafktimer', null, room));
+		let bypass = user.isAway() || (!user.can('bypassall') && (user.can('bypassafktimer') || Array.from(user.inRooms).some(room => user.can('bypassafktimer', null, /** @type {ChatRoom} */ (Rooms(room))))));
 		if (!bypass && !user.connections.some(connection => now - connection.lastActiveTime < awayTimer)) {
 			user.popup(`You have been inactive for over ${awayTimer / MINUTES} minutes, and have been marked as idle as a result. To mark yourself as back, send a message in chat, or use the /back command.`);
-			user.setAway('Idle');
+			user.setAway('(Idle)');
 		}
 		if (user.connected) continue;
 		if ((now - user.lastConnected) > threshold) {
