@@ -267,7 +267,7 @@ let BattleMovedex = {
 			this.add('-anim', source, 'Judgment', target);
 		},
 		onModifyMove() {
-			this.setTerrain('mistyterrain');
+			this.field.setTerrain('mistyterrain');
 		},
 		onHit(pokemon) {
 			pokemon.cureStatus();
