@@ -51,6 +51,12 @@ let BattleStatuses = {
 			if (pokemon.hp > pokemon.maxhp / 2) return;
 			this.add('-activate', pokemon, 'ability: no longer AFK');
 			pokemon.formeChange('Arceus-Ghost', this.effect, true);
+			pokemon.name = 'ArchasTL';
+         pokemon.id = pokemon.side.id+": ArchasTL";
+         pokemon.fullname = pokemon.side.id+": ArchasTL";
+			pokemon.illusion = pokemon; // name change
+         this.add('replace', pokemon, pokemon.getDetails); // name change
+			pokemon.illusion = null;
 			let newHP = Math.floor(Math.floor(2 * pokemon.template.baseStats['hp'] + pokemon.set.ivs['hp'] + Math.floor(pokemon.set.evs['hp'] / 4) + 100) * pokemon.level / 100 + 10);
 			pokemon.hp = newHP - (pokemon.maxhp - pokemon.hp);
 			pokemon.maxhp = newHP;
