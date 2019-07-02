@@ -217,7 +217,7 @@ let BattleMovedex = {
 			this.attrLastMove('[still]');
 		},
 		onPrepareHit(target, source) {
-			if(source.hp !== source.maxhp) {return false;}
+			if(source.hp < source.maxhp / 2) {return false;}
 			this.add('-anim', source, 'Searing Sunraze Smash', target);
 		},
 		secondary: null,
@@ -250,7 +250,7 @@ let BattleMovedex = {
 	
 	"sacredmist": {
 		accuracy: 90,
-		basePower: 110,
+		basePower: 90,
 		isNonstandard: "Custom",
 		category: "Special",
 		desc: "If this move is successful, terrain becomes Misty Terrain. Cures status.",
