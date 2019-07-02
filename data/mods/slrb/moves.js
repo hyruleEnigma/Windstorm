@@ -541,12 +541,12 @@ let BattleMovedex = {
 		onModifyMove(move, pokemon) {
 			 var allies = pokemon.side.pokemon.filter(ally => ally === pokemon || !ally.fainted && !ally.status);
 			if (allies.length == 1) {
-				if ((Math.floor(Math.random() * 100)+1)<61) {
+				if ((Math.floor(this.random() * 100)+1)<61) {
 					this.boost({spa: 2}, pokemon);
 					this.add('-anim', source, "Extreme Evoboost", source);
 				}
 			} else {
-				if ((Math.floor(Math.random() * 100)+1)<31) {
+				if ((Math.floor(this.random() * 100)+1)<31) {
 					this.boost({spa: 2}, pokemon);
 					this.add('-anim', source, "Extreme Evoboost", source);
 				}
