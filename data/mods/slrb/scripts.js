@@ -303,7 +303,7 @@ let BattleScripts = {
 			return speed & 0x1FFF;
 		},
 		isGrounded(negateImmunity = false) {
-			if ('gravity' in this.battle.pseudoWeather) return true;
+			if ('gravity' in this.battle.field.pseudoWeather) return true;
 			if ('ingrain' in this.volatiles && this.battle.gen >= 4) return true;
 			if ('smackdown' in this.volatiles) return true;
 			let item = (this.ignoringItem() ? '' : this.item);
@@ -313,7 +313,7 @@ let BattleScripts = {
 			if (this.hasAbility('levitate') && !this.battle.suppressingAttackEvents()) return null;
 			if ('magnetrise' in this.volatiles) return false;
 			if ('telekinesis' in this.volatiles) return false;
-			if ('triviaroom' in this.battle.pseudoWeather && this.name === 'Bimp' && !this.illusion) return false;
+			if ('triviaroom' in this.battle.field.pseudoWeather && this.name === 'Bimp' && !this.illusion) return false;
 			return item !== 'airballoon';
 		},
 	},
