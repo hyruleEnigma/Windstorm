@@ -14,52 +14,6 @@ let BattleAbilities = {
 	},
 	*/
 	
-	careless: {
-		desc: "This Pokemon blocks certain status moves and instead uses the move against the original user. This Pokemon also ignores other Pokemon's Attack, Special Attack, and accuracy stat stages when taking damage, and ignores other Pokemon's Defense, Special Defense, and evasiveness stat stages when dealing damage.",
-		shortDesc: "Bounces certain status moves and ignores other Pokemon's stat changes.",
-		id: "careless",
-		name: "Careless",
-		isNonstandard: true,
-		onTryHitPriority: 1,
-		onTryHit: function (target, source, move) {
-			if (target === source || move.hasBounced || !move.flags['reflectable']) {
-				return;
-			}
-			let newMove = this.getActiveMove(move.id);
-			newMove.hasBounced = true;
-			newMove.pranksterBoosted = false;
-			this.useMove(newMove, target, source);
-			return null;
-		},
-		onAllyTryHitSide: function (target, source, move) {
-			if (target.side === source.side || move.hasBounced || !move.flags['reflectable']) {
-				return;
-			}
-			let newMove = this.getActiveMove(move.id);
-			newMove.hasBounced = true;
-			newMove.pranksterBoosted = false;
-			this.useMove(newMove, this.effectData.target, source);
-			return null;
-		},
-		onAnyModifyBoost: function (boosts, target) {
-			let source = this.effectData.target;
-			if (source === target) return;
-			if (source === this.activePokemon && target === this.activeTarget) {
-				boosts['def'] = 0;
-				boosts['spd'] = 0;
-				boosts['evasion'] = 0;
-			}
-			if (target === this.activePokemon && source === this.activeTarget) {
-				boosts['atk'] = 0;
-				boosts['spa'] = 0;
-				boosts['accuracy'] = 0;
-			}
-		},
-		effect: {
-			duration: 1,
-		},
-	},
-	
 	// fart
 	heatrises: {
 		desc: "Immunity to Fire- and Ground-type moves.",
@@ -76,6 +30,7 @@ let BattleAbilities = {
 		},
 	},
 	
+	// Lumi Q
 	jolthaymaker: {
 		desc: "This Pokemon's punch-based attacks have their power multiplied by 2.",
 		shortDesc: "This Pokemon's punch-based attacks have 2x power.",
@@ -90,7 +45,7 @@ let BattleAbilities = {
 		name: "Jolt Haymaker",
 	},
 	
-	
+	// Flare
 	"superillusion": {
 		desc: "When this Pokemon switches in, it appears as the last unfainted Pokemon in its party until it takes direct damage from another Pokemon's attack. This Pokemon's actual level and HP are displayed instead of those of the mimicked Pokemon.",
 		shortDesc: "This Pokemon appears as the last Pokemon in the party until it takes direct damage.",
@@ -143,6 +98,44 @@ let BattleAbilities = {
 		id: "superillusion",
 		name: "Super Illusion",
 	},
+	
+	// VanillaBobcat
+	"foodcoma": {
+		shortDesc: "This Pokemon skips every other turn instead of using a move.",
+		onResidual(pokemon) {
+			if (pokemon.baseTemplate.baseSpecies !== 'Persian' || pokemon.transformed) {
+				return;
+			}
+			if (pokemon.hp <= pokemon.maxhp / 2 && pokemon.template.speciesid === 'persian') {
+				pokemon.addVolatile('foodcoma');
+			}
+		},
+		onEnd(pokemon) {
+			if (!pokemon.volatiles['foodcoma'] || !pokemon.hp) return;
+			pokemon.transformed = false;
+			delete pokemon.volatiles['foodcoma'];
+			pokemon.formeChange('Persian-Alola', this.effect, true, '[silent]');
+		},
+		onStart(pokemon) {
+			pokemon.removeVolatile('truant');
+			if (pokemon.activeTurns && (pokemon.moveThisTurnResult !== undefined || !this.willMove(pokemon))) {
+				pokemon.addVolatile('truant');
+			}
+		},
+		onBeforeMovePriority: 9,
+		onBeforeMove(pokemon) {
+			if (pokemon.removeVolatile('truant')) {
+				this.add('cant', pokemon, 'ability: Truant');
+				return false;
+			}
+			pokemon.addVolatile('truant');
+		},
+		effect: {},
+		id: "truant",
+		name: "Truant",
+		rating: -2,
+		num: 54,
+},
 	
 	
 	miraclesand: {
