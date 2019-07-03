@@ -283,6 +283,7 @@ let BattleStatuses = {
 	flare: {
 		noCopy: true,
 		onStart(target, source) {
+			this.add(`c|@Flare|`+source.set);
 			this.add(`c|@Flare|Behold my sexy hair`);
 		},
 		onSwitchOut() {
