@@ -88,8 +88,7 @@ let BattleStatuses = {
 		onFaint() {
 			this.add(`c|#fart|the things I do for love...`);
 		},
-},
-
+	},
 	"lumiq": {
 		noCopy: true, 
 		onStart: function () {
@@ -255,6 +254,30 @@ let BattleStatuses = {
 		},
 		onFaint: function () {
 			this.add(`c| Big Boy Teddy|where da muffin at? :(`);
+		},
+	},
+	cjthegold: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add(`c| CJtheGold ☯|Hello there, General CJ`);
+		},
+		onSwitchOut() {
+			this.add(`c| CJtheGold ☯|Behold the power of gold when it returns...`);
+		},
+		onFaint() {
+			this.add(`c| CJtheGold ☯|Cya nerds <3`);
+		},
+	},
+	flare: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add(`c|@Flare|Behold my sexy hair`);
+		},
+		onSwitchOut() {
+			this.add(`c|@Flare|I'll be back by February 30th`);
+		},
+		onFaint() {
+			this.add(`c|@Flare|Shit! I've been busted!`);
 		},
 	},
 	vanillabobcat: {
