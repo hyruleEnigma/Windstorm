@@ -41,6 +41,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 			// Nature needs to be a valid nature with the first letter capitalized ex: Modest
 			*/
 			// Please keep sets organized alphabetically based on staff member name!/*
+			/*
 			'0TakeaStudyBreak': {
 				species: 'Xerneas', ability: 'Fairy Aura', item: 'Power Herb', gender: 'M',
 				moves: ['Geomancy', 'Moonblast', 'Flash Cannon'],
@@ -94,7 +95,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 				moves: ['Sunsteel Strike', 'Play Rough', 'U-turn'],
 				signatureMove: 'Soup Time!',
 				evs: {atk: 252, def: 4, spe: 252}, nature: 'Jolly', shiny:true,
-			},
+			},*/
 			'Flare': {
 				species: 'Zoroark', ability: 'Super Illusion', item: 'Focus Sash', gender: 'M',
 				moves: ['Sludge Bomb', 'Nasty Plot', 'U-turn'],
