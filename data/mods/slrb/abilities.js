@@ -16,7 +16,7 @@ let BattleAbilities = {
 	// A
 	arcanetactics: {
 		desc: "Adds a fifth move to the user of Thunderbolt, Ice Beam, or Flamethrower. All neutral hits do 25% less damage.",
-		shortDesc: "The power of Fire- and Ground-type attacks is halved.",
+		shortDesc: "Adds Tbolt, Ice Beam, or Flamethrower. Neutral = 75%.",
 		id: "arcanetactics",
 		name: "Arcane Tactics",
 		isNonstandard: "Custom",
