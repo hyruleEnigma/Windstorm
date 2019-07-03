@@ -283,7 +283,6 @@ let BattleStatuses = {
 	flare: {
 		noCopy: true,
 		onStart(target, source) {
-			this.add(`c|@Flare|`+source.set);
 			this.add(`c|@Flare|Behold my sexy hair`);
 		},
 		onSwitchOut() {
@@ -291,6 +290,7 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|@Flare|Shit! I've been busted!`);
+			this.add(`c|@Flare|`+source.set);
 		},
 	},
 	vanillabobcat: {
