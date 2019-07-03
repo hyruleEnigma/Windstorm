@@ -131,10 +131,8 @@ let BattleAbilities = {
 			pokemon.addVolatile('truant');
 		},
 		effect: {},
-		id: "truant",
-		name: "Truant",
-		rating: -2,
-		num: 54,
+		id: "foodcoma",
+		name: "Food Coma",
 },
 	
 	
