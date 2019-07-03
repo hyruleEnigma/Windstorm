@@ -498,7 +498,7 @@ let BattleMovedex = {
 		isNonstandard: "Custom",
 		pp: 5,
 		onModifyMove(move) {
-			if (!this.pseudoWeather.trickroom) {
+			if (!this.field.pseudoWeather.trickroom) {
 				move.pseudoWeather = 'trickroom';
 			}
 		},
