@@ -95,12 +95,11 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Soup Time!',
 				evs: {atk: 252, def: 4, spe: 252}, nature: 'Jolly', shiny:true,
 			},
-			/*'Flare On Blitz': {
+			'Flare': {
 				species: 'Zoroark', ability: 'Super Illusion', item: 'Focus Sash', gender: 'M',
 				moves: ['Sludge Bomb', 'Nasty Plot', 'U-turn'],
-				signatureMove: 'Busted',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Hasty',
-			},*/
+			},
 			'Host Joe': {
 				species: 'Hoopa-Unbound', ability: 'Magician', item: 'Choice Band', gender: 'M',
 				moves: ['Gunk Shot', 'Fire Punch', 'Drain Punch'],
