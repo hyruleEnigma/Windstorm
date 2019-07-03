@@ -106,7 +106,7 @@ let BattleAbilities = {
 		onAfterDamage(damage, target, source, effect) {
 			if (target.illusion && effect && effect.effectType === 'Move' && effect.id !== 'confused'  && this.getEffectiveness(effect.type, target.getTypes()) > 0) {
 				this.singleEvent('End', this.getAbility('Illusion'), target.abilityData, target, source, effect);
-				source.types = ["Dark"];
+				target.types = ["Dark"];
 				let move = this.getMove('Busted');
 				target.moveSlots[3] = {
 					move: move.name,
@@ -124,10 +124,10 @@ let BattleAbilities = {
 			if (pokemon.illusion) {
 				this.debug('illusion cleared');
 				pokemon.illusion = null;
+				pokemon.types = ["Dark"];
 				let details = pokemon.template.species + (pokemon.level === 100 ? '' : ', L' + pokemon.level) + (pokemon.gender === '' ? '' : ', ' + pokemon.gender) + (pokemon.set.shiny ? ', shiny' : '');
 				this.add('replace', pokemon, details);
 				this.add('-end', pokemon, 'Illusion');
-				pokemon.types = ["Dark"];
 			}
 		},
 		onFaint(pokemon) {
