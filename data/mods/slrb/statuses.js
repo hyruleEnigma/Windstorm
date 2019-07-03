@@ -19,7 +19,20 @@ let BattleStatuses = {
 	},
 	*/
 	// Please keep statuses organized alphabetically based on staff member name!
-	
+
+	a: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add('-start', source, 'typechange', `Psychic/Fairy`);
+			this.add(`c|%A|This'll be **A** fun one!`);
+		},
+		onSwitchOut() {
+			this.add(`c|%A|I'm gonna take **A** break for now.`);
+		},
+		onFaint() {
+			this.add(`c|%A|oof`);
+		},
+	},
 	afkrchastl: {
 		noCopy: true,
 		onStart: function () {
@@ -74,8 +87,7 @@ let BattleStatuses = {
 		onFaint: function () {
 			this.add(`c| BruceWee|weird flex but ok`);
 		},
-	},
-	
+	},	
 	fart: {
 		noCopy: true,
 		onStart(target, source) {
