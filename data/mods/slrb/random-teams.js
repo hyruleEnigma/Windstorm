@@ -75,7 +75,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 				species: 'Porygon', ability: 'Corrosion', item: 'Eviolite', gender: 'M',
 				moves: ['Recover', 'Substitute', 'Protect'],
 				signatureMove: 'CJer Seizure™',
-				evs: {hp: 4, spa: 252, spe: 252}, nature: 'Modest',
+				evs: {hp: 4, spd: 252, spe: 252}, nature: 'Timid',
 			},
 			'fart': {
 				species: 'Kartana', ability: 'Heat Rises', item: 'Fartium-Z', gender: 'M',
