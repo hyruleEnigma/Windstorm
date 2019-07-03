@@ -186,8 +186,8 @@ let BattleMovedex = {
 	cjerseizure: {
 		accuracy: 90,
 		category: "Status",
-		desc: "Boosts the user's Attack, Defense, and Speed by one stage.",
-		shortDesc: "+1 atk, def, and spe.",
+		desc: "Swagger, Torment, Taunt, and Toxic.",
+		shortDesc: "Swagger, Torment, Taunt, and Toxic.",
 		id: "cjerseizure",
 		name: "CJer Seizure™",
 		isNonstandard: "Custom",
