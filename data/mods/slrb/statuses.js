@@ -20,19 +20,6 @@ let BattleStatuses = {
 	*/
 	// Please keep statuses organized alphabetically based on staff member name!
 	
-
-	"20thcenturygirl": {
-		noCopy: true, 
-		onStart: function () {
-			this.add(`c|+20th Century Girl|Fly like a butterfly; sting like me C;<`);
-		},
-		onSwitchOut: function () {
-			this.add(`c|+20th Century Girl|Tag out!`);
-		},
-		onFaint: function () {
-			this.add(`c|+20th Century Girl|ded`);
-		},
-	},
 	afkrchastl: {
 		noCopy: true,
 		onStart: function () {
@@ -102,7 +89,20 @@ let BattleStatuses = {
 			this.add(`c|#fart|the things I do for love...`);
 		},
 },
-	
+
+	"lumiq": {
+		noCopy: true, 
+		onStart: function () {
+			this.add(`c|%Lumi Q|Fly like a butterfly; sting like me C;<`);
+		},
+		onSwitchOut: function () {
+			this.add(`c|%Lumi Q|Tag out!`);
+		},
+		onFaint: function () {
+			this.add(`c|%Lumi Q|ded`);
+		},
+	},
+
 	mdpikachu: {
 		noCopy: true, 
 		onStart: function () {
@@ -119,26 +119,26 @@ let BattleStatuses = {
 	hyruleenigma: {
 		noCopy: true, 
 		onStart: function () {
-			this.add(`c| hyruleEnigma|Ahoy, Lobby!`);
+			this.add(`c|%hyruleEnigma|Ahoy, Lobby!`);
 		},
 		onSwitchOut: function () {
-			this.add(`c| hyruleEnigma|If only I were Dunsparce...`);
+			this.add(`c|%hyruleEnigma|If only I were Dunsparce...`);
 		},
 		onFaint: function () {
-			this.add(`c| hyruleEnigma|I should've buffed Sword Beam.`);
+			this.add(`c|%hyruleEnigma|I should've buffed Sword Beam.`);
 		},
 	},
 	
     sacredlatias: {
         noCopy: true,
         onStart: function () {
-            this.add(`c| SacredLatias|Latias for ag, just saying.`);
+            this.add(`c|%SacredLatias|Latias for ag, just saying.`);
         },
         onSwitchOut: function () {
-            this.add(`c| SacredLatias|Come onnnn, I coulda taken one more hit!`);
+            this.add(`c|%SacredLatias|Come onnnn, I coulda taken one more hit!`);
         },
         onFaint: function () {
-            this.add(`c| SacredLatias|Them spoopnoodles finally got the best of me...`);
+            this.add(`c|%SacredLatias|Them spoopnoodles finally got the best of me...`);
         },
     },
 	
