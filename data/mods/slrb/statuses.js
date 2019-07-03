@@ -290,7 +290,6 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|@Flare|Shit! I've been busted!`);
-			this.add(`c|@Flare|`+source.set);
 		},
 	},
 	vanillabobcat: {
