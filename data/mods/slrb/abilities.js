@@ -104,22 +104,20 @@ let BattleAbilities = {
 			pokemon.types = pokemon.illusion.types;
 		},
 		onAfterDamage(damage, target, source, effect) {
-			if (effect.typeMod > 0) {
-				if (target.illusion && effect && effect.effectType === 'Move' && effect.id !== 'confused') {
-					this.singleEvent('End', this.getAbility('Illusion'), target.abilityData, target, source, effect);
-					source.types = ["Dark"];
-					let move = this.getMove('Busted');
-					target.moveSlots[3] = {
-						move: move.name,
-						id: move.id,
-						pp: move.pp,
-						maxpp: move.pp,
-						target: move.target,
-						disabled: false,
-						used: false,
-						virtual: true,
-					};
-				}
+			if (target.illusion && effect && effect.effectType === 'Move' && effect.id !== 'confused'  && this.getEffectiveness(effect.type, target.getTypes()) > 0) {
+				this.singleEvent('End', this.getAbility('Illusion'), target.abilityData, target, source, effect);
+				source.types = ["Dark"];
+				let move = this.getMove('Busted');
+				target.moveSlots[3] = {
+					move: move.name,
+					id: move.id,
+					pp: move.pp,
+					maxpp: move.pp,
+					target: move.target,
+					disabled: false,
+					used: false,
+					virtual: true,
+				};
 			}
 		},
 		onEnd(pokemon) {
