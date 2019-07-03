@@ -41,17 +41,17 @@ class RandomStaffBrosTeams extends RandomTeams {
 			// Nature needs to be a valid nature with the first letter capitalized ex: Modest
 			*/
 			// Please keep sets organized alphabetically based on staff member name!/*
-			'0': {
-				species: 'Mew', ability: 'Fairy Aura', item: 'Power Herb', gender: 'M',
-				moves: ['Geomancy', 'Moonblast', 'Flash Cannon'],
-				signatureMove: 'Take a Study Break',
-				evs: {atk: 4, def: 252, spd: 252}, nature: 'Bold',
-			},
 			'0TakeaStudyBreak': {
 				species: 'Xerneas', ability: 'Fairy Aura', item: 'Power Herb', gender: 'M',
 				moves: ['Geomancy', 'Moonblast', 'Flash Cannon'],
 				signatureMove: 'Take a Study Break',
 				evs: {atk: 4, def: 252, spd: 252}, nature: 'Bold',
+			},
+			'A': {
+				species: 'Mew', ability: 'Fairy Aura', item: 'Leftovers', gender: 'M',
+				moves: ['Moonblast', 'Roost', 'Substitute'],
+				signatureMove: "A's Secret Plan",
+				evs: {hp: 192, def: 96, spd: 56, spe:164}, nature: 'Timid', shiny: true,
 			},
 			'AFKrchasTL': {
 				species: 'Lilligant', ability: 'AFK', item: 'Life Orb', gender: 'F',
