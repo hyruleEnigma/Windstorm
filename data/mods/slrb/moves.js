@@ -202,7 +202,7 @@ let BattleMovedex = {
 		accuracy: true,
 		basePower: 240,
 		basePowerCallback(pokemon, target, move) {
-			if (pokemon.hp !== pokemon.maxhp) return move.basePower * 0.5;
+			if (pokemon.hp !== pokemon.maxhp) return move.basePower * 0.3;
 			return move.basePower;
 		},
 		category: "Special",
