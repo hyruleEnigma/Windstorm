@@ -261,7 +261,7 @@ let BattleMovedex = {
 			this.add('-start', target, 'typechange', 'Electric');
 		},
 		onAfterHit(target, source, move) {
-			let newBaseTypes = target.template.getTypes(true);
+			let newBaseTypes = target.template.types;
 			target.setType(newBaseTypes);
 			this.add('-start', target, 'typechange', newBaseTypes.join('/'));
 		},
