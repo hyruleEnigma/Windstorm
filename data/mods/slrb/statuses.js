@@ -257,6 +257,25 @@ let BattleStatuses = {
 			this.add(`c| Big Boy Teddy|where da muffin at? :(`);
 		},
 	},
+	vanillabobcat: {
+		noCopy: true, 
+		onStart(pokemon) {
+			let foe = pokemon.side.foe.active[0];
+			if (foe.name === "Tenshi") {
+				this.add(`c|‽VanillaBobcat|My hair is purrrrfect, unlike yours Furfrou.`);
+			} else if (foe.name === "bidoferz") {
+				this.add(`c|‽VanillaBobcat|this cheeky bidoof nicked me barbie`);
+			} else {
+				this.add(`c|‽VanillaBobcat|Game of Thrones is a terrible show.`);
+			}
+		},
+		onSwitchOut: function () {
+			this.add(`c|‽VanillaBobcat|=(O w O)=`);
+		},
+		onFaint: function () {
+			this.add(`c|‽VanillaBobcat|[[shoutouts to my squad]]`);
+		},
+	},
 	leffect: {
 		name: 'L',
 		id: 'leffect',
