@@ -167,7 +167,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Sacred Mist',
 				evs: {hp: 252, def: 252, spa: 4}, nature: 'Bold',
 			},
-			'Tenshi Nagae': {
+			'Tenshi': {
 				species: 'Stoutland', ability: 'Miracle Sand', item: 'Poisonium Z', gender: 'M',
 				moves: ['Power Whip', 'Iron Head', 'Purify'],
 				signatureMove: 'Divine Bork',
