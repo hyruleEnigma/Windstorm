@@ -179,6 +179,13 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'French Vanilla',
 				evs: {atk: 128, spa: 128, spe: 252}, nature: 'Timid',
 			},
+			'yo boi arthurlis': {
+				species: 'Torterra', ability: 'Harvesting Summer', item: 'Iapapa Berry', gender: 'M',
+				moves: ['Heat Crash', 'Stone Edge', 'Earthquake'],
+				signatureMove: 'Absorption Charge',
+				evs: {hp: 252, atk: 252, spd: 252}, nature: 'Adamant',
+			},
+
 		};
 		let pool = Object.keys(sets);
 		/** @type {{[type: string]: number}} */
