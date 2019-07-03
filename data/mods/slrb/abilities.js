@@ -107,14 +107,8 @@ let BattleAbilities = {
 				return;
 			}
 			if (pokemon.hp <= pokemon.maxhp / 2 && pokemon.template.speciesid === 'persian') {
-				pokemon.addVolatile('foodcoma');
+				pokemon.formeChange('Persian-Alola', this.effect, true, '[silent]');
 			}
-		},
-		onEnd(pokemon) {
-			if (!pokemon.volatiles['foodcoma'] || !pokemon.hp) return;
-			pokemon.transformed = false;
-			delete pokemon.volatiles['foodcoma'];
-			pokemon.formeChange('Persian-Alola', this.effect, true, '[silent]');
 		},
 		onStart(pokemon) {
 			pokemon.removeVolatile('truant');
