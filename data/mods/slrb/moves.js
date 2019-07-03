@@ -772,7 +772,36 @@ let BattleMovedex = {
 		secondary: null,
 		target: "normal",
 		type: "Ghost",
-},
+	},
+	// yo boi arthurlis
+	"absorptioncharge": {
+		accuracy: 80,
+		basePower: 120,
+		category: "Physical",
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.3x normal, rounded half down.",
+		shortDesc: "User recovers 50% of the damage dealt.",
+		id: "absorptioncharge",
+		isNonstandard: "Custom",
+		name: "Absorption Charge",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1, heal: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Giga Drain', target);
+		},
+		onAfterMoveSecondarySelf() {
+			if (this.random(5) === 0) {
+				this.field.setWeather('desolateland');
+			}
+		},
+		drain: [1, 2],
+		secondary: null,
+		target: "normal",
+		type: "Grass",
+	},
 };
 
 exports.BattleMovedex = BattleMovedex;
