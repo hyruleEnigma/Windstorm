@@ -194,35 +194,13 @@ let BattleMovedex = {
 		pp: 10,
 		priority: 0,
 		flags: {protect:0, snatch: 1, mirror: 1},
-		volatileStatus: 'seizing',
-		effect: {
-			noCopy: true,
-			duration: 3,
-			onHit(pokemon) {
-				pokemon.addVolatile('torment');
-				pokemon.addVolatile('taunt');
-				//pokemon.addVolatile('confusion');
-			},
-			onStart(pokemon) {
-				this.add('-start', pokemon, 'Torment');
-				if (target.activeTurns && !this.willMove(target)) {
-					this.effectData.duration++;
-				}
-				this.add('-start', pokemon, 'move: Taunt');
-			},
-			onResidualOrder: 12,
-			onEnd(pokemon) {
-				this.add('-end', pokemon, 'Torment');
-				this.add('-end', pokemon, 'move: Taunt');
-			},
-			onDisableMove(pokemon) {
-				if (pokemon.lastMove && pokemon.lastMove.id !== 'struggle') pokemon.disableMove(pokemon.lastMove.id);
-				for (const moveSlot of pokemon.moveSlots) {
-					if (this.getMove(moveSlot.id).category === 'Status') {
-						pokemon.disableMove(moveSlot.id);
-					}
-				}
-			},
+		volatileStatus: 'confusion',
+		boosts: {
+			atk: 2,
+		},
+		onHit(pokemon) {
+			pokemon.addVolatile('torment');
+			pokemon.addVolatile('taunt');
 		},
 		onTryMovePriority: 100,
 		onTryMove() {
