@@ -48,7 +48,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 				evs: {atk: 4, def: 252, spd: 252}, nature: 'Bold',
 			},
 			'A': {
-				species: 'Mew', ability: 'Fairy Aura', item: 'Leftovers', gender: 'M',
+				species: 'Mew', ability: 'Arcane Tactics', item: 'Leftovers', gender: 'M',
 				moves: ['Moonblast', 'Roost', 'Substitute'],
 				signatureMove: "A's Secret Plan",
 				evs: {hp: 192, def: 96, spd: 56, spe:164}, nature: 'Timid', shiny: true,
