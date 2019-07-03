@@ -632,6 +632,7 @@ let BattleMovedex = {
 			}
 			source.setBoost(boosts);
 			this.add('-clearnegativeboost', source, '[silent]');
+			this.add('-start', source, 'typechange', `Dragon/Ground`);
 		},
 		boosts: {atk: 1, spe: 1},
 		target: "self",
