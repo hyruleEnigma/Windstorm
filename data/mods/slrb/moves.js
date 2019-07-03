@@ -624,13 +624,14 @@ let BattleMovedex = {
 			if (source.template.speciesid === 'latios') {
 				source.formeChange('Latios-Mega', true);
 			}
+			var boosts;
 			for (let i in source.boosts) {
 				if (source.boosts[i] < 0) {
 					boosts[i] = 0;
 				}
-				source.setBoost(boosts);
-				this.add('-clearnegativeboost', source, '[silent]');
 			}
+			source.setBoost(boosts);
+			this.add('-clearnegativeboost', source, '[silent]');
 		},
 		boosts: {atk: 1, spe: 1},
 		target: "self",
