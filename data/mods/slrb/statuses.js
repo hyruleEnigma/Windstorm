@@ -142,20 +142,18 @@ let BattleStatuses = {
 			this.add(`c|%hyruleEnigma|I should've buffed Sword Beam.`);
 		},
 	},
-	
-    sacredlatias: {
-        noCopy: true,
-        onStart: function () {
-            this.add(`c|%SacredLatias|Latias for ag, just saying.`);
-        },
-        onSwitchOut: function () {
-            this.add(`c|%SacredLatias|Come onnnn, I coulda taken one more hit!`);
-        },
-        onFaint: function () {
-            this.add(`c|%SacredLatias|Them spoopnoodles finally got the best of me...`);
-        },
-    },
-	
+   sacredlatias: {
+       noCopy: true,
+       onStart: function () {
+           this.add(`c|%SacredLatias|Latias for ag, just saying.`);
+       },
+       onSwitchOut: function () {
+           this.add(`c|%SacredLatias|Come onnnn, I coulda taken one more hit!`);
+       },
+       onFaint: function () {
+           this.add(`c|%SacredLatias|Them spoopnoodles finally got the best of me...`);
+       },
+   },
 	mobilegreennamed: {
 		noCopy: true, 
 		onStart: function () {
@@ -168,7 +166,24 @@ let BattleStatuses = {
 			this.add(`c| MobileGreenNamed|X_X`);
 		},
 	},
-	
+	moxielatios: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add(`c|+Moxie ♥ Latios|Latios does get moxie idiot.`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Moxie ♥ Latios|I need to find where I asked for your opinion, one second.`);
+		},
+		onFaint() {
+			this.add(`c|+Moxie ♥ Latios|My Lobby needs me.`);
+		},
+	},
+	megalatios: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add('-start', source, 'typechange', `Dragon/Ground`);
+		},
+	},
 	tenshinagae: {
 		noCopy: true, 
 		onStart: function () {
