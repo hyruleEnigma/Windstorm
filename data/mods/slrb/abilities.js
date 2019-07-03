@@ -13,6 +13,21 @@ let BattleAbilities = {
 		// For more examples, see https://github.com/Zarel/Pokemon-Showdown/blob/master/data/abilities.js
 	},
 	*/
+	// A
+	arcanetactics: {
+		desc: "Adds a fifth move to the user of Thunderbolt, Ice Beam, or Flamethrower. All neutral hits do 25% less damage.",
+		shortDesc: "The power of Fire- and Ground-type attacks is halved.",
+		id: "arcanetactics",
+		name: "Arcane Tactics",
+		isNonstandard: "Custom",
+		onSourceBasePowerPriority: 7,
+		onSourceBasePower(basePower, attacker, defender, move) {
+			let not_neutral = ['Ghost', 'Poison', 'Steel', 'Fighting', 'Psychic', 'Dragon'];
+			if (!not_neutral.include(move.type)) {
+				return this.chainModify(0.75);
+			}
+		},
+	},
 	// ArchasTL
 	"afk": {
 		shortDesc: "User transforms into ArchasTL at half health.",
