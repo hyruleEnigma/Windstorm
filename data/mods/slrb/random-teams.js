@@ -77,6 +77,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'CJer Seizure™',
 				evs: {hp: 4, spd: 252, spe: 252}, nature: 'Timid',
 			},
+			'CJtheGold ☯': {
+				species: 'Marshadow', ability: 'Shadow Nerd', item: 'Focus Sash', gender: 'M',
+				moves: ['Spectral Thief', 'High Jump Kick', 'Shadow Sneak'],
+				signatureMove: 'Touch of Midas',
+				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
+			},
 			'fart': {
 				species: 'Kartana', ability: 'Heat Rises', item: 'Fartium-Z', gender: 'M',
 				moves: ['Sunsteel Strike', 'Play Rough', 'U-turn'],
