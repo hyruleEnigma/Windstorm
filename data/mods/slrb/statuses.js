@@ -102,6 +102,20 @@ let BattleStatuses = {
 			this.add(`c|%Lumi Q|ded`);
 		},
 	},
+	
+	mustard: {
+		noCopy: true, 
+		onStart: function () {
+			this.add(`c|@mustard|hi`);
+		},
+		onSwitchOut: function () {
+			this.add(`c|@mustard|Hell yeah, brother! Cheers from Iraq!`);
+		},
+		onFaint: function () {
+			this.add(`c|@mustard|Unluckeee`);
+		},
+	},
+
 
 	mdpikachu: {
 		noCopy: true, 
