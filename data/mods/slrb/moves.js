@@ -252,7 +252,7 @@ let BattleMovedex = {
 		pp: 20,
 		priority: 0,
 		flags: {protect: 1, mirror: 1,},
-		onHit(target) {
+		onPrepareHit(target, source) {
 			if (target.getTypes().join() === 'Electric' || !target.setType('Electric')) {
 				// Soak should animate even when it fails.
 				// Returning false would suppress the animation.
@@ -261,8 +261,8 @@ let BattleMovedex = {
 			this.add('-start', target, 'typechange', 'Electric');
 		},
 		onAfterHit(target, source, move) {
-			let newBaseTypes = target.template.getTypes(true).filter(type => type !== '???');
-			source.setType(newBaseTypes);
+			let newBaseTypes = target.template.getTypes(true);
+			target.setType(newBaseTypes);
 			this.add('-start', target, 'typechange', newBaseTypes.join('/'));
 		},
 		secondary: null,
