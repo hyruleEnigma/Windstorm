@@ -253,13 +253,13 @@ class RandomStaffBrosTeams extends RandomTeams {
 			} else {
 				set.evs = {hp: 84, atk: 84, def: 84, spa: 84, spd: 84, spe: 84};
 			}
-			while ((set.moves.length < 3 || (set.species === 'Mew' && set.moves.length < 3))  && ssbSet.moves.length > 0) {
+			while (set.moves.length < 3  && ssbSet.moves.length > 0) {
 				let move = this.sampleNoReplace(ssbSet.moves);
 				if (Array.isArray(move)) move = this.sampleNoReplace(move);
 				set.moves.push(move);
-				move = this.sample(['Flamethrower', 'Ice Beam', 'Thunderbolt']);
-				if (set.species === 'Mew') { set.moves.push(move); }
 			}
+			let move = this.sample(['Flamethrower', 'Ice Beam', 'Thunderbolt']);
+			if (set.species === 'Mew') { set.moves.push(move); }
 			set.moves.push(ssbSet.signatureMove);
 			team.push(set);
 		}
