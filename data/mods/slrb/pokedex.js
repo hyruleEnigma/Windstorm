@@ -31,6 +31,11 @@ let BattlePokedex = {
 		types: ['Dragon', 'Ground'],
 		baseStats: {hp: 80, atk: 160, def: 100, spa: 130, spd: 120, spe: 110},
 	},
+	// VanillaBobcat
+	persianalola: {
+		inherit: true,
+		abilities: {0: 'Harvest'},
+	},
 };
 
 exports.BattlePokedex = BattlePokedex;
