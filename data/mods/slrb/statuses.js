@@ -228,10 +228,9 @@ let BattleStatuses = {
 			this.add(`c| Big Boy Teddy|where da muffin at? :(`);
 		},
 	},
-	l: {
+	leffect: {
 		name: 'L',
-		id: 'l',
-		num: 912,
+		id: 'leffect',
 		// this is a volatile status
 		onStart: function (target, source, sourceEffect) {
 			if (sourceEffect && sourceEffect.id === 'lockedmove') {
@@ -248,7 +247,6 @@ let BattleStatuses = {
 		onModifyMove: function (move, pokemon) {
 			if (move.type === 'Normal' && move.id !== 'naturalgift') {
 				move.type = pokemon.set.shiny && pokemon.types[1] || pokemon.types[0];
-				if (move.category !== 'Status') pokemon.addVolatile('pixilate');
 			}
 		},
 	},
