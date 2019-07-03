@@ -37,6 +37,36 @@ let BattleMovedex = {
 	},
 	*/
 	// Please keep sets organized alphabetically based on staff member name!
+	// A
+	"assecretplan": {
+		accuracy: 100,
+		basePower: 85,
+		category: "Special",
+		desc: "This move will always deal neutral damage. Additionally, this move will randomly apply either paralysis, burn, or -2 SpA.",
+		shortDesc: "Neutral damage. Para, burn, or -2 SpA.",
+		id: "assecretplan",
+		isNonstandard: "Custom",
+		name: "A's Secret Plan",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onHit(target, source, move) {
+			let effect = this.random(3);
+			if (effect === 0) {
+				target.trySetStatus('par', source);
+			} else if (effect === 1) {
+				target.trySetStatus('brn', source);
+			} else {
+				target.boost({spa: -2});
+			}
+		},
+		secondary: null,
+		target: "normal",
+		type: "???",
+	},
 	// 0TakeAStudyBreak
 	"takeastudybreak": {
 		accuracy: true,
@@ -65,8 +95,6 @@ let BattleMovedex = {
 		secondary: null,
 		target: "self",
 		type: "Normal",
-		zMoveEffect: 'clearnegativeboost',
-		contestType: "Cute",
 	},
 	// ArchasTL
 	"nerdslandering": {
