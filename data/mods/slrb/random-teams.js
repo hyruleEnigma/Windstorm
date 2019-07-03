@@ -41,6 +41,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 			// Nature needs to be a valid nature with the first letter capitalized ex: Modest
 			*/
 			// Please keep sets organized alphabetically based on staff member name!/*
+			'0': {
+				species: 'Mew', ability: 'Fairy Aura', item: 'Power Herb', gender: 'M',
+				moves: ['Geomancy', 'Moonblast', 'Flash Cannon'],
+				signatureMove: 'Take a Study Break',
+				evs: {atk: 4, def: 252, spd: 252}, nature: 'Bold',
+			},
 			'0TakeaStudyBreak': {
 				species: 'Xerneas', ability: 'Fairy Aura', item: 'Power Herb', gender: 'M',
 				moves: ['Geomancy', 'Moonblast', 'Flash Cannon'],
@@ -247,10 +253,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 			} else {
 				set.evs = {hp: 84, atk: 84, def: 84, spa: 84, spd: 84, spe: 84};
 			}
-			while (set.moves.length < 3 && ssbSet.moves.length > 0) {
+			while (set.moves.length < 3  && ssbSet.moves.length > 0) {
 				let move = this.sampleNoReplace(ssbSet.moves);
 				if (Array.isArray(move)) move = this.sampleNoReplace(move);
 				set.moves.push(move);
+				move = this.sample(['Flamethrower', 'Ice Beam', 'Thunderbolt']);
+				if (set.species === 'Mew') { set.moves.push(move); }
 			}
 			set.moves.push(ssbSet.signatureMove);
 			team.push(set);
