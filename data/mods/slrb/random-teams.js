@@ -10,7 +10,7 @@
  * @property {(string | string[])[]} moves
  * @property {string} signatureMove
  * @property {{hp?: number, atk?: number, def?: number, spa?: number, spd?: number, spe?: number}=} evs
- * @property {{hp?: number, atk?: number, def?: number, spa?: number, spd?: number, spe?: number}=} ivs
+ * @property {{hp?: number, atk?: number, def?: number, spa?: number, spd?: nmobumber, spe?: number}=} ivs
  * @property {string | string[]} nature
  * @property {number=} level
  * @property {boolean=} shiny
@@ -142,6 +142,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				moves: ['Ice Beam', 'Energy Ball', 'Thunderbolt'],
 				signatureMove: 'Toaster Bomb',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
+			},
+			'Moxie ♥ Latios': {
+				species: 'Latios', ability: 'Moxie', item: 'Soul Dew', gender: 'M',
+				moves: ['Dragon Hammer', 'Spectral Thief', 'Shore Up'],
+				signatureMove: 'ExtremeMoxieBoost',
+				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Hasty', shiny: true,
 			},
 			'mustard': {
 				species: 'Azelf', ability: 'Huge Power', item: 'Life Orb', gender: 'M',
