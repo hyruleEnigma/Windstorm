@@ -336,32 +336,23 @@ let BattleMovedex = {
 	},
 	// Flare
 	"busted": {
-		basePower: 110,
-		accuracy: 95,
+		basePower: 80,
+		accuracy: 100,
 		category: "Special",
-		desc: "Lowers the user's Defense and Special Defense by 1 stage.",
-		shortDesc: "Lowers the user's Defense and Sp. Def by 1.",
+		desc: "No additional effect.",
+		shortDesc: "No additional effect.",
 		id: "busted",
 		name: "Busted",
 		isNonstandard: "Custom",
 		pp: 10,
-		priority: 0,
+		priority: 1,
 		flags: {protect: 1, mirror: 1},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit(target, source, move) {
-			this.add('-anim', source, 'Judgment', target);
-		},
-		self: {
-			boosts: {
-				def: -1,
-				spd: -1,
-			},
-		},
 		secondary: null,
 		target: "normal",
-		type: "Fire",
+		type: "Dark",
 	},
 	// Host Joe
 	"infiniteabyss": {
