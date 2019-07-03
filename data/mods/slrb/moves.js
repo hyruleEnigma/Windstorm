@@ -60,7 +60,7 @@ let BattleMovedex = {
 			} else if (effect === 1) {
 				target.trySetStatus('brn', source);
 			} else {
-				target.boost({spa: -2});
+				this.boost({spa: -2}, target);
 			}
 		},
 		secondary: null,
