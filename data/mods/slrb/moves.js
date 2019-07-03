@@ -609,7 +609,7 @@ let BattleMovedex = {
 		zMoveEffect: 'clearnegativeboost',
 		contestType: "Cute",
 	},
-	"L": {
+	"l": {
 		accuracy: true,
 		basePower: 0,
 		category: "Status",
