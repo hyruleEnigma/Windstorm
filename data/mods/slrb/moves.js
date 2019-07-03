@@ -602,6 +602,40 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Fire",
 	},
+	// Moxie Latios
+	extrememoxieboost: {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "Boosts Attack and Speed; Mega Evolves. Summons Sandstorm and removes negative stat boosts.",
+		shortDesc: "+1 Atk/Spe, Mega, Sandstorm.",
+		id: "extrememoxieboost",
+		name: "ExtremeMoxieBoost",
+		isNonstandard: "Custom",
+		pp: 10,
+		priority: 0,
+		flags: {},
+		weather: 'Sandstorm',
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Quiver Dance", source);
+			if (source.template.speciesid === 'latios') {
+				source.formeChange('Latios-Mega', true);
+			}
+			for (let i in source.boosts) {
+				if (source.boosts[i] < 0) {
+					boosts[i] = 0;
+				}
+				source.setBoost(boosts);
+				this.add('-clearnegativeboost', source, '[silent]');
+			}
+		},
+		boosts: {atk: 1, spe: 1},
+		target: "self",
+		type: "Psychic",
+	},
 	// mustard
 	"l": {
 		accuracy: true,
