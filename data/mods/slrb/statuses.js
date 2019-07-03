@@ -184,16 +184,16 @@ let BattleStatuses = {
 			this.add('-start', source, 'typechange', `Dragon/Ground`);
 		},
 	},
-	tenshinagae: {
+	tenshi: {
 		noCopy: true, 
-		onStart: function () {
-			this.add(`c|@Tenshi Nagae|Praise Be Puppy Jesus`);
+		onStart() {
+			this.add(`c|@Tenshi|Praise Be Puppy Jesus`);
 		},
-		onSwitchOut: function () {
-			this.add(`c|@Tenshi Nagae|/me borks at a distance`);
+		onSwitchOut() {
+			this.add(`c|@Tenshi|/me borks at a distance`);
 		},
-		onFaint: function () {
-			this.add(`c|@Tenshi Nagae|Growl Bork Bork :C`);
+		onFaint() {
+			this.add(`c|@Tenshi|Growl Bork Bork :C`);
 		},
 	},
 	
