@@ -276,6 +276,19 @@ let BattleStatuses = {
 			this.add(`c|‽VanillaBobcat|[[shoutouts to my squad]]`);
 		},
 	},
+	yoboiarthurlis: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add('-start', source, 'typechange', `Grass/Rock`);
+			this.add(`c| yo boi arthurlis|Been a long time, kiddo.... wanna have a bad time?`);
+		},
+		onSwitchOut() {
+			this.add(`c| yo boi arthurlis|smell your memes later`);
+		},
+		onFaint() {
+			this.add(`c| yo boi arthurlis|__**call zun**__`);
+		},
+	},
 	leffect: {
 		name: 'L',
 		id: 'leffect',
