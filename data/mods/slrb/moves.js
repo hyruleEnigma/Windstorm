@@ -211,6 +211,36 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Electric",
 	},
+	// CJtheGold
+	"touchofmidas": {
+		accuracy: 90,
+		basePower: 90,
+		category: "Physical",
+		desc: "Causes the target to become a Electric type. Fails if the target is an Arceus or a Silvally, or if the target is already purely Electric type.",
+		shortDesc: "Changes the target's type to Electric.",
+		id: "touchofmidas",
+		name: "Touch of Midas",
+		isNonstandard: "Custom",
+		pp: 20,
+		priority: 0,
+		flags: {protect: 1, mirror: 1,},
+		onHit(target) {
+			if (target.getTypes().join() === 'Electric' || !target.setType('Electric')) {
+				// Soak should animate even when it fails.
+				// Returning false would suppress the animation.
+				return null;
+			}
+			this.add('-start', target, 'typechange', 'Electric');
+		},
+		onAfterHit(target, source, move) {
+			let newBaseTypes = target.template.getTypes(true).filter(type => type !== '???');
+			source.setType(newBaseTypes);
+			this.add('-start', target, 'typechange', newBaseTypes.join('/'));
+		},
+		secondary: null,
+		target: "normal",
+		type: "Ground",
+	},
 	// fart
 	souptime: {
 		accuracy: 100,
