@@ -36,8 +36,204 @@ let BattleMovedex = {
 		heal: [1, 2], // recover first num / second num % of the target's HP
 	},
 	*/
-	// Please keep sets organized alphabetically based on staff member name!	
-	
+	// Please keep sets organized alphabetically based on staff member name!
+	// 0TakeAStudyBreak
+	"takeastudybreak": {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "The user falls asleep for the turn and restores all of its HP, curing itself of any major status condition in the process. Fails if the user has full HP, is already asleep, or if another effect is preventing sleep.",
+		shortDesc: "1 turn Rest.",
+		id: "takeastudybreak",
+		isNonstandard: "Custom",
+		name: "Take a Study Break",
+		pp: 10,
+		priority: 0,
+		flags: {snatch: 1, heal: 1},
+		onTryMove(pokemon) {
+			if (pokemon.hp < pokemon.maxhp && pokemon.status !== 'slp' && !pokemon.hasAbility('comatose')) return;
+			this.add('-fail', pokemon);
+			return null;
+		},
+		onHit(target) {
+			if (!target.setStatus('slp')) return false;
+			target.statusData.time = 1;
+			target.statusData.startTime = 1;
+			this.heal(target.maxhp / 2); //Aeshetic only as the healing happens after you fall asleep in-game
+			this.add('-status', target, 'slp', '[from] move: Rest');
+		},
+		secondary: null,
+		target: "self",
+		type: "Normal",
+		zMoveEffect: 'clearnegativeboost',
+		contestType: "Cute",
+	},
+	// ArchasTL
+	"nerdslandering": {
+		accuracy: 100,
+		basePower: 130,
+		category: "Special",
+		desc: "This move has a 30% chance to burn. Summons sun.",
+		shortDesc: "30% burn. Summons sun.",
+		id: "nerdslandering",
+		name: "Nerd Slandering",
+		isNonstandard: "Custom",
+		pp: 5,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Coil", source);
+		},
+		onModifyMove(move, pokemon) {
+			this.field.setWeather('sunnyday');
+		},
+		secondary: null,
+		target: "normal",
+		type: "Fire",
+		secondary: {
+			chance: 30,
+			status: 'brn',
+		},
+		zMovePower: 200,
+	},
+	// barton
+	"hyperlink": {
+		accuracy: 100,
+		basePower: 75,
+		category: "Special",
+		desc: "Has a 50% chance to force the target to switch.",
+		id: "hyperlink",
+		name: "Hyperlink",
+		pp: 10,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onHit(target, source, move) {
+			if (this.random(2) === 0) {
+				target.forceSwitchFlag = true;
+			}
+		},
+		target: "normal",
+		type: "Fairy",
+	},
+	// Big Boy Teddy
+	"poweroffluff": {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "Raises the user's Speed by 2 stages and its Attack by 1 stage.",
+		shortDesc: "Raises the user's Speed by 2 and Attack by 1.",
+		id: "poweroffluff",
+		isNonstandard: "Custom",
+		name: "Power of Fluff",
+		pp: 10,
+		priority: 0,
+		flags: {snatch: 1},
+		boosts: {
+			spe: 2,
+			atk: 1,
+		},
+		secondary: null,
+		target: "self",
+		type: "Normal",
+		zMoveEffect: 'clearnegativeboost',
+		contestType: "Cute",
+	},
+	// BruceWee
+	"bruceboost": {
+		basePower: 100,
+		accuracy: 100,
+		category: "Special",
+		desc: "Has a 10% chance to raise the user's Attack, Defense, Special Attack, Special Defense, and Speed by 1 stage.",
+		shortDesc: "10% chance to raise all stats by 1 (not acc/eva).",
+		id: "bruceboost",
+		name: "Bruce Boost",
+		isNonstandard: "Custom",
+		pp: 5,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Conversion", source);
+		},
+		onPrepareHit(target, source, move) {
+			this.add('-anim', source, 'Judgment', target);
+			this.add('-anim', target, 'Extreme Evoboost', target);
+		},
+		secondary: {
+			chance: 10,
+			self: {
+				boosts: {
+					atk: 1,
+					def: 1,
+					spa: 1,
+					spd: 1,
+					spe: 1,
+				},
+			},
+		},
+		target: "normal",
+		type: "Psychic",
+	},
+	// CJer
+	cjerseizure: {
+		accuracy: 90,
+		category: "Status",
+		desc: "Boosts the user's Attack, Defense, and Speed by one stage.",
+		shortDesc: "+1 atk, def, and spe.",
+		id: "cjerseizure",
+		name: "CJer Seizure™",
+		isNonstandard: "Custom",
+		pp: 10,
+		priority: 0,
+		flags: {protect:0, snatch: 1, mirror: 1},
+		volatileStatus: 'seizing',
+		effect: {
+			noCopy: true,
+			duration: 3,
+			onHit(pokemon) {
+				pokemon.addVolatile('torment');
+				pokemon.addVolatile('taunt');
+				//pokemon.addVolatile('confusion');
+			},
+			onStart(pokemon) {
+				this.add('-start', pokemon, 'Torment');
+				if (target.activeTurns && !this.willMove(target)) {
+					this.effectData.duration++;
+				}
+				this.add('-start', pokemon, 'move: Taunt');
+			},
+			onResidualOrder: 12,
+			onEnd(pokemon) {
+				this.add('-end', pokemon, 'Torment');
+				this.add('-end', pokemon, 'move: Taunt');
+			},
+			onDisableMove(pokemon) {
+				if (pokemon.lastMove && pokemon.lastMove.id !== 'struggle') pokemon.disableMove(pokemon.lastMove.id);
+				for (const moveSlot of pokemon.moveSlots) {
+					if (this.getMove(moveSlot.id).category === 'Status') {
+						pokemon.disableMove(moveSlot.id);
+					}
+				}
+			},
+		},
+		onTryMovePriority: 100,
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		status: 'tox',
+		secondary: null,
+		target: "normal",
+		type: "Electric",
+	},
+	// fart
 	souptime: {
 		accuracy: 100,
 		basePower: 90,
@@ -102,102 +298,70 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Normal",
 	},
-	
-	// Tenshi Nagae
-	divinebork: {
-		basePower: 130,
-		accuracy: 100,
-		category: "Physical",
-		desc: "This move summons Sandstorm and boosts the user's Attack by one stage the first time it's used.",
-		shortDesc: "User's Atk +1 once only. Summons Sandstorm.",
-		id: "divinebork",
-		name: "Divine Bork",
+	// Flare
+	"busted": {
+		basePower: 110,
+		accuracy: 95,
+		category: "Special",
+		desc: "Lowers the user's Defense and Special Defense by 1 stage.",
+		shortDesc: "Lowers the user's Defense and Sp. Def by 1.",
+		id: "busted",
+		name: "Busted",
 		isNonstandard: "Custom",
 		pp: 10,
-		priority: 0,
-		flags: {mirror: 1, protect: 1, contact: 1},
-		onTryMovePriority: 100,
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, 'Meteor Mash', target);
-		},
-		onAfterMove(pokemon) {
-			if (pokemon.happiness == 255) {
-				this.add('-activate', pokemon, 'ability: Bork');
-				this.boost({atk: 1}, pokemon, pokemon, 'move: Bork');
-				pokemon.happiness = pokemon.happiness - 1;
-			}
-		},
-		onAfterMoveSecondarySelf() {
-			this.field.setWeather('sandstorm');
-		},
-		target: "normal",
-		type: "Normal",
-	},
-	
-	
-	"bruceboost": {
-		basePower: 100,
-		accuracy: 100,
-		category: "Special",
-		desc: "Has a 10% chance to raise the user's Attack, Defense, Special Attack, Special Defense, and Speed by 1 stage.",
-		shortDesc: "10% chance to raise all stats by 1 (not acc/eva).",
-		id: "bruceboost",
-		name: "Bruce Boost",
-		isNonstandard: "Custom",
-		pp: 5,
 		priority: 0,
 		flags: {protect: 1, mirror: 1},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, "Conversion", source);
-		},
 		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
-			this.add('-anim', target, 'Extreme Evoboost', target);
 		},
-		secondary: {
-			chance: 10,
-			self: {
-				boosts: {
-					atk: 1,
-					def: 1,
-					spa: 1,
-					spd: 1,
-					spe: 1,
-				},
+		self: {
+			boosts: {
+				def: -1,
+				spd: -1,
 			},
 		},
+		secondary: null,
 		target: "normal",
-		type: "Psychic",
+		type: "Fire",
 	},
-	
-	"hyperlink": {
+	// Host Joe
+	"infiniteabyss": {
 		accuracy: 100,
-		basePower: 75,
-		category: "Special",
-		desc: "Has a 50% chance to force the target to switch.",
-		id: "hyperlink",
-		name: "Hyperlink",
-		pp: 10,
-		priority: 0,
-		flags: {contact: 1, protect: 1, mirror: 1},
+		basePower: 100,
+		category: "Physical",
+		desc: "Summons Trick Room and lowers the user's Speed by one stage.",
+		shortDesc: "User's Spe. -1; sets Trick Room.",
+		id: "infiniteabyss",
+		name: "Infinite Abyss",
+		isNonstandard: "Custom",
+		pp: 5,
+		onModifyMove(move) {
+			if (!this.field.pseudoWeather.trickroom) {
+				move.pseudoWeather = 'trickroom';
+			}
+		},
+		flags: {protect: 1, mirror: 1},
+		onTryMovePriority: 100,
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onHit(target, source, move) {
-			if (this.random(2) === 0) {
-				target.forceSwitchFlag = true;
-			}
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Coil", source);
+			this.add('-anim', source, "Extreme Evoboost", source);
 		},
+		self: {
+			boosts: {
+				spe: -1,
+			},
+		},
+		secondary: null,
 		target: "normal",
-		type: "Fairy",
+		type: "Dark",
 	},
-	
+	// hyruleEnigma
 	"swordbeam": {
 		accuracy: true,
 		basePower: 240,
@@ -224,7 +388,7 @@ let BattleMovedex = {
 		target: "normal",
 		type: "???",
 	},
-	
+	// i want a lamp
 	"lamplust": {
 		accuracy: 100,
 		basePower: 100,
@@ -247,37 +411,56 @@ let BattleMovedex = {
 		zMovePower: 160,
 		contestType: "Cool",
 	},
-	
-	"sacredmist": {
-		accuracy: 90,
-		basePower: 90,
+	// Krookies
+	"yummycookies": {
+		accuracy: 100,
+		basePower: 75,
+		category: "Physical",
+		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.3x normal, rounded half down.",
+		shortDesc: "User recovers 50% of the damage dealt.",
+		id: "yummycookies",
 		isNonstandard: "Custom",
-		category: "Special",
-		desc: "If this move is successful, terrain becomes Misty Terrain. Cures status.",
-		shortDesc: "Summons Misty Terrain; cures status.",
-		id: "sacredmist",
-		name: "Sacred Mist",
+		name: "Yummy Cookies!!!",
 		pp: 10,
-        priority: 0,
-        flags: {protect: 1, mirror: 1},
+		priority: 0,
+		flags: {protect: 1, mirror: 1, punch: 1, heal: 1},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
 		onPrepareHit(target, source, move) {
 			this.add('-anim', source, 'Judgment', target);
 		},
-		onModifyMove() {
-			this.field.setTerrain('mistyterrain');
+		drain: [1, 2],
+		secondary: null,
+		target: "normal",
+		type: "Dark",
+	},
+	// Lumi Q
+	"stingpunch": {
+		basePower: 65,
+		accuracy: 100,
+		category: "Physical",
+		desc: "Raises the user's Speed by 2 stages if this move knocks out the target.",
+		shortDesc: "Raises user's Speed by 2 if this KOes the target.",
+		id: "stingpunch",
+		name: "Sting Punch",
+		isNonstandard: "Custom",
+		pp: 5,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1, punch: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
 		},
-		onHit(pokemon) {
-			pokemon.cureStatus();
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Meteor Mash', target);
+		},
+		onAfterMoveSecondarySelf(pokemon, target, move) {
+			if (!target || target.fainted || target.hp <= 0) this.boost({spe: 2}, pokemon, pokemon, move);
 		},
 		target: "normal",
-		type: "Psychic",
-        zMovePower: 185,
+		type: "Bug",
 	},
-	
-	
+	// MajesticAngelo
 	"malicedecree": {
 		accuracy: 100,
 		basePower: 130,
@@ -318,208 +501,7 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Dark",
 	},
-	
-	"report": {
-		accuracy: 100,
-		basePower: 80,
-		category: "Physical",
-		desc: "If both the user and the target have not fainted, the target is forced to switch out and be replaced with a random unfainted ally. This effect fails if the target used Ingrain previously, has the Suction Cups Ability, or this move hit a substitute. Ignores Electric immunity.",
-		shortDesc: "Forces the target to switch to a random ally. Ignores Electric immunity.",
-		id: "report",
-		isViable: true,
-		name: "/report",
-		pp: 10,
-		priority: -6,
-		flags: {contact: 1, protect: 1, mirror: 1},
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source, move) {
-			this.add('-anim', source, 'Judgment', target);
-		},
-		onEffectiveness(typeMod, type, move) {
-			if (move.type !== 'Electric') return;
-			let target = this.activeTarget;
-			if (!target) return; // avoid crashing when called from a chat plugin
-			// ignore effectiveness if the target is Ground type and immune to Electric
-			if (!target.runImmunity('Electric')) {
-				if (target.hasType('Ground')) return 0;
-			}
-		},
-		ignoreImmunity: {'Electric': true},
-		forceSwitch: true,
-		target: "normal",
-		type: "Electric",
-		zMovePower: 160,
-	},
-	
-	"stingpunch": {
-		basePower: 65,
-		accuracy: 100,
-		category: "Physical",
-		desc: "Raises the user's Speed by 2 stages if this move knocks out the target.",
-		shortDesc: "Raises user's Speed by 2 if this KOes the target.",
-		id: "stingpunch",
-		name: "Sting Punch",
-		isNonstandard: "Custom",
-		pp: 5,
-		priority: 0,
-		flags: {contact: 1, protect: 1, mirror: 1, punch: 1},
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, 'Meteor Mash', target);
-		},
-		onAfterMoveSecondarySelf(pokemon, target, move) {
-			if (!target || target.fainted || target.hp <= 0) this.boost({spe: 2}, pokemon, pokemon, move);
-		},
-		target: "normal",
-		type: "Bug",
-	},
-	
-	"toasterbomb": {
-		basePower: 110,
-		accuracy: 95,
-		category: "Special",
-		desc: "Lowers the user's Defense and Special Defense by 1 stage.",
-		shortDesc: "Lowers the user's Defense and Sp. Def by 1.",
-		id: "toasterbomb",
-		name: "Toaster Bomb",
-		isNonstandard: "Custom",
-		pp: 5,
-		priority: 0,
-		flags: {protect: 1, mirror: 1},
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source, move) {
-			this.add('-anim', source, 'Judgment', target);
-		},
-		self: {
-			boosts: {
-				def: -1,
-				spd: -1,
-			},
-		},
-		secondary: null,
-		target: "normal",
-		type: "Fire",
-	},
-	
-	"busted": {
-		basePower: 110,
-		accuracy: 95,
-		category: "Special",
-		desc: "Lowers the user's Defense and Special Defense by 1 stage.",
-		shortDesc: "Lowers the user's Defense and Sp. Def by 1.",
-		id: "busted",
-		name: "Busted",
-		isNonstandard: "Custom",
-		pp: 10,
-		priority: 0,
-		flags: {protect: 1, mirror: 1},
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source, move) {
-			this.add('-anim', source, 'Judgment', target);
-		},
-		self: {
-			boosts: {
-				def: -1,
-				spd: -1,
-			},
-		},
-		secondary: null,
-		target: "normal",
-		type: "Fire",
-	},
-	"yummycookies": {
-		accuracy: 100,
-		basePower: 75,
-		category: "Physical",
-		desc: "The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.3x normal, rounded half down.",
-		shortDesc: "User recovers 50% of the damage dealt.",
-		id: "yummycookies",
-		isNonstandard: "Custom",
-		name: "Yummy Cookies!!!",
-		pp: 10,
-		priority: 0,
-		flags: {protect: 1, mirror: 1, punch: 1, heal: 1},
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source, move) {
-			this.add('-anim', source, 'Judgment', target);
-		},
-		drain: [1, 2],
-		secondary: null,
-		target: "normal",
-		type: "Dark",
-	},
-	"triplenightmare": {
-		accuracy: 90,
-		basePower: 130,
-		category: "Special",
-		desc: "Lowers the user's Special Attack by 2 stages.",
-		shortDesc: "Lowers the user's Sp. Atk by 2.",
-		id: "triplenightmare",
-		isNonstandard: "Custom",
-		name: "Triple Nightmare",
-		pp: 5,
-		priority: 0,
-		flags: {protect: 1, mirror: 1},
-		onTryMovePriority: 100,
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, "Defog", target);
-		},
-		self: {
-			boosts: {
-				spa: -2,
-			},
-		},
-		secondary: null,
-		target: "normal",
-		type: "Dark",
-	},
-	// Host Joe
-	"infiniteabyss": {
-		accuracy: 100,
-		basePower: 100,
-		category: "Physical",
-		desc: "Summons Trick Room and raises the user's Special Attack by one stage.",
-		shortDesc: "User's Spe. -1; sets Trick Room.",
-		id: "infiniteabyss",
-		name: "Infinite Abyss",
-		isNonstandard: "Custom",
-		pp: 5,
-		onModifyMove(move) {
-			if (!this.field.pseudoWeather.trickroom) {
-				move.pseudoWeather = 'trickroom';
-			}
-		},
-		flags: {protect: 1, mirror: 1},
-		onTryMovePriority: 100,
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, "Coil", source);
-			this.add('-anim', source, "Extreme Evoboost", source);
-		},
-		self: {
-			boosts: {
-				spe: -1,
-			},
-		},
-		secondary: null,
-		target: "normal",
-		type: "Dark",
-	},
+	// MajesticLucario
 	"deusexmachina": {
 		accuracy: 85,
 		basePower: 120,
@@ -557,64 +539,76 @@ let BattleMovedex = {
 		type: "Steel",
 		zMovePower: 200,
 	},
-	"nerdslandering": {
+	// MdPikachu	
+	"report": {
 		accuracy: 100,
-		basePower: 130,
-		category: "Special",
-		desc: "This move has a 30% chance to burn. Summons sun.",
-		shortDesc: "30% burn. Summons sun.",
-		id: "nerdslandering",
-		name: "Nerd Slandering",
-		isNonstandard: "Custom",
-		pp: 5,
-		priority: 0,
+		basePower: 80,
+		category: "Physical",
+		desc: "If both the user and the target have not fainted, the target is forced to switch out and be replaced with a random unfainted ally. This effect fails if the target used Ingrain previously, has the Suction Cups Ability, or this move hit a substitute. Ignores Electric immunity.",
+		shortDesc: "Forces the target to switch to a random ally. Ignores Electric immunity.",
+		id: "report",
+		isViable: true,
+		name: "/report",
+		pp: 10,
+		priority: -6,
 		flags: {contact: 1, protect: 1, mirror: 1},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, "Coil", source);
+		onPrepareHit(target, source, move) {
+			this.add('-anim', source, 'Judgment', target);
 		},
-		onModifyMove(move, pokemon) {
-			this.field.setWeather('sunnyday');
+		onEffectiveness(typeMod, type, move) {
+			if (move.type !== 'Electric') return;
+			let target = this.activeTarget;
+			if (!target) return; // avoid crashing when called from a chat plugin
+			// ignore effectiveness if the target is Ground type and immune to Electric
+			if (!target.runImmunity('Electric')) {
+				if (target.hasType('Ground')) return 0;
+			}
+		},
+		ignoreImmunity: {'Electric': true},
+		forceSwitch: true,
+		target: "normal",
+		type: "Electric",
+		zMovePower: 160,
+	},
+	// MobileGreenNamed
+	"toasterbomb": {
+		basePower: 110,
+		accuracy: 95,
+		category: "Special",
+		desc: "Lowers the user's Defense and Special Defense by 1 stage.",
+		shortDesc: "Lowers the user's Defense and Sp. Def by 1.",
+		id: "toasterbomb",
+		name: "Toaster Bomb",
+		isNonstandard: "Custom",
+		pp: 5,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source, move) {
+			this.add('-anim', source, 'Judgment', target);
+		},
+		self: {
+			boosts: {
+				def: -1,
+				spd: -1,
+			},
 		},
 		secondary: null,
 		target: "normal",
 		type: "Fire",
-		secondary: {
-			chance: 30,
-			status: 'brn',
-		},
-		zMovePower: 200,
 	},
-	"poweroffluff": {
-		accuracy: true,
-		basePower: 0,
-		category: "Status",
-		desc: "Raises the user's Speed by 2 stages and its Attack by 1 stage.",
-		shortDesc: "Raises the user's Speed by 2 and Attack by 1.",
-		id: "poweroffluff",
-		isNonstandard: "Custom",
-		name: "Power of Fluff",
-		pp: 10,
-		priority: 0,
-		flags: {snatch: 1},
-		boosts: {
-			spe: 2,
-			atk: 1,
-		},
-		secondary: null,
-		target: "self",
-		type: "Normal",
-		zMoveEffect: 'clearnegativeboost',
-		contestType: "Cute",
-	},
+	// mustard
 	"l": {
 		accuracy: true,
 		basePower: 0,
 		category: "Status",
-		desc: "Raises the user's Atk/SpA by 2 stages and its Spe by 1 stage.",
-		shortDesc: "Raises the user's Atk/SpA by 2 and Spe by 1.",
+		desc: "Raises the user's Atk/SpA by 2 stages and its Spe by 1 stage. Normal moves become Psychic type when used by mustard.",
+		shortDesc: "Atk/SpA +2, Spe +1. Normal = Psychic.",
 		id: "l",
 		isNonstandard: "Custom",
 		name: "L",
@@ -641,89 +635,96 @@ let BattleMovedex = {
 		zMoveEffect: 'clearnegativeboost',
 		contestType: "Smart",
 	},
-	
-	"takeastudybreak": {
-		accuracy: true,
-		basePower: 0,
-		category: "Status",
-		desc: "The user falls asleep for the turn and restores all of its HP, curing itself of any major status condition in the process. Fails if the user has full HP, is already asleep, or if another effect is preventing sleep.",
-		shortDesc: "1 turn Rest.",
-		id: "takeastudybreak",
-		isNonstandard: "Custom",
-		name: "Take a Study Break",
-		pp: 10,
-		priority: 0,
-		flags: {snatch: 1, heal: 1},
-		onTryMove(pokemon) {
-			if (pokemon.hp < pokemon.maxhp && pokemon.status !== 'slp' && !pokemon.hasAbility('comatose')) return;
-			this.add('-fail', pokemon);
-			return null;
-		},
-		onHit(target) {
-			if (!target.setStatus('slp')) return false;
-			target.statusData.time = 1;
-			target.statusData.startTime = 1;
-			this.heal(target.maxhp / 2); //Aeshetic only as the healing happens after you fall asleep in-game
-			this.add('-status', target, 'slp', '[from] move: Rest');
-		},
-		secondary: null,
-		target: "self",
-		type: "Normal",
-		zMoveEffect: 'clearnegativeboost',
-		contestType: "Cute",
-	},
-	
-	
-	// CJer
-	cjerseizure: {
+	// pinkdragontamer
+	"triplenightmare": {
 		accuracy: 90,
-		category: "Status",
-		desc: "Boosts the user's Attack, Defense, and Speed by one stage.",
-		shortDesc: "+1 atk, def, and spe.",
-		id: "cjerseizure",
-		name: "CJer Seizure™",
+		basePower: 130,
+		category: "Special",
+		desc: "Lowers the user's Special Attack by 2 stages.",
+		shortDesc: "Lowers the user's Sp. Atk by 2.",
+		id: "triplenightmare",
 		isNonstandard: "Custom",
-		pp: 10,
+		name: "Triple Nightmare",
+		pp: 5,
 		priority: 0,
-		flags: {protect:0, snatch: 1, mirror: 1},
-		volatileStatus: 'seizing',
-		effect: {
-			noCopy: true,
-			duration: 3,
-			onHit(pokemon) {
-				pokemon.addVolatile('torment');
-				pokemon.addVolatile('taunt');
-				//pokemon.addVolatile('confusion');
-			},
-			onStart(pokemon) {
-				this.add('-start', pokemon, 'Torment');
-				if (target.activeTurns && !this.willMove(target)) {
-					this.effectData.duration++;
-				}
-				this.add('-start', pokemon, 'move: Taunt');
-			},
-			onResidualOrder: 12,
-			onEnd(pokemon) {
-				this.add('-end', pokemon, 'Torment');
-				this.add('-end', pokemon, 'move: Taunt');
-			},
-			onDisableMove(pokemon) {
-				if (pokemon.lastMove && pokemon.lastMove.id !== 'struggle') pokemon.disableMove(pokemon.lastMove.id);
-				for (const moveSlot of pokemon.moveSlots) {
-					if (this.getMove(moveSlot.id).category === 'Status') {
-						pokemon.disableMove(moveSlot.id);
-					}
-				}
-			},
-		},
+		flags: {protect: 1, mirror: 1},
 		onTryMovePriority: 100,
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		status: 'tox',
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Defog", target);
+		},
+		self: {
+			boosts: {
+				spa: -2,
+			},
+		},
 		secondary: null,
 		target: "normal",
-		type: "Electric",
+		type: "Dark",
+	},
+	// SacredLatias
+	"sacredmist": {
+		accuracy: 90,
+		basePower: 90,
+		isNonstandard: "Custom",
+		category: "Special",
+		desc: "If this move is successful, terrain becomes Misty Terrain. Cures status.",
+		shortDesc: "Summons Misty Terrain; cures status.",
+		id: "sacredmist",
+		name: "Sacred Mist",
+		pp: 10,
+        priority: 0,
+        flags: {protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source, move) {
+			this.add('-anim', source, 'Judgment', target);
+		},
+		onModifyMove() {
+			this.field.setTerrain('mistyterrain');
+		},
+		onHit(pokemon) {
+			pokemon.cureStatus();
+		},
+		target: "normal",
+		type: "Psychic",
+        zMovePower: 185,
+	},
+	// Tenshi Nagae
+	divinebork: {
+		basePower: 130,
+		accuracy: 100,
+		category: "Physical",
+		desc: "This move summons Sandstorm and boosts the user's Attack by one stage the first time it's used.",
+		shortDesc: "User's Atk +1 once only. Summons Sandstorm.",
+		id: "divinebork",
+		name: "Divine Bork",
+		isNonstandard: "Custom",
+		pp: 10,
+		priority: 0,
+		flags: {mirror: 1, protect: 1, contact: 1},
+		onTryMovePriority: 100,
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Meteor Mash', target);
+		},
+		onAfterMove(pokemon) {
+			if (pokemon.happiness == 255) {
+				this.add('-activate', pokemon, 'ability: Bork');
+				this.boost({atk: 1}, pokemon, pokemon, 'move: Bork');
+				pokemon.happiness = pokemon.happiness - 1;
+			}
+		},
+		onAfterMoveSecondarySelf() {
+			this.field.setWeather('sandstorm');
+		},
+		target: "normal",
+		type: "Normal",
 	},
 };
 
