@@ -173,6 +173,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Divine Bork',
 				evs: {hp: 36, atk: 252, def: 220}, nature: 'Impish',
 			},
+			'VanillaBobcat': {
+				species: 'Persian', ability: 'Food Coma', item: 'Sitrus Berry', gender: 'M',
+				moves: ['V-Create', 'Thief', 'Zap Cannon'],
+				signatureMove: 'French Vanilla',
+				evs: {atk: 128, spa: 128, spe: 252}, nature: 'Timid',
+			},
 		};
 		let pool = Object.keys(sets);
 		/** @type {{[type: string]: number}} */
