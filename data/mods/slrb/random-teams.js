@@ -98,6 +98,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 			'Flare': {
 				species: 'Zoroark', ability: 'Super Illusion', item: 'Focus Sash', gender: 'M',
 				moves: ['Sludge Bomb', 'Nasty Plot', 'U-turn'],
+				signatureMove: 'Busted',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Hasty',
 			},
 			'Host Joe': {
