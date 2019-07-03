@@ -760,6 +760,7 @@ let BattleMovedex = {
 			return this.runEvent('StallMove', source);
 		},
 		onHit(target, source) {
+			this.add(`c|‽VanillaBobcat|Is it coffee or is it diabeetus?`);
 			source.addVolatile('stall');
 			this.boost({atk: 6}, target);
 			this.boost({atk: 6}, source);
