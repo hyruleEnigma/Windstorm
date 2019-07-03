@@ -104,7 +104,6 @@ let BattleAbilities = {
 			pokemon.types = pokemon.illusion.types;
 		},
 		onAfterDamage(damage, target, source, effect) {
-			// Illusion that only breaks when hit with a move that is super effective VS dark
 			if (effect.typeMod > 0) {
 				if (target.illusion && effect && effect.effectType === 'Move' && effect.id !== 'confused') {
 					this.singleEvent('End', this.getAbility('Illusion'), target.abilityData, target, source, effect);
@@ -126,23 +125,11 @@ let BattleAbilities = {
 		onEnd(pokemon) {
 			if (pokemon.illusion) {
 				this.debug('illusion cleared');
-				let disguisedAs = toID(pokemon.illusion.name);
 				pokemon.illusion = null;
 				let details = pokemon.template.species + (pokemon.level === 100 ? '' : ', L' + pokemon.level) + (pokemon.gender === '' ? '' : ', ' + pokemon.gender) + (pokemon.set.shiny ? ', shiny' : '');
 				this.add('replace', pokemon, details);
 				this.add('-end', pokemon, 'Illusion');
-				source.types = ["Dark"];
-				// Handle hippopotas
-				if (this.getTemplate(disguisedAs).exists) disguisedAs += 'user';
-				if (pokemon.volatiles[disguisedAs]) {
-					pokemon.removeVolatile(disguisedAs);
-				}
-				if (!pokemon.volatiles[toID(pokemon.name)]) {
-					let status = this.getEffect(toID(pokemon.name));
-					if (status && status.exists) {
-						pokemon.addVolatile(toID(pokemon.name), pokemon);
-					}
-				}
+				pokemon.types = ["Dark"];
 			}
 		},
 		onFaint(pokemon) {
