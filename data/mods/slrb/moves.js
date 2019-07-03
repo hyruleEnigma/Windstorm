@@ -200,7 +200,7 @@ let BattleMovedex = {
 	
 	"swordbeam": {
 		accuracy: true,
-		basePower: 275,
+		basePower: 240,
 		basePowerCallback(pokemon, target, move) {
 			if (pokemon.hp !== pokemon.maxhp) return move.basePower * 0.5;
 			return move.basePower;
@@ -217,7 +217,7 @@ let BattleMovedex = {
 			this.attrLastMove('[still]');
 		},
 		onPrepareHit(target, source) {
-			if(source.hp < source.maxhp / 2) {return false;}
+			if(source.hp < source.maxhp / 1.11115) {return false;}
 			this.add('-anim', source, 'Searing Sunraze Smash', target);
 		},
 		secondary: null,
