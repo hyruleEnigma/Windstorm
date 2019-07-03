@@ -41,35 +41,11 @@ class RandomStaffBrosTeams extends RandomTeams {
 			// Nature needs to be a valid nature with the first letter capitalized ex: Modest
 			*/
 			// Please keep sets organized alphabetically based on staff member name!/*
-			'fart': {
-				species: 'Kartana', ability: 'Heat Rises', item: 'Fartium-Z', gender: 'M',
-				moves: ['Sunsteel Strike', 'Play Rough', 'U-turn'],
-				signatureMove: 'Soup Time!',
-				evs: {atk: 252, def: 4, spe: 252}, nature: 'Jolly', shiny:true,
-			},
-			'Tenshi Nagae': {
-				species: 'Stoutland', ability: 'Miracle Sand', item: 'Poisonium Z', gender: 'M',
-				moves: ['Power Whip', 'Iron Head', 'Purify'],
-				signatureMove: 'Divine Bork',
-				evs: {hp: 36, atk: 252, def: 220}, nature: 'Impish',
-			},
-			'hyruleEnigma': {
-				species: 'Aegislash', ability: 'Red Tunic', item: 'Leftovers', gender: 'M',
-				moves: ["kingsshield", 'Milk Drink', 'Agility'],
-				signatureMove: 'Sword Beam',
-				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
-			},
-			/*'CJer✿': {
-				species: 'Porygon', ability: 'Corrosion', item: 'Eviolite', gender: 'M',
-				moves: ['Recover', 'Substitute', 'Protect'],
-				signatureMove: 'CJer Seizure™',
-				evs: {hp: 4, spa: 252, spe: 252}, nature: 'Modest',
-			},*/
-			'BruceWee': {
-				species: 'Mewtwo', ability: 'Pressure', item: 'Leftovers', gender: 'M',
-				moves: ['Psystrike', 'Shadow Ball', 'Recover'],
-				signatureMove: 'Bruce Boost',
-				evs: {hp: 252, spa: 252, spd: 4}, nature: 'Modest',
+			'0TakeaStudyBreak': {
+				species: 'Xerneas', ability: 'Fairy Aura', item: 'Power Herb', gender: 'M',
+				moves: ['Geomancy', 'Moonblast', 'Flash Cannon'],
+				signatureMove: 'Take a Study Break',
+				evs: {atk: 4, def: 252, spd: 252}, nature: 'Bold',
 			},
 			'20th Century Girl': {
 				species: 'Scizor', ability: 'Jolt Haymaker', item: 'Life Orb', gender: 'F',
@@ -77,77 +53,11 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Sting Punch',
 				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Adamant',
 			},
-			'MobileGreenNamed': {
-				species: 'Rotom-Heat', ability: 'Adaptability', item: 'Choice Scarf', gender: 'M',
-				moves: ['Ice Beam', 'Energy Ball', 'Thunderbolt'],
-				signatureMove: 'Toaster Bomb',
-				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
-			},
-			/*'Flare On Blitz': {
-				species: 'Zoroark', ability: 'Super Illusion', item: 'Focus Sash', gender: 'M',
-				moves: ['Sludge Bomb', 'Nasty Plot', 'U-turn'],
-				//signatureMove: 'Busted',
-				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Hasty',
-			},*/
-			'MajesticAngelo': {
-				species: 'Greninja', ability: 'Protean', item: 'Life Orb', gender: 'M',
-				moves: ['Water Shuriken', 'Close Combat', 'Extreme Speed'],
-				signatureMove: 'Malice Decree',
-				evs: {atk: 252, spa: 4, spe: 252}, nature: 'Hasty',
-			},
-			'SacredLatias': {
-				species: 'Latias', ability: 'Neuroforce', item: 'Dew of Dewm', gender: 'F',
-				moves: ['Quiver Dance', 'Roost', 'Core Enforcer'],
-				signatureMove: 'Sacred Mist',
-				evs: {hp: 252, def: 252, spa: 4}, nature: 'Bold',
-			},
-			'MdPikachu': {
-				species: 'Pikachu', ability: 'Prankster', item: 'Leftovers', gender: 'M',
-				moves: ['Metronome', 'Volt Tackle', 'Iron Tail'],
-				signatureMove: '/report',
-				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
-			},
-			'Krookies': {
-				species: 'Krookodile', ability: 'Moxie', item: 'Leftovers', gender: 'M',
-				moves: ['Earthquake', 'Dragon Dance', 'Taunt'],
-				signatureMove: 'Yummy Cookies!!!',
-				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
-			},
-			'pinkdragontamer': {
-				species: 'Hydreigon', ability: 'Contrary', item: 'Life Orb', gender: 'F',
-				moves: ['Roost', 'Overheat', 'Draco Meteor'],
-				signatureMove: 'Triple Nightmare',
-				evs: {def: 4, spa: 252, spe: 252}, nature: 'Timid',
-			},
-			'Host Joe': {
-				species: 'Hoopa-Unbound', ability: 'Magician', item: 'Choice Band', gender: 'M',
-				moves: ['Gunk Shot', 'Fire Punch', 'Drain Punch'],
-				signatureMove: 'Infinite Abyss',
-				evs: {atk: 252, def: 4, spe: 252}, nature: 'Jolly',
-			},
-			'MajesticLucario': {
-				species: 'Lucario', ability: 'Fallen Warriors', item: 'Distorted Lens', gender: 'M',
-				moves: ['Aura Sphere', 'Dragon Pulse', 'Earth Power'],
-				signatureMove: 'Deus Ex Machina',
-				evs: {spa: 252, def: 4, spe: 252}, nature: 'Timid',
-			},
-			'Big Boy Teddy': {
-				species: 'Bewear', ability: 'Fur Coat', item: 'Life Orb', gender: 'M',
-				moves: ['Knock Off', 'Drain Punch', 'Cotton Guard'],
-				signatureMove: 'Power of Fluff',
-				evs: {atk: 4, spd: 252, spe: 252}, nature: 'Adamant',
-			},
-			'0TakeaStudyBreak': {
-				species: 'Xerneas', ability: 'Fairy Aura', item: 'Power Herb', gender: 'M',
-				moves: ['Geomancy', 'Moonblast', 'Flash Cannon'],
-				signatureMove: 'Take a Study Break',
-				evs: {atk: 4, def: 252, spd: 252}, nature: 'Bold',
-			},
-			'i want a lamp': {
-				species: 'Venomoth', ability: 'Flashdrive', item: 'Bright Powder', gender: 'M',
-				moves: ['Quiver Dance', 'Moonlight', 'Sludge Bomb'],
-				signatureMove: 'Lamp Lust',
-				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
+			'AFKrchasTL': {
+				species: 'Lilligant', ability: 'AFK', item: 'Life Orb', gender: 'F',
+				moves: ['Seed Flare', 'Stun Spore', 'Quiver Dance'],
+				signatureMove: 'Nerd Slandering',
+				evs: {spa: 252, spd:4, spe: 252}, nature: 'Timid',
 			},
 			'barton': {
 				species: 'Clefable', ability: 'Vibrant', item: 'Satsuma', gender: 'M',
@@ -155,11 +65,107 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Hyperlink',
 				evs: {hp: 248, spa: 8, def: 252}, nature: 'Bold',
 			},
-			'AFKrchasTL': {
-				species: 'Lilligant', ability: 'AFK', item: 'Life Orb', gender: 'F',
-				moves: ['Seed Flare', 'Stun Spore', 'Quiver Dance'],
-				signatureMove: 'Nerd Slandering',
-				evs: {spa: 252, spd:4, spe: 252}, nature: 'Timid',
+			'Big Boy Teddy': {
+				species: 'Bewear', ability: 'Fur Coat', item: 'Life Orb', gender: 'M',
+				moves: ['Knock Off', 'Drain Punch', 'Cotton Guard'],
+				signatureMove: 'Power of Fluff',
+				evs: {atk: 4, spd: 252, spe: 252}, nature: 'Adamant',
+			},
+			'BruceWee': {
+				species: 'Mewtwo', ability: 'Pressure', item: 'Leftovers', gender: 'M',
+				moves: ['Psystrike', 'Shadow Ball', 'Recover'],
+				signatureMove: 'Bruce Boost',
+				evs: {hp: 252, spa: 252, spd: 4}, nature: 'Modest',
+			},
+			/*'CJer✿': {
+				species: 'Porygon', ability: 'Corrosion', item: 'Eviolite', gender: 'M',
+				moves: ['Recover', 'Substitute', 'Protect'],
+				signatureMove: 'CJer Seizure™',
+				evs: {hp: 4, spa: 252, spe: 252}, nature: 'Modest',
+			},*/
+			'fart': {
+				species: 'Kartana', ability: 'Heat Rises', item: 'Fartium-Z', gender: 'M',
+				moves: ['Sunsteel Strike', 'Play Rough', 'U-turn'],
+				signatureMove: 'Soup Time!',
+				evs: {atk: 252, def: 4, spe: 252}, nature: 'Jolly', shiny:true,
+			},
+			/*'Flare On Blitz': {
+				species: 'Zoroark', ability: 'Super Illusion', item: 'Focus Sash', gender: 'M',
+				moves: ['Sludge Bomb', 'Nasty Plot', 'U-turn'],
+				signatureMove: 'Busted',
+				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Hasty',
+			},*/
+			'Host Joe': {
+				species: 'Hoopa-Unbound', ability: 'Magician', item: 'Choice Band', gender: 'M',
+				moves: ['Gunk Shot', 'Fire Punch', 'Drain Punch'],
+				signatureMove: 'Infinite Abyss',
+				evs: {atk: 252, def: 4, spe: 252}, nature: 'Jolly',
+			},
+			'hyruleEnigma': {
+				species: 'Aegislash', ability: 'Red Tunic', item: 'Leftovers', gender: 'M',
+				moves: ["kingsshield", 'Milk Drink', 'Agility'],
+				signatureMove: 'Sword Beam',
+				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
+			},
+			'icazah': {
+				species: 'Azelf', ability: 'Huge Power', item: 'Life Orb', gender: 'M',
+				moves: ['Explosion', 'Photon Geyser', 'Boomburst'],
+				signatureMove: 'L',
+				evs: {atk: 4, spa: 252, spe: 252}, nature: 'Timid',
+			},
+			'i want a lamp': {
+				species: 'Venomoth', ability: 'Flashdrive', item: 'Bright Powder', gender: 'M',
+				moves: ['Quiver Dance', 'Moonlight', 'Sludge Bomb'],
+				signatureMove: 'Lamp Lust',
+				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
+			},
+			'Krookies': {
+				species: 'Krookodile', ability: 'Moxie', item: 'Leftovers', gender: 'M',
+				moves: ['Earthquake', 'Dragon Dance', 'Taunt'],
+				signatureMove: 'Yummy Cookies!!!',
+				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
+			},
+			'MajesticAngelo': {
+				species: 'Greninja', ability: 'Protean', item: 'Life Orb', gender: 'M',
+				moves: ['Water Shuriken', 'Close Combat', 'Extreme Speed'],
+				signatureMove: 'Malice Decree',
+				evs: {atk: 252, spa: 4, spe: 252}, nature: 'Hasty',
+			},
+			'MdPikachu': {
+				species: 'Pikachu', ability: 'Prankster', item: 'Leftovers', gender: 'M',
+				moves: ['Metronome', 'Volt Tackle', 'Iron Tail'],
+				signatureMove: '/report',
+				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
+			},
+			'MajesticLucario': {
+				species: 'Lucario', ability: 'Fallen Warriors', item: 'Distorted Lens', gender: 'M',
+				moves: ['Aura Sphere', 'Dragon Pulse', 'Earth Power'],
+				signatureMove: 'Deus Ex Machina',
+				evs: {spa: 252, def: 4, spe: 252}, nature: 'Timid',
+			},
+			'MobileGreenNamed': {
+				species: 'Rotom-Heat', ability: 'Adaptability', item: 'Choice Scarf', gender: 'M',
+				moves: ['Ice Beam', 'Energy Ball', 'Thunderbolt'],
+				signatureMove: 'Toaster Bomb',
+				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
+			},
+			'pinkdragontamer': {
+				species: 'Hydreigon', ability: 'Contrary', item: 'Life Orb', gender: 'F',
+				moves: ['Roost', 'Overheat', 'Draco Meteor'],
+				signatureMove: 'Triple Nightmare',
+				evs: {def: 4, spa: 252, spe: 252}, nature: 'Timid',
+			},
+			'SacredLatias': {
+				species: 'Latias', ability: 'Neuroforce', item: 'Dew of Dewm', gender: 'F',
+				moves: ['Quiver Dance', 'Roost', 'Core Enforcer'],
+				signatureMove: 'Sacred Mist',
+				evs: {hp: 252, def: 252, spa: 4}, nature: 'Bold',
+			},
+			'Tenshi Nagae': {
+				species: 'Stoutland', ability: 'Miracle Sand', item: 'Poisonium Z', gender: 'M',
+				moves: ['Power Whip', 'Iron Head', 'Purify'],
+				signatureMove: 'Divine Bork',
+				evs: {hp: 36, atk: 252, def: 220}, nature: 'Impish',
 			},
 		};
 		let pool = Object.keys(sets);
