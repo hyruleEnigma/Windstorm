@@ -71,12 +71,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Bruce Boost',
 				evs: {hp: 252, spa: 252, spd: 4}, nature: 'Modest',
 			},
-			/*'CJer✿': {
+			'CJer✿': {
 				species: 'Porygon', ability: 'Corrosion', item: 'Eviolite', gender: 'M',
 				moves: ['Recover', 'Substitute', 'Protect'],
 				signatureMove: 'CJer Seizure™',
 				evs: {hp: 4, spa: 252, spe: 252}, nature: 'Modest',
-			},*/
+			},
 			'fart': {
 				species: 'Kartana', ability: 'Heat Rises', item: 'Fartium-Z', gender: 'M',
 				moves: ['Sunsteel Strike', 'Play Rough', 'U-turn'],
