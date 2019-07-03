@@ -253,6 +253,40 @@ let BattleAbilities = {
 		name: "Flashdrive",
 	},
 	
+	// yo boi arthurlis
+	"harvestingsummer": {
+		desc: "Half damage from Fire/Ice. 50% chance to respawn item. Weight doubled.",
+		shortDesc: "Thick Fat / Heavy Metal / Harvest",
+		onModifyWeight(weight) {
+			return weight * 2;
+		},
+		onSourceModifyAtkPriority: 6,
+		onSourceModifyAtk(atk, attacker, defender, move) {
+			if (move.type === 'Ice' || move.type === 'Fire') {
+				this.debug('Thick Fat weaken');
+				return this.chainModify(0.5);
+			}
+		},
+		onSourceModifySpAPriority: 5,
+		onSourceModifySpA(atk, attacker, defender, move) {
+			if (move.type === 'Ice' || move.type === 'Fire') {
+				this.debug('Thick Fat weaken');
+				return this.chainModify(0.5);
+			}
+		},
+		onResidual(pokemon) {
+			if (this.field.isWeather(['sunnyday', 'desolateland']) || this.randomChance(1, 2)) {
+				if (pokemon.hp && !pokemon.item && this.getItem(pokemon.lastItem).isBerry) {
+					pokemon.setItem(pokemon.lastItem);
+					pokemon.lastItem = '';
+					this.add('-item', pokemon, pokemon.getItem(), '[from] ability: Harvest');
+				}
+			}
+		},
+		id: "harvestingsummer",
+		name: "Harvesting Summer",
+	},
+	
 };
 
 exports.BattleAbilities = BattleAbilities;
