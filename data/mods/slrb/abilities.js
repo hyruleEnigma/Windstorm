@@ -197,6 +197,12 @@ let BattleAbilities = {
 				return this.chainModify(1.5);
 			}
 		},
+		onModifyPriority(priority, pokemon, target, move) {
+			if (move && move.category === 'Status') {
+				move.pranksterBoosted = true;
+				return priority + 1;
+			}
+		},
 		onDamage: function (damage, target, source, effect) {
 			if (effect && effect.id === 'brn') {
 				return damage / 2;
