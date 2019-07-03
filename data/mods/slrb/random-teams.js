@@ -47,12 +47,6 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Take a Study Break',
 				evs: {atk: 4, def: 252, spd: 252}, nature: 'Bold',
 			},
-			'20th Century Girl': {
-				species: 'Scizor', ability: 'Jolt Haymaker', item: 'Life Orb', gender: 'F',
-				moves: ['Bullet Punch', 'Power-Up Punch', 'Ice Punch'],
-				signatureMove: 'Sting Punch',
-				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Adamant',
-			},
 			'AFKrchasTL': {
 				species: 'Lilligant', ability: 'AFK', item: 'Life Orb', gender: 'F',
 				moves: ['Seed Flare', 'Stun Spore', 'Quiver Dance'],
@@ -107,12 +101,6 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Sword Beam',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
 			},
-			'icazah': {
-				species: 'Azelf', ability: 'Huge Power', item: 'Life Orb', gender: 'M',
-				moves: ['Explosion', 'Photon Geyser', 'Boomburst'],
-				signatureMove: 'L',
-				evs: {atk: 4, spa: 252, spe: 252}, nature: 'Timid',
-			},
 			'i want a lamp': {
 				species: 'Venomoth', ability: 'Flashdrive', item: 'Bright Powder', gender: 'M',
 				moves: ['Quiver Dance', 'Moonlight', 'Sludge Bomb'],
@@ -124,6 +112,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				moves: ['Earthquake', 'Dragon Dance', 'Taunt'],
 				signatureMove: 'Yummy Cookies!!!',
 				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
+			},
+			'Lumi Q': {
+				species: 'Scizor', ability: 'Jolt Haymaker', item: 'Life Orb', gender: 'F',
+				moves: ['Bullet Punch', 'Power-Up Punch', 'Ice Punch'],
+				signatureMove: 'Sting Punch',
+				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Adamant',
 			},
 			'MajesticAngelo': {
 				species: 'Greninja', ability: 'Protean', item: 'Life Orb', gender: 'M',
@@ -148,6 +142,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				moves: ['Ice Beam', 'Energy Ball', 'Thunderbolt'],
 				signatureMove: 'Toaster Bomb',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
+			},
+			'mustard': {
+				species: 'Azelf', ability: 'Huge Power', item: 'Life Orb', gender: 'M',
+				moves: ['Explosion', 'Photon Geyser', 'Boomburst'],
+				signatureMove: 'L',
+				evs: {atk: 4, spa: 252, spe: 252}, nature: 'Timid',
 			},
 			'pinkdragontamer': {
 				species: 'Hydreigon', ability: 'Contrary', item: 'Life Orb', gender: 'F',
