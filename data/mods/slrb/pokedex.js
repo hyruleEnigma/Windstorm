@@ -36,6 +36,11 @@ let BattlePokedex = {
 		inherit: true,
 		abilities: {0: 'Harvest'},
 	},
+	// yo boi arthurlis
+	torterra: {
+		inherit: true,
+		types: ['Grass', 'Rock'],
+	},
 };
 
 exports.BattlePokedex = BattlePokedex;
