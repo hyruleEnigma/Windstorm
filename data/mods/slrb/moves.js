@@ -740,6 +740,38 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Normal",
 	},
+	// VanillaBobcat
+	frenchvanilla: {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "Raises both the user's and the target's Attack by 3 stages, lowers the Defense of both by 3 stages, confuses both Pokemon, and has a 100% chance to cause the target to flinch.",
+		shortDesc: "+6 Atk, confusion, and attract to user & target.",
+		id: "frenchvanilla",
+		name: "French Vanilla",
+		isNonstandard: "Custom",
+		pp: 5,
+		flags: {protect: 1, mirror: 1, contact: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Feather Dance", target);
+			return this.runEvent('StallMove', source);
+		},
+		onHit(target, source) {
+			source.addVolatile('stall');
+			this.boost({atk: 6}, target);
+			this.boost({atk: 6}, source);
+			target.addVolatile('confusion');
+			source.addVolatile('confusion');
+			target.addVolatile('attract');
+			source.addVolatile('attract');
+		},
+		secondary: null,
+		target: "normal",
+		type: "Ghost",
+},
 };
 
 exports.BattleMovedex = BattleMovedex;
