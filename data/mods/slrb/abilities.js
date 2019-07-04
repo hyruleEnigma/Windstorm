@@ -34,6 +34,18 @@ let BattleAbilities = {
 		id: "afk",
 		name: "AFK",
 	},
+	// A Phantom
+	"phantomflex": {
+		shortDesc: "This Pokemon's Ghost moves have priority raised by 1.",
+		onModifyPriority: function (priority, pokemon, target, move) {
+			if (move && move.type === 'Ghost') {
+				return priority + 1;
+			}
+		},
+		id: "phantomflex",
+		name: "Phantom Flex",
+	},
+
 	// barton
 	"vibrant": {
 		shortDesc: "This Pokemon's Fairy moves have priority raised by 1.",
