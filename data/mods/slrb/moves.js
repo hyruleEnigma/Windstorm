@@ -727,6 +727,23 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Dark",
 	},
+	"Wu-Kong Fist": {
+		accuracy:100,
+		basepower: 100,
+		desc: "30% chance to burn the target.",
+		shortDesc: "30% chance to burn the target.",
+		id: "Wu-Kong Fist",
+		name: "Wu-Kong Fist",
+		pp: 10,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1, punch: 1},
+		secondary: {
+			chance: 30,
+			status: "brn",
+		},
+		target: "normal",
+		type: "Fire",
+	},
 	// SacredLatias
 	"sacredmist": {
 		accuracy: 90,
