@@ -584,18 +584,10 @@ let BattleMovedex = {
 		},
 		onPrepareHit(target, source) {
 			this.add('-anim', source, 'Extreme Evoboost', source);
+			target.addVolatile('taunt', source);
 		},
 		onAfterMoveSecondarySelf() {
 			this.field.setTerrain('electricterrain');
-		},
-		effect: {
-			onStart(pokemon) {
-				this.add('-start', pokemon, 'Aqua Ring');
-			},
-			onResidualOrder: 6,
-			onResidual(pokemon) {
-				this.heal(pokemon.maxhp / 16);
-			},
 		},
 		secondary: {
 			chance: 100,
