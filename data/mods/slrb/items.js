@@ -8,7 +8,7 @@ let BattleItems = {
 	fartiumz: {
 		id: "fartiumz",
 		name: "Fartium Z",
-		isNonstandard: true,
+		isNonstandard: "Custom",
 		onTakeItem: false,
 		zMove: "Soup-Stealing 7-Star Strike",
 		zMoveFrom: "Soup Time!",
@@ -16,12 +16,20 @@ let BattleItems = {
 		gen: 7,
 		desc: "If held by a Kartana with Soup Time!, it can use Soup-Stealing 7-Star Strike.",
 	},
-	
+	// Marukomuru
+	berserkamulet: {
+		id: "berserkamulet",
+		name: "Berserk Amulet",
+		isNonstandard: "Custom",
+		onTakeItem: false,
+		gen: 7,
+		desc: "Boosts holder's Attack by 2. Cannot be removed.",
+	},
 	// SacredLatias
 	dewofdewm: {
 		id: "dewofdewm",
 		name: "Dew of Dewm",
-		isNonstandard: true,
+		isNonstandard: "Custom",
 		onTakeItem: false,
 		onBasePower: function () {},
 		onModifySpAPriority: 1,
@@ -44,6 +52,7 @@ let BattleItems = {
 		id: "satsuma",
 		name: "Satsuma",
 		spritenum: 242,
+		isNonstandard: "Custom",
 		onResidualOrder: 5,
 		onResidualSubOrder: 2,
 		onResidual: function (pokemon) {
@@ -63,7 +72,7 @@ let BattleItems = {
 		id: "distortedlens",
 		name: "Distorted Lens",
 		spritenum: 35,
-		isNonstandard: true,
+		isNonstandard: "Custom",
 		onSourceModifyDamage: function (damage, source, target, move) {
 			if (move.type === 'Fighting' && (!target.volatiles['substitute'] || move.flags['authentic'] || (move.infiltrates && this.gen >= 6))) {
 				this.debug('-50% reduction');
