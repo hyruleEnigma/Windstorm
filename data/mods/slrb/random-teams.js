@@ -53,6 +53,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: "A's Secret Plan",
 				evs: {hp: 192, def: 96, spd: 56, spe:164}, nature: 'Timid', shiny: true,
 			},
+			'A Phantom': {
+				species: 'Phantump', ability: 'Phantom Flex', item: 'Power Herb', gender: 'M',
+				moves: ['Hex', 'Geomancy', 'Power Trip'],
+				signatureMove: "Forest Fire",
+				evs: {def: 4, spa: 252, spe:252}, nature: 'Timid',
+			},
 			'AFKrchasTL': {
 				species: 'Lilligant', ability: 'AFK', item: 'Life Orb', gender: 'F',
 				moves: ['Seed Flare', 'Stun Spore', 'Quiver Dance'],
