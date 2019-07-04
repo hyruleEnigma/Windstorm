@@ -14,11 +14,16 @@ let BattlePokedex = {
 		inherit: true,
 		types: ['Psychic', 'Fairy'],
 	},
+	// A Phantom
+	phantump: {
+		inherit: true,
+		baseStats: {hp: 86, atk: 100, def: 96, spa: 140, spd: 120, spe: 76},
+	},
 	// CJer
 	porygon: {
 		inherit: true,
 		baseStats: {hp: 105, atk: 100, def: 110, spa: 125, spd: 115, spe: 80},
-	},	
+	},
 	// fart
 	kartana: {
 		inherit: true,
