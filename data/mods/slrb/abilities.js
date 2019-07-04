@@ -45,7 +45,6 @@ let BattleAbilities = {
 		id: "phantomflex",
 		name: "Phantom Flex",
 	},
-
 	// barton
 	"vibrant": {
 		shortDesc: "This Pokemon's Fairy moves have priority raised by 1.",
@@ -56,6 +55,32 @@ let BattleAbilities = {
 		},
 		id: "vibrant",
 		name: "vibrant",
+	},
+	// brownisaur
+	"sweetdisguise": {
+		desc: "If this Pokemon is a Bulbasaur, the first hit it takes in battle deals 0 neutral damage. Its disguise is then broken. Confusion damage also breaks the disguise.",
+		shortDesc: "If this Pokemon is a Bulbasaur, the first hit it takes in battle deals 0 neutral damage.",
+		onDamagePriority: 1,
+		onDamage(damage, target, source, effect) {
+			if (effect && effect.effectType === 'Move' && ['bulbasaur'].includes(target.template.speciesid) && !target.transformed && target.happiness === 255) {
+				this.add('-activate', target, 'ability: Sweet Disguise');
+				this.effectData.busted = true;
+				return 0;
+			}
+		},
+		onEffectiveness(typeMod, target, type, move) {
+			if (!target) return;
+			if (target.happiness === 254 || !['bulbasaur'].includes(target.template.speciesid) || target.transformed || (target.volatiles['substitute'] && !(move.flags['authentic'] || move.infiltrates))) return;
+			if (!target.runImmunity(move.type)) return;
+			return 0;
+		},
+		onUpdate(pokemon) {
+			if (['bulbasaur'].includes(pokemon.template.speciesid) && this.effectData.busted) {
+				pokemon.happiness = 254;
+			}
+		},
+		id: "sweetdisguise",
+		name: "Sweet Disguise",
 	},
 	// CJtheGold
 	shadownerd: {
