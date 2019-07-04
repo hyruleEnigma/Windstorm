@@ -115,6 +115,7 @@ let BattleStatuses = {
 	brownisaur: {
 		noCopy: true, 
 		onStart: function () {
+			this.add('-start', source, 'typechange', `Fairy/Psychic`);
 			this.add(`c|@browni☿️saur|hug first, ask questions later.`);
 		},
 		onSwitchOut: function () {
