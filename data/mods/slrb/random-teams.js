@@ -137,6 +137,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Malice Decree',
 				evs: {atk: 252, spa: 4, spe: 252}, nature: 'Hasty',
 			},
+			'Marukomuru': {
+				species: 'Oricorio-Pom-Pom', ability: 'Shield Dust', item: 'Berserk Amulet', gender: 'M',
+				moves: ['Head Charge', 'Double Kick', 'Megahorn'],
+				signatureMove: 'Rainbow Power',
+				evs: {hp: 118, atk: 126, def: 96, spd: 96, spe: 72}, nature: 'Adamant',
+			},
 			'MdPikachu': {
 				species: 'Pikachu', ability: 'Prankster', item: 'Leftovers', gender: 'M',
 				moves: ['Metronome', 'Volt Tackle', 'Iron Tail'],
