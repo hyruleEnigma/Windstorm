@@ -191,6 +191,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Sacred Mist',
 				evs: {hp: 252, def: 252, spa: 4}, nature: 'Bold',
 			},
+			'Tauon': {
+				species: 'Skarmory', ability: 'Gale Wings v1', item: 'Sharp Beak', gender: 'M',
+				moves: ['Swords Dance', 'Roost', ['Taunt', 'Stealth Rock']],
+				signatureMove: 'B O I',
+				evs: {hp: 4, atk: 252, spe: 252}, nature: 'Adamant',
+			},
 			'Tenshi': {
 				species: 'Stoutland', ability: 'Miracle Sand', item: 'Poisonium Z', gender: 'M',
 				moves: ['Power Whip', 'Iron Head', 'Purify'],
