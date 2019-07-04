@@ -153,6 +153,18 @@ let BattleStatuses = {
 			this.add(`c|%hyruleEnigma|I should've buffed Sword Beam.`);
 		},
 	},
+   rYGLY: {
+		noCopy: true,
+		onStart: function () {
+			this.add(`c|rYGLY|(Here come dat boi`);
+		},
+		onSwitchOut: function () {
+			this.add(`c|rYGLY|Gottem`);
+		},
+		onFaint: function () {
+			this.add(`c|rYGLY|poor monkey ;-;`);
+		},
+	},
    sacredlatias: {
        noCopy: true,
        onStart: function () {
