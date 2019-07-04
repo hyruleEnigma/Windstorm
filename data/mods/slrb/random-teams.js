@@ -173,6 +173,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Triple Nightmare',
 				evs: {def: 4, spa: 252, spe: 252}, nature: 'Timid',
 			},
+			'rYGLY': {
+				species: 'Monferno', ability: 'Adaptability', item: 'Life orb', gender: 'M',
+				moves: ['Close Combat', 'Mach Punch', 'U-turn'],
+				signatureMove: 'Wu-Kong Fist',
+				evs: {hp: 4, atk: 252, spe:252}, nature: 'Jolly',
+        },
 			'SacredLatias': {
 				species: 'Latias', ability: 'Neuroforce', item: 'Dew of Dewm', gender: 'F',
 				moves: ['Quiver Dance', 'Roost', 'Core Enforcer'],
