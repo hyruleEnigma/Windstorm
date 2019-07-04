@@ -112,6 +112,18 @@ let BattleStatuses = {
 			this.add(`c|+barton|drat`);
 		},
 	},
+	brownisaur: {
+		noCopy: true, 
+		onStart: function () {
+			this.add(`c|@browni☿️saur|hug first, ask questions later.`);
+		},
+		onSwitchOut: function () {
+			this.add(`c|@browni☿️saur|that wasn't very nice ;-;`);
+		},
+		onFaint: function () {
+			this.add(`c|@browni☿️saur|should have banned you when I had the chance`);
+		},
+	},
 	brucewee: {
 		noCopy: true, 
 		onStart: function () {
