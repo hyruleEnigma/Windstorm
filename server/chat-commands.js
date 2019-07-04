@@ -355,7 +355,7 @@ const commands = {
 		let ranks = Object.keys(Config.groups);
 		for (let u in Users.usergroups) {
 			let rank = Users.usergroups[u].charAt(0);
-			if (rank === ' ' || rank === '+') continue;
+			if (rank === ' ') continue;
 			// In case the usergroups.csv file is not proper, we check for the server ranks.
 			if (ranks.includes(rank)) {
 				let name = Users.usergroups[u].substr(1);
