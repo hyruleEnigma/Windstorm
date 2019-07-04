@@ -33,6 +33,19 @@ let BattleStatuses = {
 			this.add(`c|%A|oof`);
 		},
 	},
+	aphantom: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add('-start', source, 'typechange', `Psychic/Fairy`);
+			this.add(`c| A Phantom|/me used Phantom Force!`);
+		},
+		onSwitchOut() {
+			this.add(`c| A Phantom|/me pulls down your pants and runs!`);
+		},
+		onFaint() {
+			this.add(`c| A Phantom|neat`);
+		},
+},
 	afkrchastl: {
 		noCopy: true,
 		onStart: function () {
