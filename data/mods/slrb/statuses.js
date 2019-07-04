@@ -36,7 +36,6 @@ let BattleStatuses = {
 	aphantom: {
 		noCopy: true,
 		onStart(target, source) {
-			this.add('-start', source, 'typechange', `Psychic/Fairy`);
 			this.add(`c| A Phantom|/me used Phantom Force!`);
 		},
 		onSwitchOut() {
