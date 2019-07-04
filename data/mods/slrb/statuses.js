@@ -312,16 +312,17 @@ let BattleStatuses = {
 			this.add(`c|%pinkdragontamer|!faq you`);
 		},
 	},
-	majesticlucario: {
+	polestarobey: {
 		noCopy: true, 
 		onStart: function () {
-			//this.add(`c|@Host Joe|Im about to crack open a cold one, Boy!`);
+			this.add(`c| Polestar Obey|let's get this going!`);
+			this.add(`c| Polestar Obey|here comes my strongest and best friend!`);
 		},
 		onSwitchOut: function () {
-			//this.add(`c|@Host Joe|I'm trying, Jennifer!`);
+			this.add(`c| Polestar Obey|I'll return you for now.`);
 		},
 		onFaint: function () {
-			//this.add(`c|@Host Joe|Cavs in 7`);
+			this.add(`c| Polestar Obey|My friends, I mourn you`);
 		},
 	},
 	flare: {
