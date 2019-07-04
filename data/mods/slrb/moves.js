@@ -765,6 +765,7 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Dark",
 	},
+	// rYGLY
 	"wukongfist": {
 		accuracy:100,
 		basepower: 100,
@@ -810,6 +811,30 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Psychic",
         zMovePower: 185,
+	},
+	// Tauon
+	boi: {
+		accuracy: 100,
+		basePower: 120,
+		category: "Physical",
+		desc: "The user takes recoil damage equal to 33% the HP lost by the target, rounded half up, but not less than 1 HP.",
+		shortDesc: "Has 33% recoil.",
+		id: "boi",
+		name: "B O I",
+		isNonstandard: "Custom",
+		pp: 15,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Supersonic Skystrike', target);
+		},
+		recoil: [33, 100],
+		secondary: null,
+		target: "normal",
+		type: "Flying",
 	},
 	// Tenshi Nagae
 	divinebork: {
