@@ -576,7 +576,7 @@ let BattleMovedex = {
 		id: "rainbowpower",
 		name: "Rainbow Power",
 		isNonstandard: "Custom",
-		pp: 2,
+		pp: 1,
 		priority: 0,
 		flags: {snatch: 1},
 		onTryMove() {
@@ -584,7 +584,7 @@ let BattleMovedex = {
 		},
 		onPrepareHit(target, source) {
 			this.add('-anim', source, 'Extreme Evoboost', source);
-			target.addVolatile('taunt', source);
+			target.addVolatile('aquaring', source);
 		},
 		onAfterMoveSecondarySelf() {
 			this.field.setTerrain('electricterrain');
