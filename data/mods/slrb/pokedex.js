@@ -36,6 +36,11 @@ let BattlePokedex = {
 		types: ['Dragon', 'Ground'],
 		baseStats: {hp: 80, atk: 160, def: 100, spa: 130, spd: 120, spe: 110},
 	},
+	// rYGLY
+	monferno: {
+		inherit: true,
+		baseStats: {hp: 76, atk: 104, def: 71, spa: 104, spd: 71, spe: 108},
+	},
 	// VanillaBobcat
 	persianalola: {
 		inherit: true,
