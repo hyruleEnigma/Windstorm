@@ -765,12 +765,12 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Dark",
 	},
-	"Wu-Kong Fist": {
+	"wukongfist": {
 		accuracy:100,
 		basepower: 100,
 		desc: "30% chance to burn the target.",
 		shortDesc: "30% chance to burn the target.",
-		id: "Wu-Kong Fist",
+		id: "wukongfist",
 		name: "Wu-Kong Fist",
 		pp: 10,
 		priority: 0,
