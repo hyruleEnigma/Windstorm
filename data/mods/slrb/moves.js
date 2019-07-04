@@ -568,9 +568,9 @@ let BattleMovedex = {
 	},
 	// Marukomuru
 	"rainbowpower": {
-		basePower: 100,
-		accuracy: 100,
-		category: "Special",
+		basePower: 0,
+		accuracy: true,
+		category: "Status",
 		desc: "Raises the user's Attack, Defense, Special Attack, Special Defense, and Speed by 1 stage. Applies Aqua Ring and summons Electric Terrain.",
 		shortDesc: "Raises all stats by 1 (not acc/eva), Aqua Ring, Electric Terrain.",
 		id: "rainbowpower",
@@ -609,7 +609,7 @@ let BattleMovedex = {
 				},
 			},
 		},
-		target: "normal",
+		target: "self",
 		type: "Psychic",
 },
 	// MdPikachu	
