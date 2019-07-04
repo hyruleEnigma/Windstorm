@@ -87,6 +87,18 @@ let BattleStatuses = {
 			this.add(`c| Big Boy Teddy|where da muffin at? :(`);
 		},
 	},
+	barton: {
+		noCopy: true, 
+		onStart: function () {
+			this.add(`c|+barton|ESKETIT`);
+		},
+		onSwitchOut: function () {
+			this.add(`c|+barton|peace y'all`);
+		},
+		onFaint: function () {
+			this.add(`c|+barton|drat`);
+		},
+	},
 	brucewee: {
 		noCopy: true, 
 		onStart: function () {
