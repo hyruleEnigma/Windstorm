@@ -19,6 +19,11 @@ let BattlePokedex = {
 		inherit: true,
 		baseStats: {hp: 86, atk: 100, def: 96, spa: 140, spd: 120, spe: 76},
 	},
+	// brownisaur
+	bulbasaur: {
+		inherit: true,
+		types: ['Fairy', 'Psychic'],
+	},
 	// CJer
 	porygon: {
 		inherit: true,
