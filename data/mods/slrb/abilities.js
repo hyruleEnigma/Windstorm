@@ -228,6 +228,17 @@ let BattleAbilities = {
 			}
 		},
 	},
+	// Tauon
+	galewingsv1: {
+		desc: "This Pokemon's Flying-type moves have their priority increased by 1.",
+		shortDesc: "This Pokemon's Flying-type moves have their priority increased by 1.",
+		id: "galewingsv1",
+		name: "Gale Wings v1",
+		isNonstandard: "Custom",
+		onModifyPriority(priority, pokemon, target, move) {
+			if (move && move.type === 'Flying') return priority + 1;
+		},
+	},
 	// Tenshi
 	miraclesand: {
 		desc: "If Sandstorm is active, this Pokemon's Speed and Defense are multiplied by 1.5. This Pokemon takes no damage from Sandstorm.",
