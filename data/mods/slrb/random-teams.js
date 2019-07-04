@@ -77,6 +77,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Power of Fluff',
 				evs: {atk: 4, spd: 252, spe: 252}, nature: 'Adamant',
 			},
+			'browni☿️saur': {
+				species: 'Bulbasaur', ability: 'Sweet Disguise', item: 'Brownium Z', gender: 'F',
+				moves: ['Moonblast', 'Psystrike', 'Moongeist Beam'],
+				signatureMove: 'Happy Birthday! :D',
+				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Timid',
+			},
 			'BruceWee': {
 				species: 'Mewtwo', ability: 'Pressure', item: 'Leftovers', gender: 'M',
 				moves: ['Psystrike', 'Shadow Ball', 'Recover'],
