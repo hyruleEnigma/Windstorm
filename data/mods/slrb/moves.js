@@ -566,6 +566,52 @@ let BattleMovedex = {
 		type: "Steel",
 		zMovePower: 200,
 	},
+	// Marukomuru
+	"rainbowpower": {
+		basePower: 100,
+		accuracy: 100,
+		category: "Special",
+		desc: "Raises the user's Attack, Defense, Special Attack, Special Defense, and Speed by 1 stage. Applies Aqua Ring and summons Electric Terrain.",
+		shortDesc: "Raises all stats by 1 (not acc/eva), Aqua Ring, Electric Terrain.",
+		id: "rainbowpower",
+		name: "Rainbow Power",
+		isNonstandard: "Custom",
+		pp: 2,
+		priority: 0,
+		flags: {snatch: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Extreme Evoboost', source);
+		},
+		onAfterMoveSecondarySelf() {
+			this.field.setTerrain('electricterrain');
+		},
+		effect: {
+			onStart(pokemon) {
+				this.add('-start', pokemon, 'Aqua Ring');
+			},
+			onResidualOrder: 6,
+			onResidual(pokemon) {
+				this.heal(pokemon.maxhp / 16);
+			},
+		},
+		secondary: {
+			chance: 100,
+			self: {
+				boosts: {
+					atk: 1,
+					def: 1,
+					spa: 1,
+					spd: 1,
+					spe: 1,
+				},
+			},
+		},
+		target: "normal",
+		type: "Psychic",
+},
 	// MdPikachu	
 	"report": {
 		accuracy: 100,
