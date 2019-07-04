@@ -29,7 +29,7 @@ let BattleItems = {
 		zMove: true,
 		zMoveType: "Normal",
 		gen: 7,
-		desc: "If held by a Kartana with Soup Time!, it can use Soup-Stealing 7-Star Strike.",
+		desc: "Normalium Z + Focus Sash + Eviolite",
 	},
 	// fart
 	fartiumz: {
@@ -41,7 +41,7 @@ let BattleItems = {
 		zMoveFrom: "Soup Time!",
 		zMoveUser: ["Kartana"],
 		gen: 7,
-		desc: "Normalium Z + Focus Sash + Eviolite",
+		desc: "If held by a Kartana with Soup Time!, it can use Soup-Stealing 7-Star Strike.",
 	},
 	// Marukomuru
 	berserkamulet: {
