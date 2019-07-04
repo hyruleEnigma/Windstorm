@@ -160,6 +160,18 @@ let BattleStatuses = {
 			this.add(`c|%hyruleEnigma|I should've buffed Sword Beam.`);
 		},
 	},
+	iwantalamp: {
+		noCopy: true, 
+		onStart: function () {
+			this.add(`c| i want a lamp|WHERE IS MY LAMP`);
+		},
+		onSwitchOut: function () {
+			this.add(`c| i want a lamp|hold on, i think ive found my lamp`);
+		},
+		onFaint: function () {
+			this.add(`c| i want a lamp|ZZzzzZZzZzZZZlampzZZzZZzZ`);
+		},
+	},
 	krookies: {
 		noCopy: true, 
 		onStart() {
