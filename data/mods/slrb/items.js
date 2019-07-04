@@ -3,7 +3,34 @@
 /**@type {{[k: string]: ModdedItemData}} */
 let BattleItems = {
 	
-	
+	// brownisaur
+	browniumz: {
+		id: "browniumz",
+		name: "Brownium Z",
+		isNonstandard: "Custom",
+		onTakeItem: false,
+		onModifyDefPriority: 2,
+		onModifyDef(def, pokemon) {
+			if (pokemon.baseTemplate.nfe) {
+				return this.chainModify(1.5);
+			}
+		},
+		onModifySpDPriority: 2,
+		onModifySpD(spd, pokemon) {
+			if (pokemon.baseTemplate.nfe) {
+				return this.chainModify(1.5);
+			}
+		},
+		onDamage(damage, target, source, effect) {
+			if (target.hp === target.maxhp && damage >= target.hp && effect && effect.effectType === 'Move') {
+				return target.hp - 1;
+			}
+		},
+		zMove: true,
+		zMoveType: "Normal",
+		gen: 7,
+		desc: "If held by a Kartana with Soup Time!, it can use Soup-Stealing 7-Star Strike.",
+	},
 	// fart
 	fartiumz: {
 		id: "fartiumz",
