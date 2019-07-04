@@ -818,6 +818,7 @@ let BattleMovedex = {
 	"wukongfist": {
 		accuracy:100,
 		basepower: 100,
+		category: "Physical",
 		desc: "30% chance to burn the target.",
 		shortDesc: "30% chance to burn the target.",
 		id: "wukongfist",
