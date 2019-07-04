@@ -149,12 +149,6 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: '/report',
 				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
 			},
-			'MajesticLucario': {
-				species: 'Lucario', ability: 'Fallen Warriors', item: 'Distorted Lens', gender: 'M',
-				moves: ['Aura Sphere', 'Dragon Pulse', 'Earth Power'],
-				signatureMove: 'Deus Ex Machina',
-				evs: {spa: 252, def: 4, spe: 252}, nature: 'Timid',
-			},
 			'MobileGreenNamed': {
 				species: 'Rotom-Heat', ability: 'Adaptability', item: 'Choice Scarf', gender: 'M',
 				moves: ['Ice Beam', 'Energy Ball', 'Thunderbolt'],
@@ -178,6 +172,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				moves: ['Roost', 'Overheat', 'Draco Meteor'],
 				signatureMove: 'Triple Nightmare',
 				evs: {def: 4, spa: 252, spe: 252}, nature: 'Timid',
+			},
+			'Polestar Obey': {
+				species: 'Lucario', ability: 'Fallen Warriors', item: 'Distorted Lens', gender: 'M',
+				moves: ['Aura Sphere', 'Dragon Pulse', 'Earth Power'],
+				signatureMove: 'Deus Ex Machina',
+				evs: {spa: 252, def: 4, spe: 252}, nature: 'Timid',
 			},
 			'rYGLY': {
 				species: 'Monferno', ability: 'Adaptability', item: 'Life orb', gender: 'M',
