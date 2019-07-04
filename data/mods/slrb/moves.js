@@ -202,6 +202,25 @@ let BattleMovedex = {
 		zMoveEffect: 'clearnegativeboost',
 		contestType: "Cute",
 	},
+	// brownisaur
+	"happybirthdayd": {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		shortDesc: "No competitive use.",
+		id: "happybirthdayd",
+		name: "Happy Birthday! :D",
+		pp: 40,
+		priority: 0,
+		flags: {},
+		onTryHit(target, source) {
+			this.add('-activate', target, 'move: Celebrate');
+		},
+		secondary: null,
+		target: "self",
+		type: "Normal",
+		zMoveBoost: {atk: 2, def: 2, spa: 2, spd: 2, spe: 2},
+	},
 	// BruceWee
 	"bruceboost": {
 		basePower: 100,
