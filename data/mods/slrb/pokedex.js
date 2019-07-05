@@ -49,7 +49,7 @@ let BattlePokedex = {
 	// rYGLY
 	monferno: {
 		inherit: true,
-		baseStats: {hp: 76, atk: 104, def: 71, spa: 104, spd: 71, spe: 108},
+		baseStats: {hp: 64, atk: 118, def: 92, spa: 118, spd: 92, spe: 121},
 	},
 	// VanillaBobcat
 	persianalola: {
