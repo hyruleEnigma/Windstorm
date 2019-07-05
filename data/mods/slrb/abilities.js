@@ -23,7 +23,7 @@ let BattleAbilities = {
 		onSourceBasePowerPriority: 7,
 		onSourceBasePower(basePower, attacker, defender, move) {
 			let not_neutral = ['Ghost', 'Poison', 'Steel', 'Fighting', 'Psychic', 'Dragon'];
-			if (!not_neutral.include(move.type)) {
+			if (!not_neutral.includes(move.type)) {
 				return this.chainModify(0.75);
 			}
 		},
