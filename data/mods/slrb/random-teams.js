@@ -191,6 +191,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Deus Ex Machina',
 				evs: {spa: 252, def: 4, spe: 252}, nature: 'Timid',
 			},
+			'PokemonDeadChannel': {
+				species: 'Steenee', ability: 'Wonder Guard', item: 'Leppa Berry', gender: '',
+				moves: ['Extreme Evoboost', 'Taunt', 'Shore Up'],
+				signatureMove: 'Debug',
+				nature: 'Serious',
+			},
 			'rYGLY': {
 				species: 'Monferno', ability: 'Adaptability', item: 'Life orb', gender: 'M',
 				moves: ['Close Combat', 'Mach Punch', 'U-turn'],

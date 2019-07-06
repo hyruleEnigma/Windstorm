@@ -113,7 +113,8 @@ let BattleStatuses = {
 	},
 	brownisaur: {
 		noCopy: true, 
-		onStart: function () {
+		onStart: function (source) {
+			source.types = ['Fairy', 'Psychic'];
 			this.add('-start', source, 'typechange', `Fairy/Psychic`);
 			this.add(`c|@browni☿️saur|hug first, ask questions later.`);
 		},
@@ -348,6 +349,20 @@ let BattleStatuses = {
 		},
 		onFaint: function () {
 			this.add(`c| Polestar Obey|My friends, I mourn you`);
+		},
+	},
+	pokemondeadchannel: {
+		noCopy: true, 
+		onStart: function (source) {
+			this.add(`c|+PokemonDeadChannel|I'm pretty sure I can be as overpowered as I want to with no reprocussions`);
+			source.addVolatile('curse');
+			this.add(`c|+PokemonDeadChannel|Oh, guess I was wrong`);
+		},
+		onSwitchOut: function () {
+			this.add(`c|+PokemonDeadChannel|unfortunate`);
+		},
+		onFaint: function () {
+			this.add(`c|+PokemonDeadChannel|I listen to way too much rap music x_x`);
 		},
 	},
 	flare: {

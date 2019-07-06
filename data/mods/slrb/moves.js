@@ -817,7 +817,7 @@ let BattleMovedex = {
 	// rYGLY
 	"wukongfist": {
 		accuracy:100,
-		basepower: 100,
+		basePower: 100,
 		category: "Physical",
 		desc: "30% chance to burn the target.",
 		shortDesc: "30% chance to burn the target.",
@@ -978,6 +978,35 @@ let BattleMovedex = {
 		},
 		drain: [1, 2],
 		secondary: null,
+		target: "normal",
+		type: "Grass",
+	},
+	// PokemonDeadChannel
+	"debug": {
+		onModifyMove(move, pokemon) {
+			if (pokemon.positiveBoosts() && pokemon.positiveBoosts() > 0) move.multihit = pokemon.positiveBoosts();
+		},
+		accuracy: true,
+		basePower: 7,
+		category: "Physical",
+		desc: "Hits for the amount of positive stat boosts this user has (1 if no stat boosts.). Uses Metronome after every hit.",
+		id: "debug",
+		isNonstandard: "Custom",
+		name: "Debug",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Conversion', source);
+		},
+		self: {
+			onHit(source) {
+				this.useMove('metronome', source);
+			},
+		},
 		target: "normal",
 		type: "Grass",
 	},
