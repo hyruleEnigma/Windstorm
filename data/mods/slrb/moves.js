@@ -601,12 +601,12 @@ let BattleMovedex = {
 			if (allies.length == 1) {
 				if ((Math.floor(this.random() * 100)+1)<61) {
 					this.boost({spa: 2}, pokemon);
-					this.add('-anim', source, "Extreme Evoboost", source);
+					this.add('-anim', pokemon, "Extreme Evoboost", pokemon);
 				}
 			} else {
 				if ((Math.floor(this.random() * 100)+1)<31) {
 					this.boost({spa: 2}, pokemon);
-					this.add('-anim', source, "Extreme Evoboost", source);
+					this.add('-anim', pokemon, "Extreme Evoboost", pokemon);
 				}
 			}
 		},
