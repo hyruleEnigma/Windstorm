@@ -34,6 +34,10 @@ let BattlePokedex = {
 		inherit: true,
 		types: ['Fairy', 'Steel'],
 	},
+	// GeoffBruedly
+	feebas: {
+		baseStats: {hp: 100, atk: 150, def: 90, spa: 180, spd: 160, spe: 90},
+	},
 	// MdPikachu
 	pikachu: {
 		inherit: true,
