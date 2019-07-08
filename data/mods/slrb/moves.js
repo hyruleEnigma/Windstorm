@@ -179,6 +179,29 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Fairy",
 	},
+	// BetaDog
+	"snuggles": {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "Lowers the target's Attack and Sp. Attack by 2 stages. Raises user's Defense and Sp. Defense by 1 stage.",
+		shortDesc: "Target: -2 Atk/SpA. User: +1 Def/SpD.",
+		id: "snuggles",
+		name: "Snuggles",
+		pp: 40,
+		priority: 0,
+		flags: {protect: 1, reflectable: 1, mirror: 1},
+		onTryMove(attacker, defender, move) {
+			this.boost({def: 1, spd: 1}, attacker, attacker, move);
+		},
+		boosts: {
+			atk: -2,
+			spa: -2,
+		},
+		secondary: null,
+		target: "normal",
+		type: "Dark",
+	},
 	// Big Boy Teddy
 	"poweroffluff": {
 		accuracy: true,
@@ -412,6 +435,7 @@ let BattleMovedex = {
 		shortDesc: "Charges, then hits foe(s) turn 2. Traps, confuses, and paralyzes.",
 		id: "fmagikarp",
 		name: "f Magikarp",
+		isNonstandard: "Custom",
 		pp: 10,
 		priority: 0,
 		flags: {charge: 1, protect: 1, mirror: 1},
