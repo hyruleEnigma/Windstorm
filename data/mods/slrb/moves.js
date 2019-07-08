@@ -415,17 +415,17 @@ let BattleMovedex = {
 		pp: 10,
 		priority: 0,
 		flags: {charge: 1, protect: 1, mirror: 1},
+		volatileStatus: 'partiallytrapped',
 		onTryMove(attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
 				return;
 			}
 			this.add('-nothing');
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
+				defender.addVolatile('confusion');
+				defender.trySetStatus('par');
 				return;
 			}
-			defender.addVolatile('confusion');
-			defender.addVolatile('bind');
-			defender.trySetStatus('par');
 			attacker.addVolatile('twoturnmove', defender);
 			return null;
 		},
