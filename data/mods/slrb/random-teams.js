@@ -113,6 +113,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Busted',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Hasty',
 			},
+			'Flare': {
+				species: 'Feebas', ability: 'Primordial Sea', item: 'Leftovers', gender: 'M',
+				moves: ['Scald', 'Ice Beam', 'Thunder'],
+				signatureMove: 'f Magikarp',
+				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Modest',
+			},
 			'Host Joe': {
 				species: 'Hoopa-Unbound', ability: 'Magician', item: 'Choice Band', gender: 'M',
 				moves: ['Gunk Shot', 'Fire Punch', 'Drain Punch'],
