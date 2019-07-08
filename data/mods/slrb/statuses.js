@@ -44,7 +44,7 @@ let BattleStatuses = {
 		onFaint() {
 			this.add(`c| A Phantom|neat`);
 		},
-},
+	},
 	afkrchastl: {
 		noCopy: true,
 		onStart: function () {
@@ -160,6 +160,18 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|#fart|the things I do for love...`);
+		},
+	},
+	geoffbruedly: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add(`c| GeoffBruedly|I am the one... who lost his soul... I am the one who'll be the last one standing`);
+		},
+		onSwitchOut() {
+			this.add(`c| GeoffBruedly|time to surrender like the French`);
+		},
+		onFaint() {
+			this.add(`c| GeoffBruedly|I never saw France!`);
 		},
 	},
 	hostjoe: {
