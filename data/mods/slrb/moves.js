@@ -403,6 +403,36 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Dark",
 	},
+	// GeoffBruedly
+	"fmagikarp": {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "Has a higher chance for a critical hit. This attack charges on the first turn and executes on the second. If the user is holding a Power Herb, the move completes in one turn.",
+		shortDesc: "Charges, then hits foe(s) turn 2. High crit ratio.",
+		id: "fmagikarp",
+		name: "f Magikarp",
+		pp: 10,
+		priority: 0,
+		flags: {charge: 1, protect: 1, mirror: 1},
+		onTryMove(attacker, defender, move) {
+			if (attacker.removeVolatile(move.id)) {
+				return;
+			}
+			this.add('-nothing');
+			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
+				return;
+			}
+			defender.addVolatile('confusion');
+			defender.addVolatile('bind');
+			defender.trySetStatus('par');
+			attacker.addVolatile('twoturnmove', defender);
+			return null;
+		},
+		secondary: null,
+		target: "normal",
+		type: "Water",
+	},
 	// Host Joe
 	"infiniteabyss": {
 		accuracy: 100,
