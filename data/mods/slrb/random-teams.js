@@ -71,6 +71,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Hyperlink',
 				evs: {hp: 248, spa: 8, def: 252}, nature: 'Bold',
 			},
+			'BetaDog': {
+				species: 'Houndour', ability: 'Fluffy Paws', item: 'Eviolite', gender: 'M',
+				moves: ['Fire Blast', 'Night Daze', 'Slack Off'],
+				signatureMove: 'Snuggles',
+				evs: {def: 4, spa: 252, spe: 4}, nature: 'Modest', shiny: true,
+			},
 			'Big Boy Teddy': {
 				species: 'Bewear', ability: 'Fur Coat', item: 'Life Orb', gender: 'M',
 				moves: ['Knock Off', 'Drain Punch', 'Cotton Guard'],
