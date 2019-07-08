@@ -37,6 +37,7 @@ let BattleAliases = {
 	"bf": "[Gen 7] Battle Factory",
 	"gen6bf": "[Gen 6] Battle Factory",
 	"ssb": "[Gen 7] Super Staff Bros Brawl",
+	"slrb": "[Gen 7] Super Lobby Regular Bros",
 
 	// mega evos
 	"fabio": "Ampharos-Mega",
