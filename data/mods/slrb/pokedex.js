@@ -12,6 +12,7 @@ let BattlePokedex = {
 	// A
 	mew: {
 		inherit: true,
+		abilities: {0: 'Arcane Tactics'},
 		types: ['Psychic', 'Fairy'],
 	},
 	// A Phantom
