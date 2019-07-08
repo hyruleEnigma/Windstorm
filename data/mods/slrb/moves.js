@@ -418,12 +418,12 @@ let BattleMovedex = {
 		volatileStatus: 'partiallytrapped',
 		onTryMove(attacker, defender, move) {
 			if (attacker.removeVolatile(move.id)) {
+				defender.addVolatile('confusion');
+				defender.trySetStatus('par');
 				return;
 			}
 			this.add('-nothing');
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
-				defender.addVolatile('confusion');
-				defender.trySetStatus('par');
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
