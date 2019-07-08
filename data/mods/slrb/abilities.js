@@ -56,6 +56,20 @@ let BattleAbilities = {
 		id: "vibrant",
 		name: "vibrant",
 	},
+	// BetaDog
+	fluffypaws: {
+		desc: "This Pokemon's Status moves have their priority increased by 1. Defense doubled.",
+		shortDesc: "Prankster + Fur Coat",
+		id: "fluffypaws",
+		name: "Fluffy Paws",
+		isNonstandard: "Custom",
+		onModifyPriority(priority, pokemon, target, move) {
+			if (move && move.category === 'Status') return priority + 1;
+		},
+		onModifyDef: function (def) {
+			return this.chainModify(2);
+		},
+	},
 	// brownisaur
 	"sweetdisguise": {
 		desc: "If this Pokemon is a Bulbasaur, the first hit it takes in battle deals 0 neutral damage. Its disguise is then broken. Confusion damage also breaks the disguise.",
