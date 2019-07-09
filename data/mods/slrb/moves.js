@@ -159,8 +159,8 @@ let BattleMovedex = {
 	},
 	// barton
 	"hyperlink": {
-		accuracy: 100,
-		basePower: 75,
+		accuracy: 90,
+		basePower: 60,
 		category: "Special",
 		desc: "Has a 50% chance to force the target to switch.",
 		id: "hyperlink",
