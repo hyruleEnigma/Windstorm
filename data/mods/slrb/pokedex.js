@@ -59,6 +59,15 @@ let BattlePokedex = {
 		inherit: true,
 		abilities: {0: 'Shadow Nerd'},
 	},
+	// Elena Bonita
+	lopunny: {
+		inherit: true,
+		abilities: {0: 'Fur Coat'},
+	},
+	lopunnymega: {
+		inherit: true,
+		abilities: {0: 'Fur Coat'},
+	},
 	// fart
 	kartana: {
 		inherit: true,
