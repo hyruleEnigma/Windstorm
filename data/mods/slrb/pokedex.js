@@ -168,6 +168,12 @@ let BattlePokedex = {
 		inherit: true,
 		abilities: {0: 'Neuroforce'},
 	},
+	// Servine
+	servine: {
+		inherit: true,
+		baseStats: {hp: 60, atk: 100, def: 115, spa: 100, spd: 115, spe: 123},
+		abilities: {0: 'Contrary'},
+	},
 	// Tauon
 	skarmory: {
 		inherit: true,
