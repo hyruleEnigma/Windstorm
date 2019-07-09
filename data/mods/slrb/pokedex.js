@@ -34,6 +34,7 @@ let BattlePokedex = {
 	// Barton
 	houndour: {
 		inherit: true,
+		baseStats: {hp: 90, atk: 120, def: 60, spa: 160, spd: 100, spe: 130},
 		abilities: {0: 'Fluffy Paws'},
 	},
 	// Big Boy Teddy
