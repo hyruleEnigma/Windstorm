@@ -956,8 +956,7 @@ let BattleMovedex = {
 			this.attrLastMove('[still]');
 		},
 		onPrepareHit(target, source) {
-			this.add('-anim', source, "Coil", source);
-			this.add('-anim', source, "Extreme Evoboost", source);
+			this.add('-anim', source, "Ingrain", source);
 			target.addVolatile('ingrain');
 		},
 		self: {
