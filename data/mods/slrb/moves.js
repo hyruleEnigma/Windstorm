@@ -702,7 +702,7 @@ let BattleMovedex = {
 		id: "rainbowpower",
 		name: "Rainbow Power",
 		isNonstandard: "Custom",
-		pp: 1,
+		pp: 2,
 		priority: 0,
 		flags: {snatch: 1},
 		onTryMove() {
@@ -729,7 +729,8 @@ let BattleMovedex = {
 		},
 		target: "self",
 		type: "Psychic",
-},
+		noPPBoosts: true
+	},
 	// MdPikachu	
 	"report": {
 		accuracy: 100,
@@ -938,6 +939,36 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Psychic",
         zMovePower: 185,
+	},
+	// Servine
+	"favorableexpenditureentitlement": {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "This move lowers the user's Defense and Special Defense by 1 stage. Additionally, it adds the Ingrain volatile status.",
+		shortDesc: "Lowers Def/SpD by 1. Adds Ingrain.",
+		id: "favorableexpenditureentitlement",
+		name: "Favorable Expenditure Entitlement",
+		pp: 10,
+		priority: 0,
+		flags: {snatch:1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Coil", source);
+			this.add('-anim', source, "Extreme Evoboost", source);
+			target.addVolatile('ingrain');
+		},
+		self: {
+			boosts: {
+				def: -1,
+				spd: -1,
+			},
+		},
+		target: "self",
+		type: "Grass",
+		noPPBoosts: true,
 	},
 	// Tauon
 	boi: {
