@@ -87,6 +87,18 @@ let BattleStatuses = {
 			return ["Ghost", "Grass"];
 		},
 	},
+	betadog: {
+		noCopy: true, 
+		onStart: function () {
+			this.add(`c|+BetaDog|Oh, hi! I brought some blankets!`);
+		},
+		onSwitchOut: function () {
+			this.add(`c|+BetaDog|BRB getting blankets`);
+		},
+		onFaint: function () {
+			this.add(`c|+BetaDog|Not enough blankets?`);
+		},
+	},
 	bigboyteddy: {
 		noCopy: true, 
 		onStart: function () {
