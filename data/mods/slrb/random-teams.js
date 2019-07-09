@@ -227,6 +227,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Sacred Mist',
 				evs: {hp: 252, def: 252, spa: 4}, nature: 'Bold',
 			},
+			'Servine': {
+				species: 'Servine', ability: 'Contrary', item: 'Wide Lens', gender: 'M',
+				moves: ['Leaf Storm', 'Draco Meteor', 'Overheat'],
+				signatureMove: 'Favorable Expenditure Entitlement',
+				evs: {hp: 4, spa: 252, spe: 252}, nature: 'Modest',
+			},
 			'Tauon': {
 				species: 'Skarmory', ability: 'Gale Wings v1', item: 'Sharp Beak', gender: 'M',
 				moves: ['Swords Dance', 'Roost', ['Taunt', 'Stealth Rock']],
