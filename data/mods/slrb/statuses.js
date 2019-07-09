@@ -161,6 +161,18 @@ let BattleStatuses = {
 			this.add(`c| CJtheGold ☯|Cya nerds <3`);
 		},
 	},
+	elenabonita: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add(`c| Elena Bonita|Hugs for everyone <3`);
+		},
+		onSwitchOut() {
+			this.add(`c| Elena Bonita|brb hitting the gym`);
+		},
+		onFaint() {
+			this.add(`c| Elena Bonita|Love hurts </3>`);
+		},
+	},
 	fart: {
 		noCopy: true,
 		onStart(target, source) {
