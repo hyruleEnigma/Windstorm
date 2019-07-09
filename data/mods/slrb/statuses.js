@@ -350,6 +350,19 @@ let BattleStatuses = {
            this.add(`c|%SacredLatias|Them spoopnoodles finally got the best of me...`);
        },
    },
+	// Cant use the exact name because its a pokemon's name
+	servinesuser: {
+		noCopy: true,
+		onStart() {
+			this.add(`c| Servine|You're going to regret this \\hah pessimism\\`);
+		},
+		onSwitchOut() {
+			this.add(`c| Servine|Let me help you with your baggage.`);
+		},
+		onFaint() {
+			this.add(`c| Servine|eat pant`);
+		},
+},
 	tenshi: {
 		noCopy: true, 
 		onStart() {
