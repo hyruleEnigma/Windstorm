@@ -359,8 +359,8 @@ let BattleMovedex = {
 			if (this.random(100) >= 15) {
 				target.addVolatile('attract');
 			}
+			this.heal(target.maxhp / 2);
 		},
-		heal: [1, 2],
 		target: "normal",
 		type: "Fairy",
 },
