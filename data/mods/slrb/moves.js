@@ -356,7 +356,7 @@ let BattleMovedex = {
 			this.attrLastMove('[still]');
 		},
 		onHit(target, source, move) {
-			if (this.random(100) >== 15) {
+			if (this.random(100) >= 15) {
 				target.addVolatile('attract');
 			}
 		},
