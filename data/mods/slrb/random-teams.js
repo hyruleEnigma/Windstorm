@@ -107,6 +107,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Touch of Midas',
 				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
 			},
+			'Elena Bonita': {
+				species: 'Lopunny', ability: 'Fur Coat', item: 'Lopunnite', gender: 'F',
+				moves: ['Fake Out', 'High Jump Kick', 'Lovely Kiss'],
+				signatureMove: 'Undying Love',
+				evs: {atk: 252, def: 4, spe: 252}, nature: 'Jolly',
+			},
 			'fart': {
 				species: 'Kartana', ability: 'Heat Rises', item: 'Fartium-Z', gender: 'M',
 				moves: ['Sunsteel Strike', 'Play Rough', 'U-turn'],
