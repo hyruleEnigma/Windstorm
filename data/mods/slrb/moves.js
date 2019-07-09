@@ -341,6 +341,29 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Ground",
 	},
+	// Elena Bonita
+	"undyinglove": {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "Has a 85% chance to infatuate the target. Heals 50%.",
+		id: "undyinglove",
+		name: "Undying Love",
+		pp: 10,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onHit(target, source, move) {
+			if (this.random(100) >== 15) {
+				target.addVolatile('attract');
+			}
+		},
+		heal: [1, 2],
+		target: "normal",
+		type: "Fairy",
+},
 	// fart
 	souptime: {
 		accuracy: 100,
