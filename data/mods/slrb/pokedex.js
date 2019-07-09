@@ -18,27 +18,66 @@ let BattlePokedex = {
 	// A Phantom
 	phantump: {
 		inherit: true,
+		abilities: {0: 'Phantom Flex'},
 		baseStats: {hp: 86, atk: 100, def: 96, spa: 140, spd: 120, spe: 76},
+	},
+	// ArchasTL
+	lilligant: {
+		inherit: true,
+		abilities: {0: 'AFK'},
+	},
+	// Barton
+	clefable: {
+		inherit: true,
+		abilities: {0: 'Vibrant'},
+	},
+	// Barton
+	houndour: {
+		inherit: true,
+		abilities: {0: 'Fluffy Paws'},
+	},
+	// Big Boy Teddy
+	bewear: {
+		inherit: true,
+		abilities: {0: 'Fur Coat'},
 	},
 	// brownisaur
 	bulbasaur: {
 		inherit: true,
 		types: ['Fairy', 'Psychic'],
+		abilities: {0: 'Sweet Disguise'},
 	},
 	// CJer
 	porygon: {
 		inherit: true,
 		baseStats: {hp: 105, atk: 100, def: 110, spa: 125, spd: 115, spe: 80},
+		abilities: {0: 'Corrosion'},
+	},
+	// CJtheGold
+	marshadow: {
+		inherit: true,
+		abilities: {0: 'Shadow Nerd'},
 	},
 	// fart
 	kartana: {
 		inherit: true,
 		types: ['Fairy', 'Steel'],
 	},
+	// Flare
+	zoroark: {
+		inherit: true,
+		abilities: {0: 'Super Illusion'},
+	},
 	// GeoffBruedly
 	feebas: {
 		inherit: true,
 		baseStats: {hp: 100, atk: 150, def: 90, spa: 180, spd: 160, spe: 90},
+		abilities: {0: 'Primordial Sea'},
+	},
+	// hyruleEnigma
+	aegislash: {
+		inherit: true,
+		abilities: {0: 'Red Tunic'},
 	},
 	// MdPikachu
 	pikachu: {
