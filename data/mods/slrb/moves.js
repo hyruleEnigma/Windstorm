@@ -423,7 +423,7 @@ let BattleMovedex = {
 			this.add('-anim', source, 'Let\'s Snuggle Forever', target);
 		},
 		onHit() {
-			this.add(`c|+fart|did someone say soup?`);
+			this.add(`c|#fart|did someone say soup?`);
 		},
 		isZ: "fartiumz",
 		target: "normal",
