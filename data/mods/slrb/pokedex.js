@@ -72,6 +72,7 @@ let BattlePokedex = {
 	kartana: {
 		inherit: true,
 		types: ['Fairy', 'Steel'],
+		abilities: {0: 'Heat Rises'},
 	},
 	// Flare
 	zoroark: {
