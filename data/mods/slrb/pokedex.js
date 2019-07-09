@@ -79,10 +79,46 @@ let BattlePokedex = {
 		inherit: true,
 		abilities: {0: 'Red Tunic'},
 	},
+	// i want a lamp
+	venomoth: {
+		inherit: true,
+		abilities: {0: 'Flashdrive'},
+	},
+	// Krookies
+	krookodile: {
+		inherit: true,
+		abilities: {0: 'Moxie'},
+	},
+	// Lumi Q
+	scizor: {
+		inherit: true,
+		abilities: {0: 'Jolt Haymaker'},
+	},
+	// MajesticAngelo
+	greninja: {
+		inherit: true,
+		abilities: {0: 'Protean'},
+	},
+	// Marukomuru
+	oricoriopompom: {
+		inherit: true,
+		abilities: {0: 'Shield Dust'},
+	},
 	// MdPikachu
 	pikachu: {
 		inherit: true,
 		baseStats: {hp: 70, atk: 110, def: 80, spa: 100, spd: 100, spe: 180},
+		abilities: {0: 'Prankster'},
+	},
+	// MobileGreenNamed
+	rotomheat: {
+		inherit: true,
+		abilities: {0: 'Adaptability'},
+	},
+	// MoxieLatios
+	latios: {
+		inherit: true,
+		abilities: {0: 'Moxie'},
 	},
 	// Moxie Latios
 	latiosmega: {
@@ -91,10 +127,51 @@ let BattlePokedex = {
 		types: ['Dragon', 'Ground'],
 		baseStats: {hp: 80, atk: 160, def: 100, spa: 130, spd: 120, spe: 110},
 	},
+	// mustard
+	azelf: {
+		inherit: true,
+		abilities: {0: 'Huge Power'},
+	},
+	// pinkdragontamer
+	hydreigon: {
+		inherit: true,
+		abilities: {0: 'Contrary'},
+	},
+	// Polestar Obey
+	lucario: {
+		inherit: true,
+		abilities: {0: 'Fallen Warriors'},
+	},
+	// PokemonDeadChannel
+	steenee: {
+		inherit: true,
+		abilities: {0: 'Wonder Guard'},
+	},
 	// rYGLY
 	monferno: {
 		inherit: true,
 		baseStats: {hp: 64, atk: 118, def: 92, spa: 118, spd: 92, spe: 121},
+		abilities: {0: 'Adaptability'},
+	},
+	// Sacred Latias
+	latias: {
+		inherit: true,
+		abilities: {0: 'Neuroforce'},
+	},
+	// Tauon
+	skarmory: {
+		inherit: true,
+		abilities: {0: 'Gale Wings v1'},
+	},
+	// Tenshi
+	stoutland: {
+		inherit: true,
+		abilities: {0: 'Miracle Sand'},
+	},
+	// VanillaBobcat
+	persian: {
+		inherit: true,
+		abilities: {0: 'Food Coma'},
 	},
 	// VanillaBobcat
 	persianalola: {
@@ -105,6 +182,7 @@ let BattlePokedex = {
 	torterra: {
 		inherit: true,
 		types: ['Grass', 'Rock'],
+		abilities: {0: 'Harvesting Summer'},
 	},
 };
 
