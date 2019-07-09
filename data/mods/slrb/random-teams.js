@@ -119,7 +119,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Busted',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Hasty',
 			},
-			'Flare': {
+			'GeoffBruedly': {
 				species: 'Feebas', ability: 'Primordial Sea', item: 'Leftovers', gender: 'M',
 				moves: ['Scald', 'Ice Beam', 'Thunder'],
 				signatureMove: 'f Magikarp',
