@@ -138,12 +138,11 @@ let BattlePokedex = {
 		types: ['Dragon', 'Ground'],
 		baseStats: {hp: 80, atk: 160, def: 100, spa: 130, spd: 120, spe: 110},
 	},
-<<<<<<< HEAD
 	// PokemonDeadChannel
 	ditto: {
 		inherit: true,
 		baseStats: {hp: 255, atk: 1, def: 1, spa: 1, spd: 1, spe: 1},
-=======
+	},
 	// mustard
 	azelf: {
 		inherit: true,
@@ -158,12 +157,6 @@ let BattlePokedex = {
 	lucario: {
 		inherit: true,
 		abilities: {0: 'Fallen Warriors'},
-	},
-	// PokemonDeadChannel
-	steenee: {
-		inherit: true,
-		abilities: {0: 'Wonder Guard'},
->>>>>>> cd2ff73de37a29bef2e581796fd2fe2c36cc9310
 	},
 	// rYGLY
 	monferno: {
