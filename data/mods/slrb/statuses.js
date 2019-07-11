@@ -44,7 +44,7 @@ let BattleStatuses = {
 		onFaint() {
 			this.add(`c| A Phantom|neat`);
 		},
-},
+	},
 	afkrchastl: {
 		noCopy: true,
 		onStart: function () {
@@ -85,6 +85,18 @@ let BattleStatuses = {
 		onTypePriority: 1,
 		onType: function (types, pokemon) {
 			return ["Ghost", "Grass"];
+		},
+	},
+	betadog: {
+		noCopy: true, 
+		onStart: function () {
+			this.add(`c|+BetaDog|Oh, hi! I brought some blankets!`);
+		},
+		onSwitchOut: function () {
+			this.add(`c|+BetaDog|BRB getting blankets`);
+		},
+		onFaint: function () {
+			this.add(`c|+BetaDog|Not enough blankets?`);
 		},
 	},
 	bigboyteddy: {
@@ -149,6 +161,18 @@ let BattleStatuses = {
 			this.add(`c| CJtheGold ☯|Cya nerds <3`);
 		},
 	},
+	elenabonita: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add(`c| Elena Bonita|Hugs for everyone <3`);
+		},
+		onSwitchOut() {
+			this.add(`c| Elena Bonita|brb hitting the gym`);
+		},
+		onFaint() {
+			this.add(`c| Elena Bonita|Love hurts </3>`);
+		},
+	},
 	fart: {
 		noCopy: true,
 		onStart(target, source) {
@@ -160,6 +184,18 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|#fart|the things I do for love...`);
+		},
+	},
+	geoffbruedly: {
+		noCopy: true,
+		onStart(target, source) {
+			this.add(`c| GeoffBruedly|I am the one... who lost his soul... I am the one who'll be the last one standing`);
+		},
+		onSwitchOut() {
+			this.add(`c| GeoffBruedly|time to surrender like the French`);
+		},
+		onFaint() {
+			this.add(`c| GeoffBruedly|I never saw France!`);
 		},
 	},
 	hostjoe: {
@@ -314,6 +350,19 @@ let BattleStatuses = {
            this.add(`c|%SacredLatias|Them spoopnoodles finally got the best of me...`);
        },
    },
+	// Cant use the exact name because its a pokemon's name
+	servinesuser: {
+		noCopy: true,
+		onStart() {
+			this.add(`c| Servine|You're going to regret this \\hah pessimism\\`);
+		},
+		onSwitchOut() {
+			this.add(`c| Servine|Let me help you with your baggage.`);
+		},
+		onFaint() {
+			this.add(`c| Servine|eat pant`);
+		},
+},
 	tenshi: {
 		noCopy: true, 
 		onStart() {

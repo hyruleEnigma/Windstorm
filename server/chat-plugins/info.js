@@ -1408,14 +1408,26 @@ const commands = {
 	git: 'opensource',
 	opensource(target, room, user) {
 		if (!this.runBroadcast()) return;
-		this.sendReplyBox(
-			`Pok&eacute;mon Showdown is open source:<br />` +
-			`- Language: JavaScript (Node.js)<br />` +
-			`- <a href="https://github.com/Zarel/Pokemon-Showdown/commits/master">What's new?</a><br />` +
-			`- <a href="https://github.com/Zarel/Pokemon-Showdown">Server source code</a><br />` +
-			`- <a href="https://github.com/Zarel/Pokemon-Showdown-Client">Client source code</a><br />` +
-			`- <a href="https://github.com/Zarel/Pokemon-Showdown-Dex">Dex source code</a>`
-		);
+		if (this.can('declare', null, room)) {
+			this.sendReplyBox(
+				`Pok&eacute;mon Showdown is open source:<br />` +
+				`- Language: JavaScript (Node.js)<br />` +
+				`- <a href="https://github.com/Zarel/Pokemon-Showdown/commits/master">What's new?</a><br />` +
+				`- <a href="https://github.com/Zarel/Pokemon-Showdown">Server source code</a><br />` +
+				`- <a href="https://github.com/Zarel/Pokemon-Showdown-Client">Client source code</a><br />` +
+				`- <a href="https://github.com/Zarel/Pokemon-Showdown-Dex">Dex source code</a><br />` +
+				`- <a href="https://github.com/Torracat/Windstorm">Windstorm source code</a>`
+			);
+		} else {
+			this.sendReplyBox(
+				`Pok&eacute;mon Showdown is open source:<br />` +
+				`- Language: JavaScript (Node.js)<br />` +
+				`- <a href="https://github.com/Zarel/Pokemon-Showdown/commits/master">What's new?</a><br />` +
+				`- <a href="https://github.com/Zarel/Pokemon-Showdown">Server source code</a><br />` +
+				`- <a href="https://github.com/Zarel/Pokemon-Showdown-Client">Client source code</a><br />` +
+				`- <a href="https://github.com/Zarel/Pokemon-Showdown-Dex">Dex source code</a>`
+			);
+		}
 	},
 	opensourcehelp: [
 		`/opensource - Links to PS's source code repository.`,

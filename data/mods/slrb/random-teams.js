@@ -71,6 +71,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Hyperlink',
 				evs: {hp: 248, spa: 8, def: 252}, nature: 'Bold',
 			},
+			'BetaDog': {
+				species: 'Houndour', ability: 'Fluffy Paws', item: 'Eviolite', gender: 'M',
+				moves: ['Fire Blast', 'Night Daze', 'Slack Off'],
+				signatureMove: 'Snuggles',
+				evs: {def: 4, spa: 252, spe: 4}, nature: 'Modest', shiny: true,
+			},
 			'Big Boy Teddy': {
 				species: 'Bewear', ability: 'Fur Coat', item: 'Life Orb', gender: 'M',
 				moves: ['Knock Off', 'Drain Punch', 'Cotton Guard'],
@@ -101,6 +107,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Touch of Midas',
 				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
 			},
+			'Elena Bonita': {
+				species: 'Lopunny', ability: 'Fur Coat', item: 'Lopunnite', gender: 'F',
+				moves: ['Fake Out', 'High Jump Kick', 'Lovely Kiss'],
+				signatureMove: 'Undying Love',
+				evs: {atk: 252, def: 4, spe: 252}, nature: 'Jolly',
+			},
 			'fart': {
 				species: 'Kartana', ability: 'Heat Rises', item: 'Fartium-Z', gender: 'M',
 				moves: ['Sunsteel Strike', 'Play Rough', 'U-turn'],
@@ -112,6 +124,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				moves: ['Sludge Bomb', 'Nasty Plot', 'U-turn'],
 				signatureMove: 'Busted',
 				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Hasty',
+			},
+			'GeoffBruedly': {
+				species: 'Feebas', ability: 'Primordial Sea', item: 'Leftovers', gender: 'M',
+				moves: ['Scald', 'Ice Beam', 'Thunder'],
+				signatureMove: 'f Magikarp',
+				evs: {spa: 252, spd: 4, spe: 252}, nature: 'Modest',
 			},
 			'Host Joe': {
 				species: 'Hoopa-Unbound', ability: 'Magician', item: 'Choice Band', gender: 'M',
@@ -208,6 +226,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				moves: ['Quiver Dance', 'Roost', 'Core Enforcer'],
 				signatureMove: 'Sacred Mist',
 				evs: {hp: 252, def: 252, spa: 4}, nature: 'Bold',
+			},
+			'Servine': {
+				species: 'Servine', ability: 'Contrary', item: 'Wide Lens', gender: 'M',
+				moves: ['Leaf Storm', 'Draco Meteor', 'Overheat'],
+				signatureMove: 'Favorable Expenditure Entitlement',
+				evs: {hp: 4, spa: 252, spe: 252}, nature: 'Modest',
 			},
 			'Tauon': {
 				species: 'Skarmory', ability: 'Gale Wings v1', item: 'Sharp Beak', gender: 'M',

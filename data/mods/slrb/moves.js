@@ -159,8 +159,8 @@ let BattleMovedex = {
 	},
 	// barton
 	"hyperlink": {
-		accuracy: 100,
-		basePower: 75,
+		accuracy: 90,
+		basePower: 60,
 		category: "Special",
 		desc: "Has a 50% chance to force the target to switch.",
 		id: "hyperlink",
@@ -178,6 +178,29 @@ let BattleMovedex = {
 		},
 		target: "normal",
 		type: "Fairy",
+	},
+	// BetaDog
+	"snuggles": {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "Lowers the target's Attack and Sp. Attack by 2 stages. Raises user's Defense and Sp. Defense by 1 stage.",
+		shortDesc: "Target: -2 Atk/SpA. User: +1 Def/SpD.",
+		id: "snuggles",
+		name: "Snuggles",
+		pp: 40,
+		priority: 0,
+		flags: {protect: 1, reflectable: 1, mirror: 1},
+		onTryMove(attacker, defender, move) {
+			this.boost({def: 1, spd: 1}, attacker, attacker, move);
+		},
+		boosts: {
+			atk: -2,
+			spa: -2,
+		},
+		secondary: null,
+		target: "normal",
+		type: "Dark",
 	},
 	// Big Boy Teddy
 	"poweroffluff": {
@@ -318,6 +341,29 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Ground",
 	},
+	// Elena Bonita
+	"undyinglove": {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "Has a 85% chance to infatuate the target. Heals 50%.",
+		id: "undyinglove",
+		name: "Undying Love",
+		pp: 10,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onHit(target, source, move) {
+			if (this.random(100) >= 15) {
+				target.addVolatile('attract');
+			}
+				this.heal(source.maxhp / 2, source);
+		},
+		target: "normal",
+		type: "Fairy",
+},
 	// fart
 	souptime: {
 		accuracy: 100,
@@ -377,7 +423,7 @@ let BattleMovedex = {
 			this.add('-anim', source, 'Let\'s Snuggle Forever', target);
 		},
 		onHit() {
-			this.add(`c|+fart|did someone say soup?`);
+			this.add(`c|#fart|did someone say soup?`);
 		},
 		isZ: "fartiumz",
 		target: "normal",
@@ -402,6 +448,37 @@ let BattleMovedex = {
 		secondary: null,
 		target: "normal",
 		type: "Dark",
+	},
+	// GeoffBruedly
+	"fmagikarp": {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "This attack does nothing on the first turn and executes on the second. Traps, confuses, and paralyzes.",
+		shortDesc: "Charges, then hits foe(s) turn 2. Traps, confuses, and paralyzes.",
+		id: "fmagikarp",
+		name: "f Magikarp",
+		isNonstandard: "Custom",
+		pp: 10,
+		priority: 0,
+		flags: {charge: 1, protect: 1, mirror: 1},
+		volatileStatus: 'partiallytrapped',
+		onTryMove(attacker, defender, move) {
+			if (attacker.removeVolatile(move.id)) {
+				defender.addVolatile('confusion');
+				defender.trySetStatus('par');
+				return;
+			}
+			this.add('-nothing');
+			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
+				return;
+			}
+			attacker.addVolatile('twoturnmove', defender);
+			return null;
+		},
+		secondary: null,
+		target: "normal",
+		type: "Water",
 	},
 	// Host Joe
 	"infiniteabyss": {
@@ -601,12 +678,12 @@ let BattleMovedex = {
 			if (allies.length == 1) {
 				if ((Math.floor(this.random() * 100)+1)<61) {
 					this.boost({spa: 2}, pokemon);
-					this.add('-anim', source, "Extreme Evoboost", source);
+					this.add('-anim', pokemon, "Extreme Evoboost", pokemon);
 				}
 			} else {
 				if ((Math.floor(this.random() * 100)+1)<31) {
 					this.boost({spa: 2}, pokemon);
-					this.add('-anim', source, "Extreme Evoboost", source);
+					this.add('-anim', pokemon, "Extreme Evoboost", pokemon);
 				}
 			}
 		},
@@ -625,7 +702,7 @@ let BattleMovedex = {
 		id: "rainbowpower",
 		name: "Rainbow Power",
 		isNonstandard: "Custom",
-		pp: 1,
+		pp: 2,
 		priority: 0,
 		flags: {snatch: 1},
 		onTryMove() {
@@ -652,7 +729,8 @@ let BattleMovedex = {
 		},
 		target: "self",
 		type: "Psychic",
-},
+		noPPBoosts: true
+	},
 	// MdPikachu	
 	"report": {
 		accuracy: 100,
@@ -862,6 +940,35 @@ let BattleMovedex = {
 		type: "Psychic",
         zMovePower: 185,
 	},
+	// Servine
+	"favorableexpenditureentitlement": {
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "This move lowers the user's Defense and Special Defense by 1 stage. Additionally, it adds the Ingrain volatile status.",
+		shortDesc: "Lowers Def/SpD by 1. Adds Ingrain.",
+		id: "favorableexpenditureentitlement",
+		name: "Favorable Expenditure Entitlement",
+		pp: 10,
+		priority: 0,
+		flags: {snatch:1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Ingrain", source);
+			target.addVolatile('ingrain');
+		},
+		self: {
+			boosts: {
+				def: -1,
+				spd: -1,
+			},
+		},
+		target: "self",
+		type: "Grass",
+		noPPBoosts: true,
+	},
 	// Tauon
 	boi: {
 		accuracy: 100,
@@ -1009,6 +1116,59 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Normal",
 	},
+	"attract": {
+		num: 213,
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "Causes the target to become infatuated, making it unable to attack 50% of the time. Fails if both the user and the target are the same gender, if either is genderless, or if the target is already infatuated. The effect ends when either the user or the target is no longer active. Pokemon with the Oblivious Ability or protected by the Aroma Veil Ability are immune.",
+		shortDesc: "A target of the opposite gender gets infatuated.",
+		id: "attract",
+		name: "Attract",
+		pp: 15,
+		priority: 0,
+		flags: {protect: 1, reflectable: 1, mirror: 1, authentic: 1},
+		volatileStatus: 'attract',
+		effect: {
+			noCopy: true, // doesn't get copied by Baton Pass
+			onStart(pokemon, source, effect) {
+				if (!this.runEvent('Attract', pokemon, source)) {
+					this.debug('Attract event failed');
+					return false;
+				}
+
+				if (effect.id === 'cutecharm') {
+					this.add('-start', pokemon, 'Attract', '[from] ability: Cute Charm', '[of] ' + source);
+				} else if (effect.id === 'destinyknot') {
+					this.add('-start', pokemon, 'Attract', '[from] item: Destiny Knot', '[of] ' + source);
+				} else {
+					this.add('-start', pokemon, 'Attract');
+				}
+			},
+			onUpdate(pokemon) {
+				if (this.effectData.source && !this.effectData.source.isActive && pokemon.volatiles['attract']) {
+					this.debug('Removing Attract volatile on ' + pokemon);
+					pokemon.removeVolatile('attract');
+				}
+			},
+			onBeforeMovePriority: 2,
+			onBeforeMove(pokemon, target, move) {
+				this.add('-activate', pokemon, 'move: Attract', '[of] ' + this.effectData.source);
+				if (this.randomChance(1, 2)) {
+					this.add('cant', pokemon, 'Attract');
+					return false;
+				}
+			},
+			onEnd(pokemon) {
+				this.add('-end', pokemon, 'Attract', '[silent]');
+			},
+		},
+		secondary: null,
+		target: "normal",
+		type: "Normal",
+		zMoveEffect: 'clearnegativeboost',
+		contestType: "Cute",
+},
 };
 
 exports.BattleMovedex = BattleMovedex;
