@@ -46,6 +46,11 @@ let BattlePokedex = {
 		types: ['Dragon', 'Ground'],
 		baseStats: {hp: 80, atk: 160, def: 100, spa: 130, spd: 120, spe: 110},
 	},
+	// PokemonDeadChannel
+	ditto: {
+		inherit: true,
+		baseStats: {hp: 255, atk: 1, def: 1, spa: 1, spd: 1, spe: 1},
+	},
 	// rYGLY
 	monferno: {
 		inherit: true,

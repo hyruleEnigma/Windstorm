@@ -1,5 +1,5 @@
 'use strict';
-
+const RandomStaffBrosTeams = require('./random-teams'); // PDC's ability
 /**@type {{[k: string]: ModdedAbilityData}} */
 let BattleAbilities = {
 	/*
@@ -13,6 +13,89 @@ let BattleAbilities = {
 		// For more examples, see https://github.com/Zarel/Pokemon-Showdown/blob/master/data/abilities.js
 	},
 	*/
+	// PokemonDeadChannel
+	remix: {
+		desc: "This Pokemon's Flying-type moves have their priority increased by 1.",
+		shortDesc: "This Pokemon's Flying-type moves have their priority increased by 1.",
+		id: "remix",
+		name: "Remix",
+		isNonstandard: "Custom",
+		onStart(pokemon) {
+			if (this.activeMove && this.activeMove.id === 'skillswap') return;
+			let target = pokemon.side.foe.active[pokemon.side.foe.active.length - 1 - pokemon.position];
+			if (target) {
+				let targetTypes = target.getTypes(true).filter(type => type !== '???');
+				if (!targetTypes.length) {
+					if (target.addedType) {
+						targetTypes = ['Normal'];
+					} else {	
+						return false;
+					}
+				}
+				let weaknesses = [];
+				for (let type in this.data.TypeChart) {
+					let typeMod = this.getEffectiveness(type, targetTypes);
+					if (typeMod > 0 && this.getImmunity(type, target)) weaknesses.push(type);
+				}
+				if (!weaknesses.length) {
+					return false;
+				}
+				let validPokemon = ["Venusaur", "Charizard", "Blastoise", "Butterfree", "Beedrill", "Pidgeot", "Raticate", "Raticate-Alola", "Fearow", "Arbok", "Raichu", "Raichu-Alola", "Sandslash", "Sandslash-Alola", "Nidoqueen", "Nidoking", "Clefable", "Ninetales", "Ninetales-Alola", "Wigglytuff", "Vileplume", "Parasect", "Venomoth", "Dugtrio", "Dugtrio-Alola", "Persian", "Persian-Alola", "Golduck", "Primeape", "Arcanine", "Poliwrath", "Alakazam", "Machamp", "Victreebel", "Tentacruel", "Golem", "Golem-Alola", "Rapidash", "Slowbro", "Farfetch'd", "Dodrio", "Dewgong", "Muk", "Muk-Alola", "Cloyster", "Gengar", "Hypno", "Kingler", "Electrode", "Exeggutor", "Exeggutor-Alola", "Marowak", "Marowak-Alola", "Hitmonlee", "Hitmonchan", "Weezing", "Kangaskhan", "Seaking", "Starmie", "Mr. Mime", "Jynx", "Pinsir", "Tauros", "Gyarados", "Lapras", "Eevee-Starter", "Vaporeon", "Jolteon", "Flareon", "Omastar", "Kabutops", "Aerodactyl", "Snorlax", "Articuno", "Zapdos", "Moltres", "Dragonite", "Mewtwo", "Mew", "Meganium", "Typhlosion", "Feraligatr", "Furret", "Noctowl", "Ledian", "Ariados", "Crobat", "Lanturn", "Xatu", "Ampharos", "Bellossom", "Azumarill", "Sudowoodo", "Politoed", "Jumpluff", "Sunflora", "Quagsire", "Espeon", "Umbreon", "Slowking", "Wobbuffet", "Girafarig", "Forretress", "Dunsparce", "Steelix", "Granbull", "Qwilfish", "Scizor", "Shuckle", "Heracross", "Ursaring", "Magcargo", "Corsola", "Octillery", "Delibird", "Mantine", "Skarmory", "Houndoom", "Kingdra", "Donphan", "Stantler", "Smeargle", "Hitmontop", "Miltank", "Blissey", "Raikou", "Entei", "Suicune", "Tyranitar", "Lugia", "Ho-Oh", "Celebi", "Sceptile", "Blaziken", "Swampert", "Mightyena", "Linoone", "Beautifly", "Dustox", "Ludicolo", "Shiftry", "Swellow", "Pelipper", "Gardevoir", "Masquerain", "Breloom", "Slaking", "Ninjask", "Shedinja", "Exploud", "Hariyama", "Delcatty", "Sableye", "Mawile", "Aggron", "Medicham", "Manectric", "Plusle", "Minun", "Volbeat", "Illumise", "Swalot", "Sharpedo", "Wailord", "Camerupt", "Torkoal", "Grumpig", "Spinda", "Flygon", "Cacturne", "Altaria", "Zangoose", "Seviper", "Lunatone", "Solrock", "Whiscash", "Crawdaunt", "Claydol", "Cradily", "Armaldo", "Milotic", "Castform", "Kecleon", "Banette", "Tropius", "Chimecho", "Absol", "Glalie", "Walrein", "Huntail", "Gorebyss", "Relicanth", "Luvdisc", "Salamence", "Metagross", "Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza", "Jirachi", "Deoxys", "Deoxys-Attack", "Deoxys-Defense", "Deoxys-Speed", "Torterra", "Infernape", "Empoleon", "Staraptor", "Bibarel", "Kricketune", "Luxray", "Roserade", "Rampardos", "Bastiodon", "Wormadam", "Wormadam-Sandy", "Wormadam-Trash", "Mothim", "Vespiquen", "Pachirisu", "Floatzel", "Cherrim", "Gastrodon", "Ambipom", "Drifblim", "Lopunny", "Mismagius", "Honchkrow", "Purugly", "Skuntank", "Bronzong", "Chatot", "Spiritomb", "Garchomp", "Lucario", "Hippowdon", "Drapion", "Toxicroak", "Carnivine", "Lumineon", "Abomasnow", "Weavile", "Magnezone", "Lickilicky", "Rhyperior", "Tangrowth", "Electivire", "Magmortar", "Togekiss", "Yanmega", "Leafeon", "Glaceon", "Gliscor", "Mamoswine", "Porygon-Z", "Gallade", "Probopass", "Dusknoir", "Froslass", "Rotom", "Rotom-Heat", "Rotom-Wash", "Rotom-Frost", "Rotom-Fan", "Rotom-Mow", "Uxie", "Mesprit", "Azelf", "Dialga", "Palkia", "Heatran", "Regigigas", "Giratina", "Giratina-Origin", "Cresselia", "Phione", "Manaphy", "Darkrai", "Shaymin", "Shaymin-Sky", "Victini", "Serperior", "Emboar", "Samurott", "Watchog", "Stoutland", "Liepard", "Simisage", "Simisear", "Simipour", "Musharna", "Unfezant", "Zebstrika", "Gigalith", "Swoobat", "Excadrill", "Audino", "Conkeldurr", "Seismitoad", "Throh", "Sawk", "Leavanny", "Scolipede", "Whimsicott", "Lilligant", "Basculin", "Basculin-Blue-Striped", "Krookodile", "Darmanitan", "Maractus", "Crustle", "Scrafty", "Sigilyph", "Cofagrigus", "Carracosta", "Archeops", "Garbodor", "Zoroark", "Cinccino", "Gothitelle", "Reuniclus", "Swanna", "Vanilluxe", "Sawsbuck", "Emolga", "Escavalier", "Amoonguss", "Jellicent", "Alomomola", "Galvantula", "Ferrothorn", "Klinklang", "Eelektross", "Beheeyem", "Chandelure", "Haxorus", "Beartic", "Cryogonal", "Accelgor", "Stunfisk", "Mienshao", "Druddigon", "Golurk", "Bisharp", "Bouffalant", "Braviary", "Mandibuzz", "Heatmor", "Durant", "Hydreigon", "Volcarona", "Cobalion", "Terrakion", "Virizion", "Tornadus", "Tornadus-Therian", "Thundurus", "Thundurus-Therian", "Reshiram", "Zekrom", "Landorus", "Landorus-Therian", "Kyurem", "Kyurem-Black", "Kyurem-White", "Keldeo", "Meloetta", "Genesect", "Genesect-Douse", "Genesect-Shock", "Genesect-Burn", "Genesect-Chill", "Chesnaught", "Delphox", "Greninja", "Diggersby", "Talonflame", "Vivillon", "Pyroar", "Florges", "Gogoat", "Pangoro", "Furfrou", "Meowstic", "Meowstic-F", "Aegislash", "Aromatisse", "Slurpuff", "Malamar", "Barbaracle", "Dragalge", "Clawitzer", "Heliolisk", "Tyrantrum", "Aurorus", "Sylveon", "Hawlucha", "Dedenne", "Carbink", "Goodra", "Klefki", "Trevenant", "Gourgeist", "Gourgeist-Small", "Gourgeist-Large", "Gourgeist-Super", "Avalugg", "Noivern", "Xerneas", "Yveltal", "Zygarde", "Zygarde-10%", "Diancie", "Hoopa", "Hoopa-Unbound", "Volcanion", "Decidueye", "Incineroar", "Primarina", "Toucannon", "Gumshoos", "Vikavolt", "Crabominable", "Oricorio", "Oricorio-Pom-Pom", "Oricorio-Pa'u", "Oricorio-Sensu", "Ribombee", "Lycanroc", "Lycanroc-Midnight", "Lycanroc-Dusk", "Wishiwashi", "Toxapex", "Mudsdale", "Araquanid", "Lurantis", "Shiinotic", "Salazzle", "Bewear", "Tsareena", "Comfey", "Oranguru", "Passimian", "Golisopod", "Palossand", "Minior", "Komala", "Turtonator", "Togedemaru", "Mimikyu", "Bruxish", "Drampa", "Dhelmise", "Kommo-o", "Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Solgaleo", "Lunala", "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana", "Guzzlord", "Necrozma", "Necrozma-Dusk-Mane", "Necrozma-Dawn-Wings", "Magearna", "Marshadow", "Naganadel", "Stakataka", "Blacephalon", "Zeraora", "Melmetal", "Syclant", "Revenankh", "Pyroak", "Fidgit", "Stratagem", "Arghonaut", "Kitsunoh", "Cyclohm", "Colossoil", "Krilowatt", "Voodoom", "Tomohawk", "Necturna", "Mollux", "Aurumoth", "Malaconda", "Cawmodore", "Volkraken", "Plasmanta", "Naviathan", "Crucibelle", "Kerfluffle", "Pajantom", "Jumbao", "Caribolt", "Smokomodo", "Snaelstrom", "Equilibra"];
+				let mons = [];
+				for (let x = 0; x < validPokemon.length; x++) {
+					let frame = this.getTemplate(validPokemon[x]);
+					if (!(weaknesses.includes(frame.types[0]) || (frame.types[1] && weaknesses.includes(frame.types[1])))) continue;
+					mons.push(validPokemon[x]);
+				}
+				if (!mons) return;
+				const chosen = mons[this.random(mons.length)];
+				
+				const generator = new RandomStaffBrosTeams('gen7randombattle', this.prng);
+				let set = generator.randomSet(chosen, '[silent]');
+				let setSpecies = set.species;
+				let setAbility = set.ability;
+				if (this.getItem(set.item).megaStone) {
+					setSpecies = set.species + "-Mega";
+					setAbility = this.getTemplate(setSpecies).abilities[0];
+				} else if (this.getItem(set.item).id === "ultranecroziumz") {
+					setSpecies = set.species + "-Ultra";
+					setAbility = this.getTemplate(setSpecies).abilities[0];
+				} else if (this.getAbility(set.ability).id === "battlebond") {
+					setSpecies = set.species + "-Ash";
+				}
+				
+				pokemon.formeChange(setSpecies);
+				for (let newMove of set.moves) {
+					let moveTemplate = this.getMove(newMove);
+					if (pokemon.moves.includes(moveTemplate.id)) continue;
+					pokemon.moveSlots.push({
+						move: moveTemplate.name,
+						id: moveTemplate.id,
+						pp: 5,
+						maxpp: 5,
+						target: moveTemplate.target,
+						disabled: false,
+						disabledSource: '',
+						used: false,
+					});
+				}
+				let statName = 'atk';
+				let bestStat = 0;
+				/** @type {StatNameExceptHP} */
+				let s;
+				for (s in pokemon.storedStats) {
+					if (pokemon.storedStats[s] > bestStat) {
+						if (s === 'spe') continue;
+						statName = s;
+						bestStat = pokemon.storedStats[s];
+					}
+				}
+				this.boost({[statName]: 1, spe: 1}, pokemon);
+				// this.add('-ability', pokemon, setAbility, '[silent]');
+				pokemon.setAbility(setAbility);
+			}
+		},
+	},
 	// A
 	arcanetactics: {
 		desc: "Adds a fifth move to the user of Thunderbolt, Ice Beam, or Flamethrower. All neutral hits do 25% less damage.",

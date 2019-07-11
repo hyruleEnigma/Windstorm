@@ -354,15 +354,13 @@ let BattleStatuses = {
 	pokemondeadchannel: {
 		noCopy: true, 
 		onStart: function (source) {
-			this.add(`c|+PokemonDeadChannel|I'm pretty sure I can be as overpowered as I want to with no reprocussions`);
-			source.addVolatile('curse');
-			this.add(`c|+PokemonDeadChannel|Oh, guess I was wrong`);
+			this.add(`c|+PokemonDeadChannel|u aint shit lol`);
 		},
 		onSwitchOut: function () {
-			this.add(`c|+PokemonDeadChannel|unfortunate`);
+			this.add(`c|+PokemonDeadChannel|lol rip`);
 		},
 		onFaint: function () {
-			this.add(`c|+PokemonDeadChannel|I listen to way too much rap music x_x`);
+			this.add(`c|+PokemonDeadChannel|free my nigga 6ix9ine`);
 		},
 	},
 	flare: {

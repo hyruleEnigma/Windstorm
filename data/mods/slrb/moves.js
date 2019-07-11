@@ -982,33 +982,32 @@ let BattleMovedex = {
 		type: "Grass",
 	},
 	// PokemonDeadChannel
-	"debug": {
-		onModifyMove(move, pokemon) {
-			if (pokemon.positiveBoosts() && pokemon.positiveBoosts() > 0) move.multihit = pokemon.positiveBoosts();
-		},
+	staffimpersonation: {
 		accuracy: true,
-		basePower: 7,
-		category: "Physical",
-		desc: "Hits for the amount of positive stat boosts this user has (1 if no stat boosts.). Uses Metronome after every hit.",
-		id: "debug",
-		isNonstandard: "Custom",
-		name: "Debug",
+		basePower: 0,
+		category: "Status",
+		desc: "The user transforms into the target. The target's current stats, stat stages, types, moves, Ability, weight, gender, and sprite are copied. The user's level and HP remain the same and each copied move receives only 5 PP, with a maximum of 5 PP each. The user can no longer change formes if it would have the ability to do so. This move fails if it hits a substitute, if either the user or the target is already transformed, or if either is behind an Illusion. Clears the opponent's boosts.",
+		shortDesc: "Transforms + clears boosts",
+		id: "staffimpersonation",
+		name: "Staff Impersonation",
 		pp: 10,
-		priority: 0,
-		flags: {protect: 1, mirror: 1},
+		priority: 1,
+		flags: {mystery: 1},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, 'Conversion', source);
+		onHit(target, pokemon) {
+			pokemon.transformInto(target);
+			if (pokemon.transformed) {
+				target.clearBoosts();
+				this.add('-clearboost', target);
+			} else {
+				return false;
+			}
 		},
-		self: {
-			onHit(source) {
-				this.useMove('metronome', source);
-			},
-		},
+		secondary: null,
 		target: "normal",
-		type: "Grass",
+		type: "Normal",
 	},
 };
 
