@@ -62,6 +62,8 @@ let BattleAbilities = {
 					setAbility = this.getTemplate(setSpecies).abilities[0];
 				} else if (this.getAbility(set.ability).id === "battlebond") {
 					setSpecies = set.species + "-Ash";
+				} else if (this.getAbility(set.ability).id === "powerconstruct") {
+					setSpecies = set.species + "-Complete";
 				}
 				
 				pokemon.formeChange(setSpecies);
