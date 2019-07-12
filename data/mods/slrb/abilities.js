@@ -65,12 +65,12 @@ let BattleAbilities = {
 				}
 				
 				pokemon.formeChange(setSpecies);
-				pokemon.hpType = set.hpType;
+				
 				for (let newMove of set.moves) {
 					let moveTemplate = this.getMove(newMove);
 					if (pokemon.moves.includes(moveTemplate.id)) continue;
 					pokemon.moveSlots.push({
-						move: moveTemplate.name,
+						move: (toID(newMove).includes("hiddenpower")) ? newMove : moveTemplate.name,
 						id: moveTemplate.id,
 						pp: 5,
 						maxpp: 5,
