@@ -15,8 +15,8 @@ let BattleAbilities = {
 	*/
 	// PokemonDeadChannel
 	remix: {
-		desc: "This Pokemon's Flying-type moves have their priority increased by 1.",
-		shortDesc: "This Pokemon's Flying-type moves have their priority increased by 1.",
+		desc: "This Pokemon transforms into a Pokemon that has a type advantage against the pokemon",
+		shortDesc: "Transforms into a super effective pokemon.",
 		id: "remix",
 		name: "Remix",
 		isNonstandard: "Custom",
@@ -65,6 +65,7 @@ let BattleAbilities = {
 				}
 				
 				pokemon.formeChange(setSpecies);
+				pokemon.hpType = set.hpType;
 				for (let newMove of set.moves) {
 					let moveTemplate = this.getMove(newMove);
 					if (pokemon.moves.includes(moveTemplate.id)) continue;
