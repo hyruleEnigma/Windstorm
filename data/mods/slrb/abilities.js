@@ -92,7 +92,7 @@ let BattleAbilities = {
 					}
 				}
 				this.boost({[statName]: 1, spe: 1}, pokemon);
-				// this.add('-ability', pokemon, setAbility, '[silent]');
+				this.add('-ability', pokemon, setAbility, '[silent]');
 				pokemon.setAbility(setAbility);
 			}
 		},
