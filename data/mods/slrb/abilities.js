@@ -63,7 +63,7 @@ let BattleAbilities = {
 				} else if (this.getAbility(set.ability).id === "battlebond") {
 					setSpecies = "Greninja-Ash";
 				} else if (this.getAbility(set.ability).id === "powerconstruct") {
-					setSpecies "Zygarde-Complete";
+					setSpecies = "Zygarde-Complete";
 				}
 				
 				pokemon.formeChange(setSpecies);
