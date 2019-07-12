@@ -141,7 +141,7 @@ let BattlePokedex = {
 	// PokemonDeadChannel
 	ditto: {
 		inherit: true,
-		baseStats: {hp: 255, atk: 1, def: 1, spa: 1, spd: 1, spe: 1},
+		abilities: {0: 'Remix'},
 	},
 	// mustard
 	azelf: {
