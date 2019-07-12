@@ -58,12 +58,12 @@ let BattleAbilities = {
 					setSpecies = set.species + "-Mega";
 					setAbility = this.getTemplate(setSpecies).abilities[0];
 				} else if (this.getItem(set.item).id === "ultranecroziumz") {
-					setSpecies = set.species + "-Ultra";
-					setAbility = this.getTemplate(setSpecies).abilities[0];
+					setSpecies = "Necrozma-Ultra";
+					setAbility = "Neuroforce";
 				} else if (this.getAbility(set.ability).id === "battlebond") {
-					setSpecies = set.species + "-Ash";
+					setSpecies = "Greninja-Ash";
 				} else if (this.getAbility(set.ability).id === "powerconstruct") {
-					setSpecies = set.species + "-Complete";
+					setSpecies "Zygarde-Complete";
 				}
 				
 				pokemon.formeChange(setSpecies);
