@@ -37,6 +37,142 @@ let BattleMovedex = {
 	},
 	*/
 	// Please keep sets organized alphabetically based on staff member name!
+	// bumbadadabum
+	newmove: {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "Replaces the foe with a Super Staff Bros. Brawl set that is randomly selected from all sets, except those with this move. Remaining HP and PP percentages, as well as status conditions, are transferred onto the replacement sets.",
+		shortDesc: "Replaces foe with a random StaffBros. set.",
+		id: "newmove",
+		name: "newmove",
+		isNonstandard: "Custom",
+		pp: 20,
+		noPPBoosts: true,
+		priority: 0,
+		flags: {},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Amnesia', source);
+			this.add('-anim', source, 'Double Team', source);
+		},
+		onHit(target, source) {
+			// Store percent of HP left, percent of PP left, and status for each pokemon on the user's team
+			let carryOver = [];
+			let currentTeam = target.side.pokemon;
+			for (let pokemon of currentTeam) {
+				carryOver.push({
+					hp: pokemon.hp / pokemon.maxhp,
+					status: pokemon.status,
+					statusData: pokemon.statusData,
+					pp: pokemon.moveSlots.slice().map(m => {
+						return m.pp / m.maxpp;
+					}),
+				});
+				// Handle pokemon with less than 4 moves
+				while (carryOver[carryOver.length - 1].pp.length < 4) {
+					carryOver[carryOver.length - 1].pp.push(1);
+				}
+			}
+			// Generate a new team
+			let team = this.teamGenerator.getTeam({name: source.side.name});
+			// Overwrite un-fainted pokemon other than the user
+			for (let i = 0; i < currentTeam.length; i++) {
+				if (currentTeam[i].fainted || !currentTeam[i].hp || currentTeam[i].position !== source.position) continue;
+				let set = team.shift();
+				let oldSet = carryOver[i];
+
+				// Bit of a hack so client doesn't crash when formeChange is called for the new pokemon
+				let effect = this.effect;
+				this.effect = /** @type {Effect} */ ({id: ''});
+				// @ts-ignore
+				let pokemon = new Pokemon(set, source.side);
+				this.effect = effect;
+
+				pokemon.hp = Math.floor(pokemon.maxhp * oldSet.hp) || 1;
+				pokemon.status = oldSet.status;
+				if (oldSet.statusData) pokemon.statusData = oldSet.statusData;
+				for (const [j, moveSlot] of pokemon.moveSlots.entries()) {
+					moveSlot.pp = Math.floor(moveSlot.maxpp * oldSet.pp[j]);
+				}
+				this.add('faint', target); // name change
+				this.add('replace', target, pokemon.getDetails); // name change
+				pokemon.position = currentTeam[i].position;
+				currentTeam[i] = pokemon;
+				target.formeChange(pokemon.template, this, true);
+				target.moveSlots = pokemon.moveSlots;
+				target.set = pokemon.set;
+				target.name = pokemon.name;
+				target.id = target.side.id+": "+pokemon.name;
+				target.baseMoveSlots = pokemon.baseMoveSlots;
+				target.fullname = target.side.id+": "+pokemon.name;
+			}
+			this.add('message', `${source.name} wonder traded ${target.side.name}'s team away!`);
+		},
+		target: "normal",
+		type: "Psychic",
+	},
+	// A
+	"assecretplan": {
+		accuracy: 100,
+		basePower: 85,
+		category: "Special",
+		desc: "This move will always deal neutral damage. Additionally, this move will randomly apply either paralysis, burn, or -2 SpA.",
+		shortDesc: "Neutral damage. Para, burn, or -2 SpA.",
+		id: "assecretplan",
+		isNonstandard: "Custom",
+		name: "A's Secret Plan",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onHit(target, source, move) {
+			let effect = this.random(3);
+			if (effect === 0) {
+				target.trySetStatus('par', source);
+			} else if (effect === 1) {
+				target.trySetStatus('brn', source);
+			} else {
+				this.boost({spa: -2}, target);
+			}
+		},
+		secondary: null,
+		target: "normal",
+		type: "???",
+	},
+	// 0TakeAStudyBreak
+	"takeastudybreak": {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "The user falls asleep for the turn and restores all of its HP, curing itself of any major status condition in the process. Fails if the user has full HP, is already asleep, or if another effect is preventing sleep.",
+		shortDesc: "1 turn Rest.",
+		id: "takeastudybreak",
+		isNonstandard: "Custom",
+		name: "Take a Study Break",
+		pp: 10,
+		priority: 0,
+		flags: {snatch: 1, heal: 1},
+		onTryMove(pokemon) {
+			if (pokemon.hp < pokemon.maxhp && pokemon.status !== 'slp' && !pokemon.hasAbility('comatose')) return;
+			this.add('-fail', pokemon);
+			return null;
+		},
+		onHit(target) {
+			if (!target.setStatus('slp')) return false;
+			target.statusData.time = 1;
+			target.statusData.startTime = 1;
+			this.heal(target.maxhp / 2); //Aeshetic only as the healing happens after you fall asleep in-game
+			this.add('-status', target, 'slp', '[from] move: Rest');
+		},
+		secondary: null,
+		target: "self",
+		type: "Normal",
+	},
 	// A Phantom
 	"forestfire": {
 		accuracy: true,
