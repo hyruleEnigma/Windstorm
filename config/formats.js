@@ -45,6 +45,17 @@ let Formats = [
 		banlist: ['Uber', 'Arena Trap', 'Power Construct', 'Shadow Tag', 'Baton Pass'],
 	},
 	{
+		name: "[Gen 7] OU (Blitz)",
+		threads: [
+			`&bullet; <a href="https://www.smogon.com/forums/threads/3646999/">OU Metagame Discussion</a>`,
+			`&bullet; <a href="https://www.smogon.com/forums/threads/3621329/">OU Viability Rankings</a>`,
+			`&bullet; <a href="https://www.smogon.com/forums/threads/3638845/">OU Sample Teams</a>`,
+		],
+
+		mod: 'gen7',
+		ruleset: ['[Gen 7] OU', 'Blitz'],
+	},
+	{
 		name: "[Gen 7] Ubers",
 		threads: [
 			`&bullet; <a href="https://www.smogon.com/forums/threads/3621030/">Ubers Metagame Discussion</a>`,
@@ -59,7 +70,7 @@ let Formats = [
 	{
 		name: "[Gen 7] UU",
 		threads: [
-			`&bullet; <a href="https://www.smogon.com/forums/threads/3651932/">UU Metagame Discussion</a>`,
+			`&bullet; <a href="https://www.smogon.com/forums/threads/3652404/">UU Metagame Discussion</a>`,
 			`&bullet; <a href="https://www.smogon.com/forums/threads/3641346/">UU Viability Rankings</a>`,
 			`&bullet; <a href="https://www.smogon.com/forums/threads/3621217/">UU Sample Teams</a>`,
 		],
@@ -67,21 +78,22 @@ let Formats = [
 		mod: 'gen7',
 		ruleset: ['[Gen 7] OU'],
 		banlist: ['OU', 'UUBL', 'Drizzle', 'Drought', 'Kommonium Z', 'Mewnium Z'],
+		unbanlist: ['Mimikyu'],
 		onBegin() {
-			if (this.rated && this.format === 'gen7uu') this.add('html', `<div class="broadcast-blue"><strong>UU is currently suspecting Mega Altaria! For information on how to participate check out the <a href="https://www.smogon.com/forums/threads/3651932/">suspect thread</a>.</strong></div>`);
+			if (this.rated && this.format === 'gen7uu') this.add('html', `<div class="broadcast-red"><strong>UU is currently suspecting Mimikyu! For information on how to participate check out the <a href="https://www.smogon.com/forums/threads/3652404/">suspect thread</a>.</strong></div>`);
 		},
 	},
 	{
 		name: "[Gen 7] RU",
 		threads: [
-			`&bullet; <a href="https://www.smogon.com/forums/threads/3651420/">RU Metagame Discussion</a>`,
+			`&bullet; <a href="https://www.smogon.com/forums/threads/3646905/">RU Metagame Discussion</a>`,
 			`&bullet; <a href="https://www.smogon.com/forums/threads/3645873/">RU Viability Rankings</a>`,
 			`&bullet; <a href="https://www.smogon.com/forums/threads/3645338/">RU Sample Teams</a>`,
 		],
 
 		mod: 'gen7',
 		ruleset: ['[Gen 7] UU'],
-		banlist: ['UU', 'RUBL', 'Aurora Veil'],
+		banlist: ['UU', 'RUBL', 'Mimikyu', 'Aurora Veil'],
 		unbanlist: ['Drought'],
 	},
 	{
@@ -99,7 +111,7 @@ let Formats = [
 	{
 		name: "[Gen 7] PU",
 		threads: [
-			`&bullet; <a href="https://www.smogon.com/forums/threads/3649494/">PU Metagame Discussion</a>`,
+			`&bullet; <a href="https://www.smogon.com/forums/threads/3652157/">PU Metagame Discussion</a>`,
 			`&bullet; <a href="https://www.smogon.com/forums/threads/3614892/">PU Viability Rankings</a>`,
 			`&bullet; <a href="https://www.smogon.com/forums/threads/3611496/">PU Sample Teams</a>`,
 		],
@@ -107,6 +119,9 @@ let Formats = [
 		mod: 'gen7',
 		ruleset: ['[Gen 7] NU'],
 		banlist: ['NU', 'PUBL'],
+		onBegin() {
+			if (this.rated && this.format === 'gen7pu') this.add('html', `<div class="broadcast-blue"><strong>PU is currently suspecting Guzzlord! For information on how to participate check out the <a href="https://www.smogon.com/forums/threads/3652157/">suspect thread</a>.</strong></div>`);
+		},
 	},
 	{
 		name: "[Gen 7] LC",
@@ -352,8 +367,7 @@ let Formats = [
 			validate: [4, 6],
 			battle: 4,
 		},
-		timer: {starting: 7 * 60, addPerTurn: 0, maxPerTurn: 55, maxFirstTurn: 90, grace: 90, timeoutAutoChoose: true, dcTimerBank: false},
-		ruleset: ['Pokemon', 'Minimal GBU'],
+		ruleset: ['Pokemon', 'Minimal GBU', 'VGC Timer'],
 		banlist: ['Unown', 'Dragon Ascent', 'Custap Berry', 'Enigma Berry', 'Jaboca Berry', 'Micle Berry', 'Rowap Berry'],
 		requirePlus: true,
 		onValidateTeam(team) {
@@ -383,8 +397,7 @@ let Formats = [
 			validate: [4, 6],
 			battle: 4,
 		},
-		timer: {starting: 7 * 60, addPerTurn: 0, maxPerTurn: 55, maxFirstTurn: 90, grace: 90, timeoutAutoChoose: true, dcTimerBank: false},
-		ruleset: ['Pokemon', 'Minimal GBU'],
+		ruleset: ['Pokemon', 'Minimal GBU', 'VGC Timer'],
 		banlist: ['Unown', 'Dragon Ascent'],
 		requirePlus: true,
 		onValidateTeam(team) {
@@ -417,8 +430,7 @@ let Formats = [
 			validate: [4, 6],
 			battle: 4,
 		},
-		timer: {starting: 7 * 60, addPerTurn: 0, maxPerTurn: 55, maxFirstTurn: 90, grace: 90, timeoutAutoChoose: true, dcTimerBank: false},
-		ruleset: ['Pokemon', 'Minimal GBU'],
+		ruleset: ['Pokemon', 'Minimal GBU', 'VGC Timer'],
 		banlist: ['Unown'],
 		requirePlus: true,
 		onValidateTeam(team) {
@@ -1805,6 +1817,7 @@ let Formats = [
 		searchShow: false,
 		ruleset: ['[Gen 4] OU'],
 		banlist: ['OU', 'UUBL'],
+		unbanlist: ['Sand Veil'],
 	},
 	{
 		name: "[Gen 4] NU",
@@ -1817,7 +1830,6 @@ let Formats = [
 		searchShow: false,
 		ruleset: ['[Gen 4] UU'],
 		banlist: ['UU', 'NUBL'],
-		unbanlist: ['Sand Veil'],
 	},
 	{
 		name: "[Gen 4] LC",

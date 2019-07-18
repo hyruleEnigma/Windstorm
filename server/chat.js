@@ -39,7 +39,8 @@ To reload chat commands:
  * 3. return undefined to send the original message through
  * @typedef {(this: CommandContext, message: string, user: User, room: ChatRoom | GameRoom?, connection: Connection, targetUser: User?, originalMessage: string) => (string | false | null | undefined)} ChatFilter
  */
-/** @typedef {(name: string, user: User, forStatus?: boolean) => (string)} NameFilter */
+/** @typedef {(name: string, user: User) => (string)} NameFilter */
+/** @typedef {(status: string, user: User) => (string)} StatusFilter */
 /** @typedef {(user: User, oldUser: User?, userType: string) => void} LoginFilter */
 
 const LINK_WHITELIST = ['*.pokemonshowdown.com', 'psim.us', 'smogtours.psim.us', '*.smogon.com', '*.pastebin.com', '*.hastebin.com'];
@@ -188,9 +189,8 @@ Chat.namefilters = [];
 /**
  * @param {string} name
  * @param {User} user
- * @param {boolean} forStatus
  */
-Chat.namefilter = function (name, user, forStatus = false) {
+Chat.namefilter = function (name, user) {
 	if (!Config.disablebasicnamefilter) {
 		// whitelist
 		// \u00A1-\u00BF\u00D7\u00F7  Latin punctuation/symbols
@@ -215,7 +215,7 @@ Chat.namefilter = function (name, user, forStatus = false) {
 		if (name.includes('@') && name.includes('.')) return '';
 
 		// url
-		if (/[a-z0-9]\.(com|net|org)/.test(name)) name = name.replace(/\./g, '');
+		if (/[a-z0-9]\.(com|net|org|us|uk|co|gg|tk|ml|gq|ga|xxx|download|stream|)\b/.test(name)) name = name.replace(/\./g, '');
 
 		// Limit the amount of symbols allowed in usernames to 4 maximum, and disallow (R) and (C) from being used in the middle of names.
 		let nameSymbols = name.replace(/[^\u00A1-\u00BF\u00D7\u00F7\u02B9-\u0362\u2012-\u2027\u2030-\u205E\u2050-\u205F\u2090-\u23FA\u2500-\u2BD1]+/g, '');
@@ -234,7 +234,7 @@ Chat.namefilter = function (name, user, forStatus = false) {
 
 	name = Dex.getName(name);
 	for (const filter of Chat.namefilters) {
-		name = filter(name, user, forStatus);
+		name = filter(name, user);
 		if (!name) return '';
 	}
 	return name;
@@ -278,6 +278,22 @@ Chat.nicknamefilter = function (nickname, user) {
 	}
 	return nickname;
 };
+
+/**@type {StatusFilter[]} */
+Chat.statusfilters = [];
+/**
+ * @param {string} status
+ * @param {User} user
+ */
+Chat.statusfilter = function (status, user) {
+	status = status.replace(/\|/g, '');
+	for (const filter of Chat.statusfilters) {
+		status = filter(status, user);
+		if (!status) return '';
+	}
+	return status;
+};
+
 
 /*********************************************************
  * Translations
@@ -563,7 +579,7 @@ class CommandContext extends MessageContext {
 
 		let commandHandler = this.splitCommand(message);
 
-		if (this.user.isAway() && toID(this.user.status) === 'idle') this.user.clearStatus();
+		if (this.user.statusType === 'idle') this.user.setStatusType('online');
 
 		if (typeof commandHandler === 'function') {
 			message = this.run(commandHandler);
@@ -601,7 +617,6 @@ class CommandContext extends MessageContext {
 			if (this.pmTarget) {
 				Chat.sendPM(message, this.user, this.pmTarget);
 			} else {
-				if (this.user.isAway()) this.user.clearStatus();
 				this.room.add(`|c|${this.user.getIdentity(this.room.id)}|${message}`);
 				if (this.room && this.room.game && this.room.game.onLogMessage) {
 					this.room.game.onLogMessage(message, this.user);
@@ -954,7 +969,7 @@ class CommandContext extends MessageContext {
 				buf += ` [${user.latestIp}]`;
 			}
 		}
-		buf += note;
+		buf += note.replace(/\n/gm, ' ');
 
 		Rooms.global.modlog(buf);
 		this.room.modlog(buf);
@@ -982,7 +997,7 @@ class CommandContext extends MessageContext {
 			}
 		}
 		buf += ` by ${this.user.userid}`;
-		if (note) buf += `: ${note}`;
+		if (note) buf += `: ${note.replace(/\n/gm, ' ')}`;
 
 		this.room.modlog(buf);
 	}
@@ -1071,7 +1086,6 @@ class CommandContext extends MessageContext {
 		if (this.pmTarget) {
 			this.sendReply('|c~|' + (suppressMessage || this.message));
 		} else {
-			if (this.user.isAway()) this.user.clearStatus();
 			this.sendReply('|c|' + this.user.getIdentity(this.room.id) + '|' + (suppressMessage || this.message));
 		}
 		if (!ignoreCooldown && !this.pmTarget) {
@@ -1219,7 +1233,7 @@ class CommandContext extends MessageContext {
 			this.errorReply(`Your username contains a phrase banned by this room.`);
 			return false;
 		}
-		if (user.status && (!this.checkBanwords(room, user.status) && !user.can('bypassall'))) {
+		if (user.userMessage && (!this.checkBanwords(room, user.userMessage) && !user.can('bypassall'))) {
 			this.errorReply(`Your status message contains a phrase banned by this room.`);
 			return false;
 		}
@@ -1343,7 +1357,7 @@ class CommandContext extends MessageContext {
 		}
 
 		// check for mismatched tags
-		let tags = html.toLowerCase().match(/<\/?(div|a|button|b|strong|em|i|u|center|font|marquee|blink|details|summary|code|table|td|tr)\b/g);
+		let tags = html.toLowerCase().match(/<\/?(div|a|button|b|strong|em|i|u|center|font|marquee|blink|details|summary|code|table|td|tr|style|script)\b/g);
 		if (tags) {
 			let stack = [];
 			for (const tag of tags) {
@@ -1526,6 +1540,7 @@ Chat.loadPlugins = function () {
 	if (Config.hostfilter) Chat.hostfilters.push(Config.hostfilter);
 	if (Config.loginfilter) Chat.loginfilters.push(Config.loginfilter);
 	if (Config.nicknamefilter) Chat.nicknamefilters.push(Config.nicknamefilter);
+	if (Config.statusfilter) Chat.statusfilters.push(Config.statusfilter);
 
 	// Install plug-in commands and chat filters
 
@@ -1548,6 +1563,7 @@ Chat.loadPlugins = function () {
 		if (plugin.hostfilter) Chat.hostfilters.push(plugin.hostfilter);
 		if (plugin.loginfilter) Chat.loginfilters.push(plugin.loginfilter);
 		if (plugin.nicknamefilter) Chat.nicknamefilters.push(plugin.nicknamefilter);
+		if (plugin.statusfilter) Chat.statusfilters.push(plugin.statusfilter);
 	}
 };
 

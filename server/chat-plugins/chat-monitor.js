@@ -225,7 +225,7 @@ let chatfilter = function (message, user, room) {
 };
 
 /** @type {NameFilter} */
-let namefilter = function (name, user, forStatus) {
+let namefilter = function (name, user) {
 	let id = toID(name);
 	if (Chat.namefilterwhitelist.has(id)) return name;
 	if (id === toID(user.trackRename)) return '';
@@ -248,8 +248,6 @@ let namefilter = function (name, user, forStatus) {
 			if (matched) {
 				if (Chat.monitors[list].punishment === 'AUTOLOCK') {
 					Punishments.autolock(user, Rooms('staff'), `NameMonitor`, `inappropriate name: ${name}`, `using an inappropriate name: ${name} (from ${user.name})`, false, name);
-				} else if (!forStatus) {
-					user.trackRename = name;
 				}
 				line[3]++;
 				saveFilters();
@@ -257,20 +255,19 @@ let namefilter = function (name, user, forStatus) {
 			}
 		}
 	}
-
-	if (user.trackRename) {
-		const automatic = !Chat.forceRenames.has(toID(user.trackRename));
-		Monitor.log(`[NameMonitor] Username used: ${name} (${automatic ? 'automatically ' : ''}forcerenamed from ${user.trackRename})`);
-		user.trackRename = '';
-	}
 	return name;
 };
 /** @type {LoginFilter} */
 let loginfilter = function (user) {
 	if (user.namelocked) return;
-	const forceRenamer = Chat.forceRenames.get(user.userid);
+
+	const forceRenamed = Chat.forceRenames.has(user.userid);
+	if (user.trackRename) {
+		Monitor.log(`[NameMonitor] Username used: ${user.name} (${forceRenamed ? 'automatically ' : ''}forcerenamed from ${user.trackRename})`);
+		user.trackRename = '';
+	}
 	if (Chat.namefilterwhitelist.has(user.userid)) return;
-	if (forceRenamer) Monitor.log(`[NameMonitor] Forcerenamed name being reused: ${user.name}`);
+	if (forceRenamed) Monitor.log(`[NameMonitor] Forcerenamed name being reused: ${user.name}`);
 };
 /** @type {NameFilter} */
 let nicknamefilter = function (name, user) {
@@ -302,6 +299,42 @@ let nicknamefilter = function (name, user) {
 	}
 
 	return name;
+};
+/** @type {StatusFilter} */
+let statusfilter = function (status, user) {
+	let lcStatus = status.replace(/\u039d/g, 'N').toLowerCase().replace(/[\u200b\u007F\u00AD]/g, '').replace(/\u03bf/g, 'o').replace(/\u043e/g, 'o').replace(/\u0430/g, 'a').replace(/\u0435/g, 'e').replace(/\u039d/g, 'e');
+	// Remove false positives.
+	lcStatus = lcStatus.replace('herapist', '').replace('grape', '').replace('scrape', '');
+	// Check for blatant staff impersonation attempts. Ideally this could be completely generated from Config.grouplist
+	// for better support for side servers, but not all ranks are staff ranks or should necessarily be filted.
+	if (/\b(?:global|room|upper|senior)?\s*(?:staff|admin|administrator|leader|owner|founder|mod|moderator|driver|voice|operator|sysop|creator)\b/gi.test(lcStatus)) {
+		return '';
+	}
+
+	for (const list in filterWords) {
+		for (let line of filterWords[list]) {
+			const word = line[0];
+
+			let matched;
+			if (typeof word !== 'string') {
+				matched = word.test(lcStatus);
+			} else if (word.startsWith('\\b') || word.endsWith('\\b')) {
+				matched = new RegExp(word).test(lcStatus);
+			} else {
+				matched = lcStatus.includes(word);
+			}
+			if (matched) {
+				if (Chat.monitors[list].punishment === 'AUTOLOCK') {
+					Punishments.autolock(user, Rooms('staff'), `NameMonitor`, `inappropriate status message: ${status}`, `${user.name} - using an inappropriate status: ${status}`, true);
+				}
+				line[3]++;
+				saveFilters();
+				return '';
+			}
+		}
+	}
+
+	return status;
 };
 
 /** @type {PageTable} */
@@ -452,4 +485,5 @@ exports.commands = commands;
 exports.chatfilter = chatfilter;
 exports.namefilter = namefilter;
 exports.nicknamefilter = nicknamefilter;
+exports.statusfilter = statusfilter;
 exports.loginfilter = loginfilter;

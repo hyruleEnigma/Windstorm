@@ -12541,8 +12541,14 @@ let BattleMovedex = {
 				// @ts-ignore
 				source.boosts[i] = target.boosts[i];
 			}
-			if (target.volatiles['focusenergy']) source.addVolatile('focusenergy');
-			if (target.volatiles['laserfocus']) source.addVolatile('laserfocus');
+			const volatilesToCopy = ['focusenergy', 'laserfocus'];
+			for (const volatile of volatilesToCopy) {
+				if (target.volatiles[volatile]) {
+					source.addVolatile(volatile);
+				} else {
+					source.removeVolatile(volatile);
+				}
+			}
 			this.add('-copyboost', source, target, '[from] move: Psych Up');
 		},
 		secondary: null,
@@ -13281,9 +13287,10 @@ let BattleMovedex = {
 		flags: {snatch: 1},
 		onHit(pokemon) {
 			if (pokemon.item || !pokemon.lastItem) return false;
-			pokemon.setItem(pokemon.lastItem);
+			let item = pokemon.lastItem;
 			pokemon.lastItem = '';
-			this.add('-item', pokemon, pokemon.getItem(), '[from] move: Recycle');
+			this.add('-item', pokemon, this.getItem(item), '[from] move: Recycle');
+			pokemon.setItem(item);
 		},
 		secondary: null,
 		target: "self",

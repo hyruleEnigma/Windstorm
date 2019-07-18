@@ -74,7 +74,7 @@ global.Monitor = require('./monitor');
 if (Config.watchconfig) {
 	FS(require.resolve('../config/config')).onModify(() => {
 		try {
-			global.Config = ConfigLoader.load();
+			global.Config = ConfigLoader.load(true);
 			if (global.Users) Users.cacheGroupData();
 			Monitor.notice('Reloaded ../config/config.js');
 		} catch (e) {
@@ -96,7 +96,7 @@ global.Ladders = require('./ladders');
 
 global.Chat = require('./chat');
 
-global.Users = require('./users');
+global.Users = require('../.server-dist/users').Users;
 
 global.Punishments = require('./punishments');
 

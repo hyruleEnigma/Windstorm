@@ -362,6 +362,7 @@ let BattleFormatsData = {
 		eventOnly: true,
 		gen: 4,
 		tier: "Illegal",
+		isNonstandard: 'Past',
 	},
 	pikachu: {
 		randomBattleMoves: ["volttackle", "voltswitch", "grassknot", "hiddenpowerice", "knockoff", "irontail"],
@@ -5260,7 +5261,7 @@ let BattleFormatsData = {
 		randomBattleMoves: ["blizzard", "gigadrain", "woodhammer", "earthquake", "iceshard", "hiddenpowerfire"],
 		randomDoubleBattleMoves: ["blizzard", "iceshard", "gigadrain", "protect", "focusblast", "woodhammer", "earthquake"],
 		requiredItem: "Abomasite",
-		tier: "PU",
+		tier: "PUBL",
 		doublesTier: "DUU",
 	},
 	rotom: {
@@ -6173,7 +6174,7 @@ let BattleFormatsData = {
 	cinccino: {
 		randomBattleMoves: ["tailslap", "bulletseed", "rockblast", "knockoff", "uturn"],
 		randomDoubleBattleMoves: ["tailslap", "aquatail", "uturn", "knockoff", "bulletseed", "rockblast", "protect"],
-		tier: "PU",
+		tier: "PUBL",
 		doublesTier: "(DUU)",
 	},
 	gothita: {
@@ -8551,6 +8552,30 @@ let BattleFormatsData = {
 	mumbao: {
 		isNonstandard: "CAP",
 		tier: "CAP LC",
+	},
+	fawnifer: {
+		isNonstandard: "CAP",
+		tier: "CAP LC",
+	},
+	electrelk: {
+		isNonstandard: "CAP",
+		tier: "CAP NFE",
+	},
+	smogecko: {
+		isNonstandard: "CAP",
+		tier: "CAP LC",
+	},
+	smoguana: {
+		isNonstandard: "CAP",
+		tier: "CAP NFE",
+	},
+	swirlpool: {
+		isNonstandard: "CAP",
+		tier: "CAP LC",
+	},
+	coribalis: {
+		isNonstandard: "CAP",
+		tier: "CAP NFE",
 	},
 	pokestarufo: {
 		isNonstandard: "Pokestar",
