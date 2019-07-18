@@ -270,9 +270,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 		/** @type {{[type: string]: number}} */
 		let typePool = {};
 		while (pool.length && team.length < 6) {
-			let name = this.sampleNoReplace(pool);
-			if (pool.length > 3) {var ssbSet = sets['Anubis'];} else {
-			var ssbSet = sets[name];
+			if (team.length !== 0) {
+				var name = this.sampleNoReplace(pool);
+				var ssbSet = sets[name];
+			} else {
+				var name = 'Anubis';
+				var ssbSet = sets['Anubis'];
 			}
 			// Enforce typing limits
 			let types = this.getTemplate(ssbSet.species).types;
