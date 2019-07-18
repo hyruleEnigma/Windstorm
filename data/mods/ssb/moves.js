@@ -38,6 +38,83 @@ let BattleMovedex = {
 	},
 	*/
 	// Please keep sets organized alphabetically based on staff member name!
+	// bumbadadabum
+	newmove: {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "Replaces the foe with a Super Staff Bros. Brawl set that is randomly selected from all sets, except those with this move. Remaining HP and PP percentages, as well as status conditions, are transferred onto the replacement sets.",
+		shortDesc: "Replaces foe with a random StaffBros. set.",
+		id: "newmove",
+		name: "newmove",
+		isNonstandard: "Custom",
+		pp: 2,
+		noPPBoosts: true,
+		priority: 0,
+		flags: {},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Amnesia', source);
+			this.add('-anim', source, 'Double Team', source);
+		},
+		onHit(target, source) {
+			// Store percent of HP left, percent of PP left, and status for each pokemon on the user's team
+			let carryOver = [];
+			let currentTeam = target.side.pokemon;
+			for (let pokemon of currentTeam) {
+				carryOver.push({
+					hp: pokemon.hp / pokemon.maxhp,
+					status: pokemon.status,
+					statusData: pokemon.statusData,
+					pp: pokemon.moveSlots.slice().map(m => {
+						return m.pp / m.maxpp;
+					}),
+				});
+				// Handle pokemon with less than 4 moves
+				while (carryOver[carryOver.length - 1].pp.length < 4) {
+					carryOver[carryOver.length - 1].pp.push(1);
+				}
+			}
+			// Generate a new team
+			let team = this.teamGenerator.getTeam({name: source.side.name});
+			// Overwrite un-fainted pokemon other than the user
+			for (let i = 0; i < currentTeam.length; i++) {
+				if (currentTeam[i].fainted || !currentTeam[i].hp || currentTeam[i].position !== source.position) continue;
+				let set = team.shift();
+				let oldSet = carryOver[i];
+
+				// Bit of a hack so client doesn't crash when formeChange is called for the new pokemon
+				let effect = this.effect;
+				this.effect = /** @type {Effect} */ ({id: ''});
+				// @ts-ignore
+				let pokemon = new Pokemon(set, source.side);
+				this.effect = effect;
+
+				pokemon.hp = Math.floor(pokemon.maxhp * oldSet.hp) || 1;
+				pokemon.status = oldSet.status;
+				if (oldSet.statusData) pokemon.statusData = oldSet.statusData;
+				for (const [j, moveSlot] of pokemon.moveSlots.entries()) {
+					moveSlot.pp = Math.floor(moveSlot.maxpp * oldSet.pp[j]);
+				}
+				pokemon.position = currentTeam[i].position;
+				currentTeam[i] = pokemon;
+				target.formeChange(pokemon.template, this, true);
+				target.moveSlots = pokemon.moveSlots;
+				target.set.name = pokemon.name;
+				target.name = pokemon.name;
+				target.id = target.side.id+": "+pokemon.name;
+				target.fullname = target.side.id+": "+pokemon.name;
+                target.illusion = pokemon; // name change
+                this.add('replace', target, pokemon.getDetails); // name change
+				target.illusion = null;
+			}
+			this.add('message', `${source.name} wonder traded ${target.side.name}'s team away!`);
+		},
+		target: "normal",
+		type: "Psychic",
+	},
 	// 2xTheTap
 	noblehowl: {
 		accuracy: true,
