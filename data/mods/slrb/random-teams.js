@@ -271,8 +271,8 @@ class RandomStaffBrosTeams extends RandomTeams {
 		let typePool = {};
 		while (pool.length && team.length < 6) {
 			let name = this.sampleNoReplace(pool);
-			if (pool.length == 0) {let ssbSet = sets['Anubis'];} else {
-			let ssbSet = sets[name];
+			if (pool.length == 0) {var ssbSet = sets['Anubis'];} else {
+			var ssbSet = sets[name];
 			}
 			// Enforce typing limits
 			let types = this.getTemplate(ssbSet.species).types;
