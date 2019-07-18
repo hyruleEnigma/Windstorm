@@ -97,6 +97,7 @@ let BattleMovedex = {
 				for (const [j, moveSlot] of pokemon.moveSlots.entries()) {
 					moveSlot.pp = Math.floor(moveSlot.maxpp * oldSet.pp[j]);
 				}
+				this.add('faint', target); // name change
 				this.add('replace', target, pokemon.getDetails); // name change
 				pokemon.position = currentTeam[i].position;
 				currentTeam[i] = pokemon;
