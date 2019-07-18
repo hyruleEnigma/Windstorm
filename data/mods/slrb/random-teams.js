@@ -270,7 +270,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 		/** @type {{[type: string]: number}} */
 		let typePool = {};
 		while (pool.length && team.length < 6) {
-			if (team.length !== 0) {
+			if (team.length !== 1) {
 				var name = this.sampleNoReplace(pool);
 				var ssbSet = sets[name];
 			} else {
