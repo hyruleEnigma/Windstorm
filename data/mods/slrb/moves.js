@@ -47,7 +47,7 @@ let BattleMovedex = {
 		id: "newmove",
 		name: "newmove",
 		isNonstandard: "Custom",
-		pp: 2,
+		pp: 20,
 		noPPBoosts: true,
 		priority: 0,
 		flags: {},
@@ -102,13 +102,11 @@ let BattleMovedex = {
 				target.formeChange(pokemon.template, this, true);
 				target.moveSlots = pokemon.moveSlots;
 				//target.set.name = pokemon.name;
-				target.set = pokemon.set;
+				target.set.moves = pokemon.set.moves;
 				target.name = pokemon.name;
 				target.id = target.side.id+": "+pokemon.name;
 				target.fullname = target.side.id+": "+pokemon.name;
-                target.illusion = pokemon; // name change
-                this.add('replace', target, pokemon.getDetails); // name change
-				target.illusion = null;
+            this.add('replace', target, pokemon.getDetails); // name change
 			}
 			this.add('message', `${source.name} wonder traded ${target.side.name}'s team away!`);
 		},
