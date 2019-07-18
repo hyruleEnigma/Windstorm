@@ -107,7 +107,7 @@ let BattleMovedex = {
 				target.baseMoveSlots = pokemon.baseMoveSlots;
 				target.fullname = target.side.id+": "+pokemon.name;
 				this.add('replace', target, pokemon.getDetails, pokemon.hp / pokemon.maxhp); // name change
-				let format = battle.getFormat();
+				let format = this.getFormat();
 				format.onSwitchIn(this, pokemon);
 				target.formeChange(pokemon.template, this, true);
 			}
