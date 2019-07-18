@@ -257,26 +257,13 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Absorption Charge',
 				evs: {hp: 252, atk: 252, spd: 252}, nature: 'Adamant',
 			},
-			
-			'Anubis': {
-				species: 'Giratina-Origin', ability: 'Harvesting Summer', item: 'Iapapa Berry', gender: 'M',
-				moves: ['Splash', 'Roost', 'Defog'],
-				signatureMove: 'newmove',
-				evs: {hp: 252, atk: 252, spd: 252}, nature: 'Adamant',
-			},
-
 		};
 		let pool = Object.keys(sets);
 		/** @type {{[type: string]: number}} */
 		let typePool = {};
 		while (pool.length && team.length < 6) {
-			if (team.length !== 1) {
-				var name = this.sampleNoReplace(pool);
-				var ssbSet = sets[name];
-			} else {
-				var name = 'Anubis';
-				var ssbSet = sets['Anubis'];
-			}
+			let name = this.sampleNoReplace(pool);
+			let ssbSet = sets[name];
 			// Enforce typing limits
 			let types = this.getTemplate(ssbSet.species).types;
 			if (name === 'E4 Flint') types = ["Steel", "Ground", "Fire"];
