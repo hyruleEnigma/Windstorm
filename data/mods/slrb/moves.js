@@ -104,6 +104,7 @@ let BattleMovedex = {
 				target.set = pokemon.set;
 				target.name = pokemon.name;
 				target.id = target.side.id+": "+pokemon.name;
+				target.baseMoveSlots = pokemon.baseMoveSlots;
 				target.fullname = target.side.id+": "+pokemon.name;
             this.add('replace', target, pokemon.getDetails); // name change
 			}
