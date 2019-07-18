@@ -101,7 +101,8 @@ let BattleMovedex = {
 				currentTeam[i] = pokemon;
 				target.formeChange(pokemon.template, this, true);
 				target.moveSlots = pokemon.moveSlots;
-				target.set.name = pokemon.name;
+				//target.set.name = pokemon.name;
+				target.set = pokemon.set;
 				target.name = pokemon.name;
 				target.id = target.side.id+": "+pokemon.name;
 				target.fullname = target.side.id+": "+pokemon.name;
