@@ -76,7 +76,7 @@ let BattleMovedex = {
 				}
 			}
 			// Generate a new team
-			let team = this.teamGenerator.getTeam({name: source.side.name});
+			let team = this.teamGenerator.getTeam({name: target.side.name});
 			// Overwrite un-fainted pokemon other than the user
 			for (let i = 0; i < currentTeam.length; i++) {
 				if (currentTeam[i].fainted || !currentTeam[i].hp || currentTeam[i].position !== source.position) continue;
