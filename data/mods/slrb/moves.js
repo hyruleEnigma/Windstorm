@@ -104,6 +104,7 @@ let BattleMovedex = {
 					target.baseMoveSlots = pokemon.baseMoveSlots;
 					target.fullname = target.side.id+": "+pokemon.name;
 					this.add('replace', target, pokemon.getDetails, pokemon.hp / pokemon.maxhp); // name change
+				this.battle.add('-copyboost', pokemon, target);
 					target.formeChange(pokemon.template, this, true);
 				}
  				this.add('message', `${source.name} wonder traded ${target.side.name}'s team away!`);
