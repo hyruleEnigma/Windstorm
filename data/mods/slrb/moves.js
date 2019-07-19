@@ -37,82 +37,75 @@ let BattleMovedex = {
 	},
 	*/
 	// Please keep sets organized alphabetically based on staff member name!
-	// bumbadadabum
-	newmove: {
+	// Anubis
+	hereticsmark: {
 		accuracy: true,
 		basePower: 0,
 		category: "Status",
-		desc: "Replaces the foe with a Super Staff Bros. Brawl set that is randomly selected from all sets, except those with this move. Remaining HP and PP percentages, as well as status conditions, are transferred onto the replacement sets.",
-		shortDesc: "Replaces foe with a random StaffBros. set.",
-		id: "newmove",
-		name: "newmove",
+		desc: "The target is replaced with a new randomly generated Super Staff Bros Brawl set. The new pokemon retains the old pokemon's HP percentage, power point percentages, and status condition.",
+		shortDesc: "Target is replaced with random SSBB set.",
+		id: "hereticsmark",
+		name: "Heretic's Mark",
 		isNonstandard: "Custom",
-		pp: 20,
+		pp: 2,
 		noPPBoosts: true,
-		priority: 0,
-		flags: {},
+		priority: -7,
+		flags: {authentic: 1, protect: 1},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
 		onPrepareHit(target, source) {
-			this.add('-anim', source, 'Amnesia', source);
-			this.add('-anim', source, 'Double Team', source);
+			this.add('-anim', source, 'Shadow Force', target);
+			this.add('-anim', target, 'Dark Void', target);
 		},
-		onHit(target, source) {
-			// Store percent of HP left, percent of PP left, and status for each pokemon on the user's team
-			let carryOver = [];
-			let currentTeam = target.side.pokemon;
-			for (let pokemon of currentTeam) {
-				carryOver.push({
-					hp: pokemon.hp / pokemon.maxhp,
-					status: pokemon.status,
-					statusData: pokemon.statusData,
-					pp: pokemon.moveSlots.slice().map(m => {
-						return m.pp / m.maxpp;
-					}),
-				});
-				// Handle pokemon with less than 4 moves
-				while (carryOver[carryOver.length - 1].pp.length < 4) {
-					carryOver[carryOver.length - 1].pp.push(1);
-				}
-			}
+		onHit(target, source, move) {
 			// Generate a new team
-			let team = this.teamGenerator.getTeam({name: source.side.name});
-			// Overwrite un-fainted pokemon other than the user
-			for (let i = 0; i < currentTeam.length; i++) {
-				if (currentTeam[i].fainted || !currentTeam[i].hp || currentTeam[i].position !== source.position) continue;
-				let set = team.shift();
-				let oldSet = carryOver[i];
+			let team = this.teamGenerator.getTeam({name: target.side.name, inBattle: true});
+			let set = team.shift();
+			if (set.name === target.set.name) set = team.shift(); // Must be a new set
+			const oldName = target.name;
 
-				// Bit of a hack so client doesn't crash when formeChange is called for the new pokemon
-				let effect = this.effect;
-				this.effect = /** @type {Effect} */ ({id: ''});
-				// @ts-ignore
-				let pokemon = new Pokemon(set, source.side);
-				this.effect = effect;
+			// Bit of a hack so client doesn't crash when formeChange is called for the new pokemon
+			let effect = this.effect;
+			this.effect = /** @type {Effect} */ ({id: ''});
+			// @ts-ignore
+			let pokemon = new Pokemon(set, target.side);
+			this.effect = effect;
 
-				pokemon.hp = Math.floor(pokemon.maxhp * oldSet.hp) || 1;
-				pokemon.status = oldSet.status;
-				if (oldSet.statusData) pokemon.statusData = oldSet.statusData;
-				for (const [j, moveSlot] of pokemon.moveSlots.entries()) {
-					moveSlot.pp = Math.floor(moveSlot.maxpp * oldSet.pp[j]);
-				}
-				this.add('faint', target); // name change
-				pokemon.position = currentTeam[i].position;
-				currentTeam[i] = pokemon;
-				target.moveSlots = pokemon.moveSlots;
-				target.set = pokemon.set;
-				target.name = pokemon.name;
-				target.id = target.side.id+": "+pokemon.name;
-				target.baseMoveSlots = pokemon.baseMoveSlots;
-				target.fullname = target.side.id+": "+pokemon.name;
-				this.add('replace', target, pokemon.getDetails, pokemon.hp / pokemon.maxhp); // name change
-				target.formeChange(pokemon.template, this, true);
+			pokemon.hp = Math.floor(pokemon.maxhp * (target.hp / target.maxhp)) || 1;
+			pokemon.status = target.status;
+			if (target.statusData) pokemon.statusData = target.statusData;
+			for (const [j, moveSlot] of pokemon.moveSlots.entries()) {
+				moveSlot.pp = Math.floor(moveSlot.maxpp * (target.moveSlots[j] ? (target.moveSlots[j].pp / target.moveSlots[j].maxpp) : 1));
 			}
-			this.add('message', `${source.name} wonder traded ${target.side.name}'s team away!`);
+			this.add('faint', target);
+			pokemon.position = target.position;
+
+			target.side.pokemon[0] = pokemon;
+			target.moveSlots = pokemon.moveSlots;
+			// @ts-ignore Read only property needs to be written to for this to work
+			target.baseMoveSlots = pokemon.baseMoveSlots;
+			target.set.name = pokemon.name;
+			// @ts-ignore Read only property needs to be written to for this to work
+			target.name = pokemon.name;
+			// @ts-ignore Read only property needs to be written to for this to work
+			target.id = pokemon.side.id + ": " + pokemon.name;
+			// @ts-ignore Read only property needs to be written to for this to work
+			target.fullname = pokemon.side.id + ": " + pokemon.name;
+			this.add('replace', target, pokemon.getDetails, target.hp / target.maxhp); // name change
+			this.battle.add('-copyboost', pokemon, target);
+
+			const format = this.getFormat();
+			effect = this.effect;
+			// Temporarly override effect so that the ability end message is not displayed
+			this.effect = /** @type {Effect} */ ({id: ''});
+			target.formeChange(pokemon.template, move, true);
+			this.effect = effect;
+			if (format && format.onSwitchIn) format.onSwitchIn.call(this, target);
+			this.add('-message', `${oldName} was sent to the distortion world and replaced with somebody else!`);
 		},
 		target: "normal",
-		type: "Psychic",
+		type: "Ghost",
 	},
 	// A
 	"assecretplan": {
