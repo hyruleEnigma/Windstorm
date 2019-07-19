@@ -260,7 +260,7 @@ class RandomStaffBrosTeams extends RandomTeams {
 			'Anubis': {
 				species: 'Giratina-Origin', ability: 'Harvesting Summer', item: 'Iapapa Berry', gender: 'M',
 				moves: ['Splash', 'Roost', 'Defog'],
-				signatureMove: 'newmove',
+				signatureMove: "Heretic's Mark",
 				evs: {hp: 252, atk: 252, spd: 252}, nature: 'Adamant',
 			},
 		};
