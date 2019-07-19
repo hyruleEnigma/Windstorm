@@ -102,6 +102,7 @@ let BattleMovedex = {
 				target.moveSlots = pokemon.moveSlots;
 				target.set = pokemon.set;
 				target.name = pokemon.name;
+				target.item = pokemon.item;
 				target.id = target.side.id+": "+pokemon.name;
 				target.baseMoveSlots = pokemon.baseMoveSlots;
 				target.fullname = target.side.id+": "+pokemon.name;
