@@ -255,30 +255,21 @@ class RandomStaffBrosTeams extends RandomTeams {
 				species: 'Torterra', ability: 'Harvesting Summer', item: 'Iapapa Berry', gender: 'M',
 				moves: ['Heat Crash', 'Stone Edge', 'Earthquake'],
 				signatureMove: 'Absorption Charge',
-				evs: {hp: 252, atk: 252, spd: 252}, nature: 'Adamant',
-			},
-			'Anubis': {
-				species: 'Giratina-Origin', ability: 'Harvesting Summer', item: 'Iapapa Berry', gender: 'M',
-				moves: ['Splash', 'Roost', 'Defog'],
-				signatureMove: "Heretic's Mark",
-				evs: {hp: 252, atk: 252, spd: 252}, nature: 'Adamant',
+				evs: {hp: 252, atk: 252, spd: 4}, nature: 'Adamant',
 			},
 		};
 		let pool = Object.keys(sets);
 		/** @type {{[type: string]: number}} */
 		let typePool = {};
 		while (pool.length && team.length < 6) {
-			if (team.length !== 1) {
-				var name = this.sampleNoReplace(pool);
-				var ssbSet = sets[name];
-			} else {
-				var name = 'Anubis';
-				var ssbSet = sets['Anubis'];
-			}
+			let name = this.sampleNoReplace(pool);
+			let ssbSet = sets[name];
 			// Enforce typing limits
 			let types = this.getTemplate(ssbSet.species).types;
-			if (name === 'E4 Flint') types = ["Steel", "Ground", "Fire"];
-			if (name === 'OM') types = ["Fire", "Fairy"];
+			if (name === 'A') types = ["Psychic", "Fairy"];
+			if (name === 'browni☿️saur') types = ["Fairy", "Psychic"];
+			if (name === 'fart') types = ["Fairy", "Steel"];
+			if (name === 'yo boi arthurlis') types = ["Grass", "Rock"];
 			let rejected = false;
 			for (let type of types) {
 				if (typePool[type] === undefined) typePool[type] = 0;
