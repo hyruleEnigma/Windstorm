@@ -320,6 +320,18 @@ let BattleStatuses = {
 			this.add(`c|~bumbadadabum|Who will lead my kingdom now?`);
 		},
 	},
+	ckilgannon: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+c.kilgannon|Hope you're not afraid of the dark!`);
+		},
+		onSwitchOut() {
+			this.add(`c|+c.kilgannon|/me growls`);
+		},
+		onFaint() {
+			this.add(`c|+c.kilgannon|Your time will come.`);
+		},
+	},
 	cantsay: {
 		noCopy: true,
 		onStart() {
