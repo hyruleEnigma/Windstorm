@@ -37,41 +37,6 @@ let BattleMovedex = {
 	},
 	*/
 	// Please keep sets organized alphabetically based on staff member name!
-	// UnleashOurPassion
-	quickreload: {
-		accuracy: 100,
-		basePower: 90,
-		category: "Physical",
-		desc: "Removes Reflect, Light Screen, Aurora Veil, Safeguard, Mist, Spikes, Toxic Spikes, Stealth Rock, and Sticky Web from both sides. The user switches out after damaging the target.",
-		shortDesc: "Clears all entry hazards, then switches.",
-		id: "quickreload",
-		name: "Quick Reload",
-		isNonstandard: "Custom",
-		pp: 15,
-		priority: 0,
-		flags: {mirror: 1, protect: 1},
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, "Defog", target);
-			this.add('-anim', source, "U-Turn", target);
-			let removeAll = ['reflect', 'lightscreen', 'auroraveil', 'safeguard', 'mist', 'spikes', 'toxicspikes', 'stealthrock', 'stickyweb'];
-			let silentRemove = ['reflect', 'lightscreen', 'auroraveil', 'safeguard', 'mist'];
-			for (const sideCondition of removeAll) {
-				if (target.side.removeSideCondition(sideCondition)) {
-					if (!(silentRemove.includes(sideCondition))) this.add('-sideend', target.side, this.getEffect(sideCondition).name, '[from] move: Quick Reload', '[of] ' + source);
-				}
-				if (source.side.removeSideCondition(sideCondition)) {
-					if (!(silentRemove.includes(sideCondition))) this.add('-sideend', source.side, this.getEffect(sideCondition).name, '[from] move: Quick Reload', '[of] ' + source);
-				}
-			}
-		},
-		selfSwitch: true,
-		secondary: null,
-		target: "normal",
-		type: "Bug",
-},
 	// A
 	"assecretplan": {
 		accuracy: 100,
