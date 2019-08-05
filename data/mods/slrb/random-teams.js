@@ -203,12 +203,6 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Triple Nightmare',
 				evs: {def: 4, spa: 252, spe: 252}, nature: 'Timid',
 			},
-			'Polestar Obey': {
-				species: 'Lucario', ability: 'Fallen Warriors', item: 'Distorted Lens', gender: 'M',
-				moves: ['Aura Sphere', 'Dragon Pulse', 'Earth Power'],
-				signatureMove: 'Deus Ex Machina',
-				evs: {spa: 252, def: 4, spe: 252}, nature: 'Timid',
-			},
 			'PokemonDeadChannel': {
 				species: 'Ditto', ability: 'Remix', item: 'Expert Belt', gender: '',
 				moves: [],
