@@ -672,6 +672,17 @@ let Formats = [
 		column: 2,
 	},
 	{
+		name: "[Gen 7] No weaknesses or resistances",
+		desc: `All moves hit neutrally`,
+
+		mod: 'gen7',
+		ruleset: ['Pokemon', 'Standard', 'Team Preview'],
+		banlist: ['Uber', 'Arena Trap', 'Power Construct', 'Shadow Tag', 'Baton Pass'],
+		onEffectiveness() {
+			return 0;
+		},
+	},
+	{
 		name: "[Gen 7] Balanced Hackmons",
 		desc: `Anything that can be hacked in-game and is usable in local battles is allowed.`,
 		threads: [
