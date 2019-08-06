@@ -678,6 +678,9 @@ let Formats = [
 		mod: 'gen7',
 		ruleset: ['Pokemon', 'Standard', 'Team Preview'],
 		banlist: ['Uber', 'Arena Trap', 'Power Construct', 'Shadow Tag', 'Baton Pass'],
+		onNegateImmunity() {
+			return false;
+		},
 		onEffectiveness() {
 			return 0;
 		},
