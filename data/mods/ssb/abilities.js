@@ -247,7 +247,7 @@ let BattleAbilities = {
 		isNonstandard: "Custom",
 		onStart(source) {
 			let formes = ['Oricorio', 'Oricorio-Sensu', 'Oricorio-Pom-Pom', 'Oricorio-P\'au'];
-			if (formes.includes(source.template.species)){
+			if (formes.includes(source.template.species)) {
 				formes.splice(formes.indexOf(source.template.species), 1);
 				this.add('-activate', source, 'ability: Arabesque');
 				source.formeChange(formes[this.random(formes.length)], this.getAbility('arabesque'), true);
