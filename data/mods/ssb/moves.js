@@ -809,6 +809,49 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Normal",
 	},
+	// Birdy~!
+	justdance: {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "Uses a random dance move twice in a row.",
+		shortDesc: "Uses a random dance move twice in a row.",
+		id: 'justdance',
+		name: "Just Dance",
+		isNonstandard: "Custom",
+		pp: 5,
+		priority: 0,
+		flags: {dance: 1},
+		onTryMove(pokemon) {
+			this.attrLastMove('[still]');
+		},
+		onHit(target, source, effect) {
+			const moves = [];
+			for (const i in exports.BattleMovedex) {
+				const move = exports.BattleMovedex[i];
+				if (i !== move.id) continue;
+				if (move.name.includes('Dance') && move.id !== 'lunardance' && move.id !== 'raindance' && !move.isNonstandard) {
+					moves.push(move);
+				}
+			}
+			let randomMove;
+			if (moves.length) {
+				randomMove = this.sample(moves).id;
+			}
+			if (!randomMove) {
+				return false;
+			}
+			this.useMove(randomMove, target);
+			this.useMove(randomMove, target);
+			// Kill getting locked into petal dance
+			if (source.getVolatile('lockedmove')) {
+				delete source.volatiles['lockedmove'];
+			}
+		},
+		secondary: null,
+		target: "self",
+		type: "Normal",
+	},
 	// bobochan
 	thousandcircuitoverload: {
 		accuracy: 100,
