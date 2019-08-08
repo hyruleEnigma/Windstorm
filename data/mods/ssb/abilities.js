@@ -246,7 +246,7 @@ let BattleAbilities = {
 		shortDesc: "On switch-in, this Pokemon switches to a different oricorio form.",
 		isNonstandard: "Custom",
 		onStart(source) {
-			let formes = ['Oricorio','Oricorio-Sensu','Oricorio-Pom-Pom','Oricorio-P\'au'];
+			let formes = ['Oricorio', 'Oricorio-Sensu', 'Oricorio-Pom-Pom', 'Oricorio-P\'au'];
 			if (formes.includes(source.template.species)){
 				formes.splice(formes.indexOf(source.template.species), 1);
 				this.add('-activate', source, 'ability: Arabesque');
