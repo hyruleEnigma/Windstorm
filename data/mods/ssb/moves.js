@@ -830,7 +830,7 @@ let BattleMovedex = {
 			for (const i in exports.BattleMovedex) {
 				const move = exports.BattleMovedex[i];
 				if (i !== move.id) continue;
-				if (move.name.includes('Dance') && move.id !== 'lunardance' && move.id !== 'raindance' && !move.isNonstandard) {
+				if (move.name && move.name.includes('Dance') && move.id !== 'lunardance' && move.id !== 'raindance' && !move.isNonstandard) {
 					moves.push(move);
 				}
 			}
