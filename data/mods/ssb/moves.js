@@ -111,30 +111,6 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Grass",
 	},
-	// ACakeWearingAHat
-	sparcedance: {
-		accuracy: true,
-		basePower: 0,
-		category: "Status",
-		desc: "Boosts the user's Attack, Defense, and Speed by one stage.",
-		shortDesc: "+1 atk, def, and spe.",
-		id: "sparcedance",
-		name: "Sparce Dance",
-		isNonstandard: "Custom",
-		pp: 15,
-		priority: 0,
-		flags: {snatch: 1, mirror: 1, dance: 1},
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, "Quiver Dance", source);
-		},
-		boosts: {atk: 1, def: 1, spe: 1},
-		secondary: null,
-		target: "self",
-		type: "Normal",
-	},
 	// Aelita
 	energyfield: {
 		accuracy: 100,
@@ -510,14 +486,27 @@ let BattleMovedex = {
 			target.id = pokemon.side.id + ": " + pokemon.name;
 			// @ts-ignore Read only property needs to be written to for this to work
 			target.fullname = pokemon.side.id + ": " + pokemon.name;
+			// @ts-ignore Read only property needs to be written to for this to work (Prevent pokemon other than Level 51 from being above level 100)
+			target.level = 100;
+			target.set.level = 100;
+			// @ts-ignore Read only property needs to be written to for this to work (Prevent pokemon other than Level 51 from being above level 100)
+			target.side.active[0].level = 100;
+			target.side.active[0].set.level = 100;
 			this.add('replace', target, pokemon.getDetails, target.hp / target.maxhp); // name change
 
 			const format = this.getFormat();
 			effect = this.effect;
+			target.setAbility(set.ability, target);
 			// Temporarly override effect so that the ability end message is not displayed
 			this.effect = /** @type {Effect} */ ({id: ''});
-			target.formeChange(pokemon.template, move, true);
+			target.formeChange(pokemon.template, this.getAbility(set.ability), true);
 			this.effect = effect;
+
+			target.side.pokemon[0].canMegaEvo = this.canMegaEvo(pokemon);
+			// @ts-ignore Read only property needs to be written to for this to work
+			target.side.active[0].species = pokemon.species;
+			target.side.active[0].canMegaEvo = this.canMegaEvo(target.side.active[0]);
+
 			if (format && format.onSwitchIn) format.onSwitchIn.call(this, target);
 			this.add('-message', `${oldName} was sent to the distortion world and replaced with somebody else!`);
 			for (let stat of Object.keys(target.boosts)) {
@@ -795,39 +784,6 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Bug",
 	},
-	// Bhris Brown
-	finalimpact: {
-		basePower: 85,
-		accuracy: 100,
-		category: "Physical",
-		desc: "This move summons Rain Dance and boosts the user's Defense by one stage.",
-		shortDesc: "User's Def +1. Summons Rain Dance.",
-		id: "finalimpact",
-		name: "Final Impact",
-		isNonstandard: "Custom",
-		pp: 5,
-		priority: 0,
-		flags: {mirror: 1, protect: 1, contact: 1},
-		onTryMove() {
-			this.attrLastMove('[still]');
-		},
-		onPrepareHit(target, source) {
-			this.add('-anim', source, 'Meteor Mash', target);
-		},
-		onAfterMoveSecondarySelf() {
-			this.field.setWeather('raindance');
-		},
-		secondary: {
-			chance: 100,
-			self: {
-				boosts: {
-					def: 1,
-				},
-			},
-		},
-		target: "normal",
-		type: "Fighting",
-	},
 	// biggie
 	foodrush: {
 		accuracy: 100,
@@ -1010,6 +966,30 @@ let BattleMovedex = {
 		},
 		target: "self",
 		type: "Psychic",
+	},
+	// Cake
+	sparcedance: {
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "Boosts the user's Attack, Defense, and Speed by one stage.",
+		shortDesc: "+1 atk, def, and spe.",
+		id: "sparcedance",
+		name: "Sparce Dance",
+		isNonstandard: "Custom",
+		pp: 15,
+		priority: 0,
+		flags: {snatch: 1, mirror: 1, dance: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Quiver Dance", source);
+		},
+		boosts: {atk: 1, def: 1, spe: 1},
+		secondary: null,
+		target: "self",
+		type: "Normal",
 	},
 	// cant say
 	aesthetislash: {
@@ -1229,6 +1209,38 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Dragon",
 	},
+	// deetah
+	galvanizedstrike: {
+		accuracy: 100,
+		basePower: 70,
+		category: "Physical",
+		desc: "Power doubles if the user is burned, paralyzed, or poisoned. The physical damage halving effect from the user's burn is ignored.",
+		shortDesc: "Power doubles if user is burn/poison/paralyzed.",
+		id: "galvanizedstrike",
+		name: "Galvanized Strike",
+		isNonstandard: "Custom",
+		pp: 20,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, 'Wild Charge', target);
+			this.add('-anim', source, 'Bolt Strike', target);
+		},
+		onBasePower(basePower, pokemon) {
+			if (pokemon.status && pokemon.status !== 'slp') {
+				return this.chainModify(2);
+			}
+		},
+		secondary: {
+			chance: 30,
+			status: 'par',
+		},
+		target: "normal",
+		type: "Electric",
+	},
 	// deg
 	luciddreams: {
 		accuracy: 75,
@@ -1344,7 +1356,7 @@ let BattleMovedex = {
 		isNonstandard: "Custom",
 		pp: 5,
 		priority: 0,
-		flags: {protect: 1},
+		flags: {protect: 1, authentic: 1},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
@@ -1606,10 +1618,10 @@ let BattleMovedex = {
 	// Gallant Spear
 	stormassaultogs: {
 		accuracy: 90,
-		basePower: 20,
+		basePower: 25,
 		multihit: 3,
-		category: "Special",
-		desc: "Hits three times. Each hit has a 10% chance to drop the target's Special Defense, and a 10% chance to burn. Each hit is always a critical hit.If one of the hits breaks the target's substitute, it will take damage for the remaining hits.",
+		category: "Physical",
+		desc: "Hits three times. Each hit has a 10% chance to drop the target's Special Defense, and a 10% chance to burn. Each hit is always a critical hit. If one of the hits breaks the target's substitute, it will take damage for the remaining hits.",
 		shortDesc: "Hits 3 times in one turn. 10% to lower SpD. 10% to burn. Always crits.",
 		id: "stormassaultogs",
 		isNonstandard: "Custom",
@@ -1623,6 +1635,7 @@ let BattleMovedex = {
 		},
 		onPrepareHit(target, source) {
 			this.add('-anim', source, 'Bullet Seed', target);
+			this.add('-anim', source, 'Magma Storm', target);
 		},
 		secondaries: [
 			{
@@ -1631,7 +1644,7 @@ let BattleMovedex = {
 			}, {
 				chance: 10,
 				boosts: {
-					spd: -1,
+					def: -1,
 				},
 			},
 		],
@@ -1953,9 +1966,9 @@ let BattleMovedex = {
 		id: "petrifyinggaze",
 		name: "Petrifying Gaze",
 		isNonstandard: "Custom",
-		pp: 10,
+		pp: 1,
 		priority: 0,
-		flags: {reflectable: 1, mirror: 1},
+		flags: {},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
@@ -1965,8 +1978,9 @@ let BattleMovedex = {
 		onHit(target, source, move) {
 			this.boost({atk: 2}, source, source);
 			target.trySetStatus('par', source);
-			target.tryTrap();
+			return target.addVolatile('trapped', source, move, 'trapper');
 		},
+		isZ: "dusknoiriumz",
 		secondary: null,
 		target: "normal",
 		type: "Ghost",
@@ -2035,9 +2049,9 @@ let BattleMovedex = {
 	},
 	// Jolteonite
 	hyperforcestrike: {
-		accuracy: 90,
-		basePower: 120,
-		category: "Special",
+		accuracy: 100,
+		basePower: 75,
+		category: "Physical",
 		desc: "Damages the target and restores user's HP by 25% of its total health.",
 		shortDesc: "Damages the target and heals 25% total HP.",
 		id: "hyperforcestrike",
@@ -3133,7 +3147,7 @@ let BattleMovedex = {
 			target.statusData.time = 3;
 			target.statusData.startTime = 3;
 			this.heal(target.maxhp); // Aesthetic only as the healing happens after you fall asleep in-game
-			this.boost({atk: 1, spa: 1}, target, source);
+			this.boost({def: 1, spd: 1}, target, source);
 		},
 		onPrepareHit(target, source) {
 			this.add('-anim', source, "Rest", source);
@@ -3548,17 +3562,20 @@ let BattleMovedex = {
 		onPrepareHit(target, source) {
 			this.add('-anim', source, "Revelation Dance", target);
 		},
-		self: {
-			boosts: {
-				accuracy: 1,
+		secondaries: [
+			{
+				chance: 50,
+				self: {
+					boosts: {atk: 1},
+				},
 			},
-		},
-		secondary: {
-			chance: 50,
-			self: {
-				boosts: {atk: 1},
+			{
+				chance: 100,
+				self: {
+					boosts: {accuracy: 1},
+				},
 			},
-		},
+		],
 		target: "normal",
 		type: "Normal",
 	},
@@ -3567,8 +3584,8 @@ let BattleMovedex = {
 		accuracy: 100,
 		basePower: 60,
 		category: "Physical",
-		desc: "Before doing damage, the target's stat boosts are inverted. Ignores Ground-type immunity. The user switches out after damaging the target.",
-		shortDesc: "Hits Ground. Inverts target's boosts, then switches.",
+		desc: "Before doing damage, the target's stat boosts are inverted. The user switches out after damaging the target.",
+		shortDesc: "Inverts target's boosts, then switches.",
 		id: "switchoff",
 		name: "Switch Off",
 		isNonstandard: "Custom",
@@ -3594,7 +3611,6 @@ let BattleMovedex = {
 			if (!success) return;
 			this.add('-invertboost', target, '[from] move: Switch Off');
 		},
-		ignoreImmunity: {'Electric': true},
 		selfSwitch: true,
 		secondary: null,
 		target: "normal",
@@ -4290,31 +4306,41 @@ let BattleMovedex = {
 		type: "Psychic",
 	},
 	// UnleashOurPassion
-	continuous1v1: {
-		accuracy: 90,
-		basePower: 120,
-		category: "Special",
-		desc: "Fully restores the user's HP if this move knocks out the target.",
-		shortDesc: "Fully restores user's HP if this move KOes the target.",
-		id: "continuous1v1",
-		name: "Continuous 1v1",
+	quickreload: {
+		accuracy: 100,
+		basePower: 90,
+		category: "Physical",
+		desc: "Removes Reflect, Light Screen, Aurora Veil, Safeguard, Mist, Spikes, Toxic Spikes, Stealth Rock, and Sticky Web from both sides. The user switches out after damaging the target.",
+		shortDesc: "Clears all entry hazards, then switches.",
+		id: "quickreload",
+		name: "Quick Reload",
 		isNonstandard: "Custom",
 		pp: 15,
 		priority: 0,
-		flags: {protect: 1, mirror: 1},
+		flags: {mirror: 1, protect: 1},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
 		onPrepareHit(target, source) {
-			this.add('-anim', source, "Discharge", target);
-			this.add('-anim', source, "First Impression", target);
+			this.add('-anim', source, "Defog", target);
+			this.add('-anim', source, "U-Turn", target);
 		},
-		onAfterMoveSecondarySelf(pokemon, target, move) {
-			if (!target || target.fainted || target.hp <= 0) this.heal(pokemon.maxhp, pokemon, pokemon, move);
+		onHit(target, source, move) {
+			let removeAll = ['reflect', 'lightscreen', 'auroraveil', 'safeguard', 'mist', 'spikes', 'toxicspikes', 'stealthrock', 'stickyweb'];
+			let silentRemove = ['reflect', 'lightscreen', 'auroraveil', 'safeguard', 'mist'];
+			for (const sideCondition of removeAll) {
+				if (target.side.removeSideCondition(sideCondition)) {
+					if (!(silentRemove.includes(sideCondition))) this.add('-sideend', target.side, this.getEffect(sideCondition).name, '[from] move: Quick Reload', '[of] ' + source);
+				}
+				if (source.side.removeSideCondition(sideCondition)) {
+					if (!(silentRemove.includes(sideCondition))) this.add('-sideend', source.side, this.getEffect(sideCondition).name, '[from] move: Quick Reload', '[of] ' + source);
+				}
+			}
 		},
+		selfSwitch: true,
 		secondary: null,
 		target: "normal",
-		type: "Electric",
+		type: "Bug",
 	},
 	// vivalospride
 	ceilingsabsent: {
@@ -4494,7 +4520,7 @@ let BattleMovedex = {
 		isNonstandard: "Custom",
 		pp: 1,
 		priority: 1,
-		flags: {protect: 1, mirror: 1},
+		flags: {},
 		onTryMove() {
 			this.attrLastMove('[still]');
 		},
@@ -4506,6 +4532,55 @@ let BattleMovedex = {
 		isZ: "charcoal",
 		target: "normal",
 		type: "Fire",
+	},
+	// Yuki
+	cutieescape: {
+		accuracy: true,
+		category: "Status",
+		basePower: 0,
+		desc: "The user is replaced with another Pokemon in its party. The opponent is confused, trapped, and infatuated regardless of the replacement's gender. This move fails unless the user already took damage this turn.",
+		shortDesc: "If hit; switches out + confuses, traps, infatuates.",
+		id: "cutieescape",
+		name: "Cutie Escape",
+		isNonstandard: "Custom",
+		pp: 10,
+		priority: -6,
+		flags: {mirror: 1},
+		beforeTurnCallback(pokemon) {
+			pokemon.addVolatile('cutieescape');
+			this.add('-message', `${pokemon.name} is preparing to flee!`);
+		},
+		beforeMoveCallback(pokemon) {
+			if (!pokemon.volatiles['cutieescape'] || !pokemon.volatiles['cutieescape'].tookDamage) {
+				this.add('-fail', pokemon, 'move: Cutie Escape');
+				this.add('-hint', 'Cutie Escape only works when Yuki is hit in the same turn the move is used.');
+				return true;
+			}
+		},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onPrepareHit(target, source) {
+			this.add('-anim', source, "Baton Pass", source);
+		},
+		onHit(target, source) {
+			target.addVolatile('confusion');
+			target.addVolatile('cutietrap');
+		},
+		effect: {
+			duration: 1,
+			onStart(pokemon) {
+				this.add('-singleturn', pokemon, 'move: Cutie Escape');
+			},
+			onHit(pokemon, source, move) {
+				if (move.category !== 'Status') {
+					pokemon.volatiles['cutieescape'].tookDamage = true;
+				}
+			},
+		},
+		selfSwitch: true,
+		target: "normal",
+		type: "Fairy",
 	},
 	// Zalm
 	twinweedle: {

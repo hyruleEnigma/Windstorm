@@ -354,6 +354,26 @@ let BattleAbilities = {
 			if (move && move.type === 'Dragon') return priority + 1;
 		},
 	},
+	// deetah
+	radioactive: {
+		desc: "If this Pokemon is statused, its Attack is 1.5x; ignores burn halving physical damage. This Pokemon heals 1/8 of its max HP when poisoned. This Pokemon is immune to Ground-type moves.",
+		shortDesc: "1.5x Atk if statused. Heals 1/8 if poisoned. Ground immune.",
+		id: "radioactive",
+		name: "Radioactive",
+		isNonstandard: "Custom",
+		onModifyAtk(atk, pokemon) {
+			if (pokemon.status) {
+				return this.chainModify(1.5);
+			}
+		},
+		onDamagePriority: 1,
+		onDamage(damage, target, source, effect) {
+			if (effect.id === 'psn' || effect.id === 'tox') {
+				this.heal(target.maxhp / 8);
+				return false;
+			}
+		},
+	},
 	// E4 Flint
 	starkmountain: {
 		desc: "The user summons Sunny Day when it switches in. In addition, Water-type attacks do halved damage against this Pokemon.",
@@ -750,8 +770,9 @@ let BattleAbilities = {
 	},
 	// Pirate Princess
 	acidrain: {
+		desc: "On switch-in, this Pokemon summons Acid Rain.",
 		shortDesc: "On switch-in, this Pokemon summons Acid Rain.",
-		onStart(source) {
+		onStart() {
 			this.field.setWeather('acidrain');
 		},
 		id: "acidrain",
@@ -1081,7 +1102,10 @@ let BattleAbilities = {
 		desc: "This Pokemon's attacking stat is doubled while using a Water-type attack. If a Pokemon uses a Fire-type attack against this Pokemon, that Pokemon's attacking stat is halved when calculating the damage to this Pokemon. This Pokemon cannot be burned. Gaining this Ability while burned cures it. Sets Sticky Web on switching in.",
 		shortDesc: "User's Water power is 2x; can't be burned; Fire power is halved. Sets web.",
 		onStart(pokemon) {
-			this.useMove("stickyweb", pokemon);
+			if (!pokemon.m.stickyweb) {
+				this.useMove("stickyweb", pokemon);
+				pokemon.m.stickyweb = true;
+			}
 		},
 		onModifyAtkPriority: 5,
 		onSourceModifyAtk(atk, attacker, defender, move) {
@@ -1131,6 +1155,18 @@ let BattleAbilities = {
 			if (move.id.includes('bone')) {
 				return this.chainModify([0x14CD, 0x1000]);
 			}
+		},
+	},
+	// Yuki
+	snowstorm: {
+		desc: "As it switches in, this Pokemon summons hail that remains in effect until replaced by another weather or suppressed by the effects of Cloud Nine, Air Lock, or Delta Stream.",
+		shortDesc: "On switch-in, this Pokemon summons hail which remains active until replaced.",
+		id: "snowstorm",
+		name: "Snow Storm",
+		isNonstandard: "Custom",
+		onStart() {
+			let snowStorm = this.getEffect('hail');
+			this.field.setWeather(snowStorm);
 		},
 	},
 	// Modified Illusion to support SSB volatiles

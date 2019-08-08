@@ -45,33 +45,6 @@ let BattleStatuses = {
 			this.add(`c|+5gen|I'm not dead yet, just changing formes.`);
 		},
 	},
-	acakewearingahat: {
-		noCopy: true,
-		onStart(source) {
-			this.add(`c|+ACakeWearingAHat|h`);
-			if (source.illusion) return;
-			this.add('-start', source, 'typeadd', 'Ghost');
-		},
-		onSwitchOut(source) {
-			this.add(`c|+ACakeWearingAHat|${source.side.name} is a nerd`);
-		},
-		onFaint() {
-			this.add(`c|+ACakeWearingAHat|According to all known laws of aviation, there is no way that Dunsparce should be able to fly. Its wings are too small to get its fat little body off the ground. Dunsparce, of course, does not learn Fly for this reason. It does learn Roost, though. Cute li'l winged snake thing.`);
-		},
-		// Fat Snake Innate
-		onModifyDefPriority: 6,
-		onModifyDef(def, pokemon) {
-			if (!pokemon.transformed && !pokemon.illusion) {
-				return this.chainModify(1.5);
-			}
-		},
-		onModifySpDPriority: 6,
-		onModifySpD(spd, pokemon) {
-			if (!pokemon.transformed && !pokemon.illusion) {
-				return this.chainModify(1.5);
-			}
-		},
-	},
 	aelita: {
 		noCopy: true,
 		onStart() {
@@ -168,6 +141,8 @@ let BattleStatuses = {
 		noCopy: true,
 		onStart() {
 			this.add(`c|&Anubis|hi ur qt`);
+			// In loving memory of the SSB programming team's sanity.
+			if (this.random(300) === 272) this.add(`c|&HoeenHero|Anubis's set is OP against programmer sanity.`);
 		},
 		onSwitchOut() {
 			this.add(`c|&Anubis|brb making coffee`);
@@ -270,18 +245,6 @@ let BattleStatuses = {
 			this.add(`c|@Beowulf|BUZZ BUZZ BUZZ BUZZ`);
 		},
 	},
-	bhrisbrown: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Bhris Brown|Never send a boy to do a mans job`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Bhris Brown|Goddamit Nappa...`);
-		},
-		onFaint() {
-			this.add(`c|+Bhris Brown|There is one thing I'd like to know...tell me. Will I meet that clown Kakarot in the other world?`);
-		},
-	},
 	biggie: {
 		noCopy: true,
 		onStart() {
@@ -328,6 +291,33 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|~bumbadadabum|Who will lead my kingdom now?`);
+		},
+	},
+	cake: {
+		noCopy: true,
+		onStart(source) {
+			this.add(`c|+Cake|h`);
+			if (source.illusion) return;
+			this.add('-start', source, 'typeadd', 'Ghost');
+		},
+		onSwitchOut(source) {
+			this.add(`c|+Cake|${source.side.name} is a nerd`);
+		},
+		onFaint() {
+			this.add(`c|+Cake|According to all known laws of aviation, there is no way that Dunsparce should be able to fly. Its wings are too small to get its fat little body off the ground. Dunsparce, of course, does not learn Fly for this reason. It does learn Roost, though. Cute li'l winged snake thing.`);
+		},
+		// Fat Snake Innate
+		onModifyDefPriority: 6,
+		onModifyDef(def, pokemon) {
+			if (!pokemon.transformed && !pokemon.illusion) {
+				return this.chainModify(1.5);
+			}
+		},
+		onModifySpDPriority: 6,
+		onModifySpD(spd, pokemon) {
+			if (!pokemon.transformed && !pokemon.illusion) {
+				return this.chainModify(1.5);
+			}
 		},
 	},
 	cantsay: {
@@ -404,6 +394,18 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|+Decem|>:(`);
+		},
+	},
+	deetah: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+deetah|I can see right through you.`);
+		},
+		onSwitchOut() {
+			this.add(`c|+deetah|Meow :3`);
+		},
+		onFaint() {
+			this.add(`c|+deetah|I have 8 lives left, you can't get rid of me that easily.`);
 		},
 	},
 	deg: {
@@ -523,13 +525,30 @@ let BattleStatuses = {
 		noCopy: true,
 		onStart(target, source) {
 			this.add('-start', source, 'typechange', `Fairy/Steel`);
-			this.add(`c|%fart|it's fukken raw`);
+			let activeMon;
+			activeMon = toID(source.side.foe.active[0].illusion ? source.side.foe.active[0].illusion.name : activeMon = source.side.foe.active[0].template.name);
+			let family = ['aethernum', 'ceteris', 'flare', 'ransei', 'trickster', 'zalm', 'aelita', 'biggie', 'deetah', 'birdy', 'sunny', 'jolteonite'];
+			if (activeMon === 'hoeenhero' || activeMon === 'pokemondeadchannel') {
+				 this.add(`c|%fart|what song should I sing?`);
+			} else if (activeMon === 'lifeisdank' || activeMon === 'nui' || activeMon === 'grimauxiliatrix') {
+				this.add(`c|%fart|the gang's all here!`);
+			} else if (family.includes(activeMon)) {
+				this.add(`c|%fart|what's cookin', good lookin'?`);
+			} else {
+				this.add(`c|%fart|it's fukken raw`);
+			}
 		},
 		onSwitchOut() {
 			this.add(`c|%fart|this boy is not correct. he is **flawed.**`);
 		},
-		onFaint() {
-			this.add(`c|%fart|the things I do for love...`);
+		onFaint(pokemon) {
+			let activeMon;
+			activeMon = toID(pokemon.side.foe.active[0].illusion ? pokemon.side.foe.active[0].illusion.name : activeMon = pokemon.side.foe.active[0].template.name);
+			if (activeMon === 'unleashourpassion') {
+				this.add(`c|%fart|UOP I'm deleting your mon`);
+			} else {
+				this.add(`c|%fart|the things I do for love...`);
+			}
 		},
 	},
 	flare: {
@@ -1070,7 +1089,7 @@ let BattleStatuses = {
 			this.add(`c|%Pirate Princess|You will always remember this as the day that you almost caught Captain Ja- Pirate Princess!`);
 		},
 		onFaint() {
-			this.add(`c|%Pirate Princesse|Erm… Parley?`);
+			this.add(`c|%Pirate Princess|Erm… Parley?`);
 		},
 	},
 	pluviometer: {
@@ -1379,13 +1398,13 @@ let BattleStatuses = {
 	teclis: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|@Teclis|Only in darkness can you see the stars.`);
+			this.add(`c|@Teclis|The Emperor protects.`);
 		},
 		onSwitchOut() {
-			this.add(`c|@Teclis|Hope is the last thing to die.`);
+			this.add(`c|@Teclis|Only in death does duty end.`);
 		},
 		onFaint() {
-			this.add(`c|@Teclis|There is no end, only new beginnings.`);
+			this.add(`c|@Teclis|Success is commemorated; Failure merely remembered.`);
 		},
 	},
 	tennisace: {
@@ -1483,13 +1502,13 @@ let BattleStatuses = {
 	unleashourpassion: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|%UnleashOurPassion|1v1 me if real`);
+			this.add(`c|%UnleashOurPassion|Hi I'm here to participate in a totally serious conversation`);
 		},
 		onSwitchOut() {
-			this.add(`c|%UnleashOurPassion|Tfw you remember switching exists`);
+			this.add(`c|%UnleashOurPassion|Okay that's enough shitposting for now`);
 		},
 		onFaint() {
-			this.add(`c|%UnleashOurPassion|That's hax! You were supposed to miss`);
+			this.add(`c|%UnleashOurPassion|Fine I'll go back to work...`);
 		},
 	},
 	vivalospride: {
@@ -1569,6 +1588,18 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|+XpRienzo ☑◡☑|Wait what?`);
+		},
+	},
+	yuki: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|%Yuki|My ice may be a little __cold__, but your plan has been put completely on __hold__!`);
+		},
+		onSwitchOut() {
+			this.add(`c|%Yuki|I-It's too hot in here!`);
+		},
+		onFaint() {
+			this.add(`c|%Yuki|I'm melting...`);
 		},
 	},
 	zalm: {
@@ -1680,7 +1711,7 @@ let BattleStatuses = {
 	},
 	// Custom Acid Rain weather for Pirate Princess
 	acidrain: {
-		name: 'Acid Rain',
+		name: 'AcidRain',
 		id: 'acidrain',
 		num: 0,
 		effectType: 'Weather',
@@ -1692,11 +1723,16 @@ let BattleStatuses = {
 			}
 		},
 		onStart(battle, source, effect) {
-			this.add('-weather', 'Acid Rain');
+			if (effect && effect.effectType === 'Ability') {
+				if (this.gen <= 5) this.effectData.duration = 0;
+				this.add('-weather', 'AcidRain', '[from] ability: ' + effect, '[of] ' + source);
+			} else {
+				this.add('-weather', 'AcidRain');
+			}
 		},
 		onResidualOrder: 1,
 		onResidual() {
-			this.add('-weather', 'Acid Rain', '[upkeep]');
+			this.add('-weather', 'AcidRain', '[upkeep]');
 			if (this.field.isWeather('acidrain')) this.eachEvent('Weather');
 		},
 		onWeather(target) {
@@ -1728,6 +1764,46 @@ let BattleStatuses = {
 		},
 		onAfterMove(pokemon, source) {
 			if (this.effectData.usedup) pokemon.removeVolatile('enrageeeeed');
+		},
+	},
+	// Custom effect for Yuki
+	cutietrap: {
+		duration: 5,
+		noCopy: true,
+		onStart(pokemon, source) {
+			if (!this.runEvent('Attract', pokemon, source)) {
+				this.debug('Attract event failed');
+				return false;
+			}
+			this.add('-start', pokemon, 'Attract', '[from] move: Cutie Trap', '[of] ' + source);
+			this.add('-message', `${pokemon.name} was trapped by love!`);
+		},
+		onBeforeMovePriority: 2,
+		onBeforeMove(pokemon) {
+			this.add('-activate', pokemon, 'move: Attract', '[of] ' + this.effectData.source);
+			if (this.randomChance(1, 2)) {
+				this.add('cant', pokemon, 'Attract');
+				return false;
+			}
+		},
+		onTrapPokemon(pokemon) {
+			pokemon.tryTrap();
+		},
+		onEnd(pokemon) {
+			this.add('-end', pokemon, 'Attract', '[silent]');
+			this.add('-message', `${pokemon.name} is no longer trapped by love.`);
+		},
+	},
+	// Modified hail for Yuki
+	hail: {
+		inherit: true,
+		onStart(battle, source, effect) {
+			if (effect && effect.effectType === 'Ability') {
+				if (this.gen <= 5 || effect.id === 'snowstorm') this.effectData.duration = 0;
+				this.add('-weather', 'Hail', '[from] ability: ' + effect, '[of] ' + source);
+			} else {
+				this.add('-weather', 'Hail');
+			}
 		},
 	},
 };

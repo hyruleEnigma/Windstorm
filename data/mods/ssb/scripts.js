@@ -112,12 +112,11 @@ let BattleScripts = {
 		let altForme = pokemon.baseTemplate.otherFormes && this.getTemplate(pokemon.baseTemplate.otherFormes[0]);
 		let item = pokemon.getItem();
 		if (altForme && altForme.isMega && altForme.requiredMove && pokemon.baseMoves.includes(toID(altForme.requiredMove)) && !item.zMove) return altForme.species;
-		if (!Array.isArray(item.megaStone) && item.megaEvolves !== pokemon.baseTemplate.baseSpecies || item.megaStone === pokemon.species) {
+		if (item.megaEvolves !== pokemon.baseTemplate.species || (Array.isArray(item.megaStone) && item.megaStone.includes(pokemon.species)) || (typeof item.megaStone === 'string' && item.megaStone === pokemon.species)) {
 			return null;
 		}
 		if (Array.isArray(item.megaStone)) {
-			if (item.megaStone.includes(pokemon.species)) return null;
-			return item.megaStone[Math.floor(this.random() * item.megaStone.length)];
+			return item.megaStone[this.random(item.megaStone.length)];
 		}
 		return item.megaStone;
 	},
@@ -362,7 +361,7 @@ let BattleScripts = {
 
 		if (isCrit && !suppressMessages) this.add('-crit', target);
 
-		if (pokemon.status === 'brn' && move.category === 'Physical' && !pokemon.hasAbility('guts') && !pokemon.hasAbility('superguarda')) {
+		if (pokemon.status === 'brn' && move.category === 'Physical' && !pokemon.hasAbility('guts') && !pokemon.hasAbility('superguarda') && !pokemon.hasAbility('radioactive')) {
 			if (this.gen < 6 || move.id !== 'facade') {
 				baseDamage = this.modify(baseDamage, 0.5);
 			}
@@ -395,6 +394,19 @@ let BattleScripts = {
 				speed = 0; // Anything times 0 is still 0
 			}
 			return this.battle.trunc(speed, 13);
+		},
+		isGrounded(negateImmunity = false) {
+			if ('gravity' in this.battle.field.pseudoWeather) return true;
+			if ('ingrain' in this.volatiles && this.battle.gen >= 4) return true;
+			if ('smackdown' in this.volatiles) return true;
+			const item = (this.ignoringItem() ? '' : this.item);
+			if (item === 'ironball') return true;
+			// If a Fire/Flying type uses Burn Up and Roost, it becomes ???/Flying-type, but it's still grounded.
+			if (!negateImmunity && this.hasType('Flying') && !('roost' in this.volatiles)) return false;
+			if ((this.hasAbility('levitate') || this.hasAbility('radioactive')) && !this.battle.suppressingAttackEvents()) return null;
+			if ('magnetrise' in this.volatiles) return false;
+			if ('telekinesis' in this.volatiles) return false;
+			return item !== 'airballoon';
 		},
 	},
 };
