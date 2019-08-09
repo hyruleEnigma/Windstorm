@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 /**@type {{[k: string]: ModdedPureEffectData}} */
 let BattleStatuses = {
@@ -33,16 +33,39 @@ let BattleStatuses = {
 	},
 	'5gen': {
 		noCopy: true,
-		onStart(source) {
+		onStart() {
 			this.add(`c|+5gen|Someone asked for extra sauce?`);
-			if (source.illusion) return;
-			this.field.setWeather('sunnyday', source);
 		},
 		onSwitchOut() {
 			this.add(`c|+5gen|Need to get some from the back.`);
 		},
 		onFaint() {
 			this.add(`c|+5gen|I'm not dead yet, just changing formes.`);
+		},
+	},
+	acakewearingahat: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+ACakeWearingAHat|h`);
+		},
+		onSwitchOut(source) {
+			this.add(`c|+ACakeWearingAHat|${source.side.name} is a nerd`);
+		},
+		onFaint() {
+			this.add(`c|+ACakeWearingAHat|According to all known laws of aviation, there is no way that Dunsparce should be able to fly. Its wings are too small to get its fat little body off the ground. Dunsparce, of course, does not learn Fly for this reason. It does learn Roost, though. Cute li'l winged snake thing.`);
+		},
+		// Fat Snake Innate
+		onModifyDefPriority: 6,
+		onModifyDef(def, pokemon) {
+			if (!pokemon.transformed && !pokemon.illusion) {
+				return this.chainModify(1.5);
+			}
+		},
+		onModifySpDPriority: 6,
+		onModifySpD(spd, pokemon) {
+			if (!pokemon.transformed && !pokemon.illusion) {
+				return this.chainModify(1.5);
+			}
 		},
 	},
 	aelita: {
@@ -57,48 +80,10 @@ let BattleStatuses = {
 			this.add(`c|@Aelita|CODE: LYOKO . Tower deactivated... Return to the past, now!`);
 		},
 	},
-	aeonic: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Aeonic|Guys the emoji movie wasn't __that__ bad`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Aeonic|Still better than kie btw`);
-		},
-		onFaint() {
-			this.add(`c|+Aeonic|Don't forget me`);
-		},
-	},
-	aethernum: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|@Aethernum|I am __Eterno__, fear me! ...or not...but you should! ...or not...`);
-		},
-		onSwitchOut() {
-			this.add(`c|@Aethernum|I'm not defeated, i'm just afk :^)`);
-		},
-		onFaint() {
-			this.add(`c|@Aethernum| Has been fun! But i'm too lazy to keep fighting ^_^'`);
-		},
-	},
-	akiamara: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Akiamara|alguem br?`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Akiamara|Pode me multar que já volto`);
-		},
-		onFaint() {
-			this.add(`c|+Akiamara|I'm going to report you to my big fren Mitsuki`);
-		},
-	},
 	akir: {
 		noCopy: true,
-		onStart(source) {
+		onStart() {
 			this.add(`c|%Akir|hey whats up`);
-			if (source.illusion) return;
-			this.boost({def: 1, spd: 1}, source);
 		},
 		onSwitchOut() {
 			this.add(`c|%Akir|sorry need to build more`);
@@ -113,66 +98,52 @@ let BattleStatuses = {
 			}
 		},
 	},
-	alpha: {
+	amaluna: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|@Alpha|MAMMA MIA! It's me, ALPHA!`);
+			this.add(`c|+Amaluna|Please no casual chatting here`);
 		},
 		onSwitchOut() {
-			this.add(`c|@Alpha|brb gonna eat some pizza`);
+			this.add(`c|+Amaluna|It's not too late, it's never too late`);
 		},
 		onFaint() {
-			this.add(`c|@Alpha|PER LA PATRIA!`);
+			this.add(`c|+Amaluna|Don't talk to me unless you're famous`);
 		},
 	},
-	andrew: {
+	andy: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|+Andrew|Hah! You better have BURN HEAL!`);
+			this.add(`c|+Andy >_>|**>_>**`);
 		},
 		onSwitchOut() {
-			this.add(`c|+Andrew|brb kuncing`);
+			this.add(`c|+Andy >_>|**<_<**`);
 		},
 		onFaint() {
-			this.add(`c|+Andrew|avenge me c.kilgannon!`);
+			this.add(`c|+Andy >_>|u sux >_>`);
 		},
 	},
-	anubis: {
+	ant: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|&Anubis|hi ur qt`);
-			// In loving memory of the SSB programming team's sanity.
-			if (this.random(300) === 272) this.add(`c|&HoeenHero|Anubis's set is OP against programmer sanity.`);
+			this.add(`c|@ant|the superior ant is here`);
 		},
 		onSwitchOut() {
-			this.add(`c|&Anubis|brb making coffee`);
+			this.add(`c|@ant|hasta la vista baby`);
 		},
 		onFaint() {
-			this.add(`c|&Anubis|worthless evildoer :(`);
+			this.add(`c|@ant|I'M NOT ANTEMORTEM`);
 		},
 	},
 	aquagtothepast: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|+A Quag to The Past|The Goons are all here`);
+			this.add(`c|+A Quag to The Past|You mess with one Goon, you mess with them all... And they're all here!`);
 		},
 		onSwitchOut() {
-			this.add(`c|+A Quag to The Past|um no`);
+			this.add(`c|+A Quag to The Past|Um, no.`);
 		},
 		onFaint() {
-			this.add(`c|+A Quag to The Past|Wait, this isn't the groupchat...`);
-		},
-	},
-	arandomduck: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+a random duck|SWANNA LOSE???`);
-		},
-		onSwitchOut() {
-			this.add(`c|+a random duck|YEET`);
-		},
-		onFaint() {
-			this.add(`c|+a random duck|I guess that was my swan song`);
+			this.add(`c|+A Quag to The Past|...Wait, this isn't the groupchat, is it...`);
 		},
 	},
 	arcticblast: {
@@ -221,18 +192,6 @@ let BattleStatuses = {
 			this.add(`c|+Arsenal|Wenger Out`);
 		},
 	},
-	averardo: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Averardo|ECCOMI`);
-		},
-		onSwitchIn() {
-			this.add(`c|+Averardo|Scillato (PA)`);
-		},
-		onFaint() {
-			this.add(`c|+Averardo|Non mi sporcare più i MP`);
-		},
-	},
 	beowulf: {
 		noCopy: true,
 		onStart() {
@@ -245,6 +204,18 @@ let BattleStatuses = {
 			this.add(`c|@Beowulf|BUZZ BUZZ BUZZ BUZZ`);
 		},
 	},
+	bhrisbrown: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+Bhris Brown|Never send a boy to do a mans job`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Bhris Brown|Goddamit Nappa...`);
+		},
+		onFaint() {
+			this.add(`c|+Bhris Brown|There is one thing I'd like to know...tell me. Will I meet that clown Kakarot in the other world?`);
+		},
+	},
 	biggie: {
 		noCopy: true,
 		onStart() {
@@ -255,18 +226,6 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|@biggie|It was all a dream`);
-		},
-	},
-	birdy: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|%Birdy~!|And I oop- uh, I mean, hi!`);
-		},
-		onSwitchOut() {
-			this.add(`c|%Birdy~!|Be like that, then. Don't blame ME if you lose.`);
-		},
-		onFaint() {
-			this.add(`c|%Birdy~!|My last words will always be that I don't spam.`);
 		},
 	},
 	bobochan: {
@@ -305,45 +264,6 @@ let BattleStatuses = {
 			this.add(`c|~bumbadadabum|Who will lead my kingdom now?`);
 		},
 	},
-	cake: {
-		noCopy: true,
-		onStart(source) {
-			this.add(`c|+Cake|h`);
-			if (source.illusion) return;
-			this.add('-start', source, 'typeadd', 'Ghost');
-		},
-		onSwitchOut(source) {
-			this.add(`c|+Cake|${source.side.name} is a nerd`);
-		},
-		onFaint() {
-			this.add(`c|+Cake|According to all known laws of aviation, there is no way that Dunsparce should be able to fly. Its wings are too small to get its fat little body off the ground. Dunsparce, of course, does not learn Fly for this reason. It does learn Roost, though. Cute li'l winged snake thing.`);
-		},
-		// Fat Snake Innate
-		onModifyDefPriority: 6,
-		onModifyDef(def, pokemon) {
-			if (!pokemon.transformed && !pokemon.illusion) {
-				return this.chainModify(1.5);
-			}
-		},
-		onModifySpDPriority: 6,
-		onModifySpD(spd, pokemon) {
-			if (!pokemon.transformed && !pokemon.illusion) {
-				return this.chainModify(1.5);
-			}
-		},
-	},
-	ckilgannon: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+c.kilgannon|Hope you're not afraid of the dark!`);
-		},
-		onSwitchOut() {
-			this.add(`c|+c.kilgannon|/me growls`);
-		},
-		onFaint() {
-			this.add(`c|+c.kilgannon|Your time will come.`);
-		},
-	},
 	cantsay: {
 		noCopy: true,
 		onStart() {
@@ -354,6 +274,30 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|@cant say|bg haxor :(`);
+		},
+	},
+	cc: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+cc|Yo guys! :]`);
+		},
+		onSwitchOut() {
+			this.add(`c|+cc|Gotta go brb`);
+		},
+		onFaint() {
+			this.add(`c|+cc|Unfort`);
+		},
+	},
+	cerberax: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+Cerberax|(╯°□°)╯︵ ┻━┻`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Cerberax|┬─┬ ノ( ゜-゜ノ)`);
+		},
+		onFaint() {
+			this.add(`c|+Cerberax|┬─┬ ︵ /(.□. \\）`);
 		},
 	},
 	ceteris: {
@@ -390,46 +334,10 @@ let BattleStatuses = {
 			this.add(`c|%Cleo|Cleo! Cleo! Your friendly neighborhood Sea Leo!`);
 		},
 		onSwitchOut() {
-			this.add(`c|%Cleo|/raw QUICK! Distract the foe with pictures of my cat. <a href="https://imgur.com/a/IT2IHgm" target="_blank">SHE’S SO BEAUTIFUL</a>`);
+			this.add(`c|%Cleo|bbl~`);
 		},
 		onFaint() {
-			this.add(`c|%Cleo|Love your hair. Hope you win.`);
-		},
-	},
-	dawoblefet: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|@DaWoblefet|What's going on guys? This is DaWoblefet, and welcome to Mechanics Monday.`);
-		},
-		onSwitchOut() {
-			this.add(`c|@DaWoblefet|Until next time, have a good one.`);
-		},
-		onFaint() {
-			this.add(`c|@DaWoblefet|mished`);
-		},
-	},
-	decem: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Decem|:D`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Decem|bye`);
-		},
-		onFaint() {
-			this.add(`c|+Decem|>:(`);
-		},
-	},
-	deetah: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+deetah|I can see right through you.`);
-		},
-		onSwitchOut() {
-			this.add(`c|+deetah|Meow :3`);
-		},
-		onFaint() {
-			this.add(`c|+deetah|I have 8 lives left, you can't get rid of me that easily.`);
+			this.add(`c|%Cleo|n.n`);
 		},
 	},
 	deg: {
@@ -450,6 +358,18 @@ let BattleStatuses = {
 			this.add(`c|@DragonWhale|i would switch to chomper here`);
 		},
 	},
+	duck: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+duck|Yes, I'm actually a duck. I know.`);
+		},
+		onSwitchOut() {
+			this.add(`c|+duck|/me waddles away`);
+		},
+		onFaint() {
+			this.add(`c|+duck|Duck you! That move was too op anyway.`);
+		},
+	},
 	e4flint: {
 		// Fire type when mega evolving implemented in scripts.js
 		noCopy: true,
@@ -460,65 +380,6 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|@E4 Flint|lul ok`);
-		},
-	},
-	eien: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|@Eien|umu!`);
-		},
-		onFaint() {
-			this.add(`c|@Eien|This game is Bad Civilization...`);
-		},
-	},
-	elgino: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Elgino|I'm about to solve this puzzle.`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Elgino|uh I need some hints for this one, I'll try again later`);
-		},
-		onFaint() {
-			this.add(`c|+Elgino|Frankly, I'm... ashamed.`);
-		},
-		onDamagePriority: 1,
-		onDamage(damage, target, source, effect) {
-			if (effect && effect.effectType === 'Move' && ['mimikyu', 'mimikyutotem'].includes(target.template.speciesid) && !target.transformed) {
-				this.add('-activate', target, 'ability: Disguise');
-				this.effectData.busted = true;
-				return 0;
-			}
-		},
-		onEffectiveness(typeMod, target, type, move) {
-			if (!target) return;
-			if (!['mimikyu', 'mimikyutotem'].includes(target.template.speciesid) || target.transformed || (target.volatiles['substitute'] && !(move.flags['authentic'] || move.infiltrates))) return;
-			if (!target.runImmunity(move.type)) return;
-			return 0;
-		},
-		onUpdate(pokemon) {
-			if (['mimikyu', 'mimikyutotem'].includes(pokemon.template.speciesid) && this.effectData.busted) {
-				let templateid = pokemon.template.speciesid === 'mimikyutotem' ? 'Mimikyu-Busted-Totem' : 'Mimikyu-Busted';
-				pokemon.formeChange(templateid, this.effect, true);
-			}
-		},
-	},
-	eternally: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|@eternally|quack`);
-		},
-		onFaint() {
-			this.add(`c|@eternally|quack`);
-		},
-		onTryHit(target, source, move) {
-			if (target.illusion) return;
-			if (target !== source && move.type === 'Water') {
-				if (!this.heal(target.maxhp / 4)) {
-					this.add('-immune', target, '[from] ability: Water Absorb');
-				}
-				return null;
-			}
 		},
 	},
 	explodingdaisies: {
@@ -533,6 +394,76 @@ let BattleStatuses = {
 			this.add(`c|%explodingdaisies|MY PEOPLE NEED ME!`);
 		},
 	},
+	eien: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|@Eien|umu!`);
+		},
+		onFaint() {
+			this.add(`c|@Eien|This game is Bad Civilization...`);
+		},
+	},
+	eternally: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|@eternally|quack`);
+		},
+		onFaint() {
+			this.add(`c|@eternally|quack`);
+		},
+	},
+	ev: {
+		noCopy: true,
+		onStart(target) {
+			this.add(`c|~EV|Behold! The power of EVOLUTION!`);
+			if (target.illusion) return;
+
+			/** @type {{[forme: string]: string[]}} */
+			let formes = {
+				'flareon': ['Icicle Crash', 'Earthquake', 'Baton Pass', 'Evoblast'],
+				'jolteon': ['Ice Beam', 'Flamethrower', 'Baton Pass', 'Evoblast'],
+				'vaporeon': ['Recover', 'Heal Bell', 'Baton Pass', 'Evoblast'],
+				'espeon': ['Aura Sphere', 'Lovely Kiss', 'Baton Pass', 'Evoblast'],
+				'umbreon': ['Knock Off', 'Toxic', 'Baton Pass', 'Evoblast'],
+				'leafeon': ['Synthesis', 'High Jump Kick', 'Baton Pass', 'Evoblast'],
+				'glaceon': ['Blue Flare', 'Agility', 'Baton Pass', 'Evoblast'],
+				'sylveon': ['Earth Power', 'Calm Mind', 'Baton Pass', 'Evoblast'],
+			};
+			let forme = Object.keys(formes)[this.random(8)];
+			this.add(`-anim`, target, 'Geomancy', target);
+			target.formeChange(forme);
+			target.setAbility('Adaptability');
+			// Update movepool
+			target.moveSlots = [];
+			if (!formes[forme]) throw new Error(`SSB: Can't find moveset for EV's forme: "${forme}".`); // should never happen
+			for (const [i, moveid] of formes[forme].entries()) {
+				let move = this.getMove(moveid);
+				if (!move.id) continue;
+				target.moveSlots.push({
+					move: move.name,
+					id: move.id,
+					pp: Math.floor(((move.noPPBoosts || move.isZ) ? move.pp : move.pp * 8 / 5) * (target.m.ppPercentages ? target.m.ppPercentages[i] : 1)),
+					maxpp: ((move.noPPBoosts || move.isZ) ? move.pp : move.pp * 8 / 5),
+					target: move.target,
+					disabled: false,
+					used: false,
+					virtual: true,
+				});
+			}
+		},
+		onBeforeSwitchOut(pokemon) {
+			if (pokemon.illusion) return;
+			pokemon.m.ppPercentages = pokemon.moveSlots.slice().map(m => {
+				return m.pp / m.maxpp;
+			});
+		},
+		onSwitchOut() {
+			this.add(`c|~EV|We'll be back.`);
+		},
+		onFaint() {
+			this.add(`c|~EV|If you __say__ EV it sounds like Eevee. It's actually quite simple.`);
+		},
+	},
 	'false': {
 		noCopy: true,
 		onStart() {
@@ -543,48 +474,6 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|&false|ɢ∞פ⋆ᖙᵒᵝ ٩꒰”̮*ू꒱`);
-		},
-	},
-	fart: {
-		noCopy: true,
-		onStart(target, source) {
-			this.add('-start', source, 'typechange', `Fairy/Steel`);
-			let activeMon;
-			activeMon = toID(source.side.foe.active[0].illusion ? source.side.foe.active[0].illusion.name : activeMon = source.side.foe.active[0].template.name);
-			let family = ['aethernum', 'ceteris', 'flare', 'ransei', 'trickster', 'zalm', 'aelita', 'biggie', 'deetah', 'birdy', 'sunny', 'jolteonite'];
-			if (activeMon === 'hoeenhero' || activeMon === 'pokemondeadchannel') {
-				 this.add(`c|%fart|what song should I sing?`);
-			} else if (activeMon === 'lifeisdank' || activeMon === 'nui' || activeMon === 'grimauxiliatrix') {
-				this.add(`c|%fart|the gang's all here!`);
-			} else if (family.includes(activeMon)) {
-				this.add(`c|%fart|what's cookin', good lookin'?`);
-			} else {
-				this.add(`c|%fart|it's fukken raw`);
-			}
-		},
-		onSwitchOut() {
-			this.add(`c|%fart|this boy is not correct. he is **flawed.**`);
-		},
-		onFaint(pokemon) {
-			let activeMon;
-			activeMon = toID(pokemon.side.foe.active[0].illusion ? pokemon.side.foe.active[0].illusion.name : activeMon = pokemon.side.foe.active[0].template.name);
-			if (activeMon === 'unleashourpassion') {
-				this.add(`c|%fart|UOP I'm deleting your mon`);
-			} else {
-				this.add(`c|%fart|the things I do for love...`);
-			}
-		},
-	},
-	flare: {
-		noCopy: true,
-		onStart() {
-			this.add('c|@Flare|(9°^°)9');
-		},
-		onSwitchIn() {
-			this.add('c|@Flare|ᕕ( ᐛ )ᕗ');
-		},
-		onFaint() {
-			this.add('c|@Flare|X_X');
 		},
 	},
 	fomg: {
@@ -599,16 +488,47 @@ let BattleStatuses = {
 			this.add(`c|%FOMG|Rock in peace...`);
 		},
 	},
-	gallantspear: {
+	forrce: {
 		noCopy: true,
-		onStart() {
-			this.add(`c|+Gallant Spear|*Trombe! override intensifies*`);
+		onStart(pokemon) {
+			this.add(`c|+Forrce|It's either I win or you lose, 'cause I won't accept defeat.`);
+			if (pokemon.illusion) return;
+			let i = 0;
+			for (const moveSlot of pokemon.moveSlots) {
+				let move = this.getMove(moveSlot.id);
+				moveSlot.pp = Math.floor(((move.noPPBoosts || move.isZ) ? move.pp : move.pp * 8 / 5) * (pokemon.m.ppPercentages ? pokemon.m.ppPercentages[i] : 1));
+				i++;
+			}
+		},
+		onBeforeSwitchOut(pokemon) {
+			if (pokemon.illusion) return;
+			// track percentages to keep purple pills from resetting pp
+			pokemon.m.ppPercentages = pokemon.moveSlots.slice().map(m => {
+				return m.pp / m.maxpp;
+			});
 		},
 		onSwitchOut() {
-			this.add(`c|+Gallant Spear|*neigh* *snort*`);
+			this.add(`c|+Forrce|What I gotta do to get it through to you? I'm superhuman.`);
 		},
 		onFaint() {
-			this.add(`c|+Gallant Spear|UNIVAAAAAAAAAAAAAAASE!!`);
+			this.add(`c|+Forrce|How can I find you?`);
+			this.add(`c|+Forrce|Who do you turn to?`);
+			this.add(`c|+Forrce|How do I bind you?`);
+		},
+	},
+	kalalokki: {
+		noCopy: true,
+		onStart(target) {
+			this.add(`c|@Kalalokki|(•_•)`);
+			this.add(`c|@Kalalokki|( •_•)>⌐■-■`);
+			this.add(`c|@Kalalokki|(⌐■_■)`);
+			if (target.illusion) return;
+			this.field.setWeather('raindance');
+		},
+		onFaint() {
+			this.add(`c|@Kalalokki|(⌐■_■)`);
+			this.add(`c|@Kalalokki|( •_•)>⌐■-■`);
+			this.add(`c|@Kalalokki|(x_x)`);
 		},
 	},
 	grimauxiliatrix: {
@@ -618,18 +538,6 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|@grimAuxiliatrix|**KNOCKOUT!**`);
-		},
-	},
-	guishark: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+guishark|Let's go hunt doodoodoodoodoodoo!`);
-		},
-		onSwitchOut() {
-			this.add(`c|+guishark|Run away doodoodoodoodoodoo!`);
-		},
-		onFaint() {
-			this.add(`c|+guishark|It's the end doodoodoodoodoodoo!`);
 		},
 	},
 	// Cant use the exact name because its a pokemon's name
@@ -648,6 +556,18 @@ let BattleStatuses = {
 			this.add(`c|&HoeenHero|My PMs are flooded with bug reports :(`);
 		},
 	},
+	hipstersigilyph: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+Hipster Sigilyph|You got some issues.`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Hipster Sigilyph|Gurl, bye.`);
+		},
+		onFaint() {
+			this.add(`c|+Hipster Sigilyph|Back to my cave.`);
+		},
+	},
 	hoeenhero: {
 		noCopy: true,
 		onStart() {
@@ -663,34 +583,50 @@ let BattleStatuses = {
 	hubriz: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|%Hubriz|Just a harmless flower...`);
+			this.add(`c|+Hubriz|Just a harmless flower...`);
 		},
 		onSwitchOut() {
-			this.add(`c|%Hubriz|I'll bloom once more soon enough!`);
+			this.add(`c|+Hubriz|I'll bloom once more soon enough!`);
 		},
 		onFaint() {
-			this.add(`c|%Hubriz|I burn, I pine, I perish.`);
+			this.add(`c|+Hubriz|I burn, I pine, I perish.`);
 		},
 	},
-	inactive: {
+	hurl: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|+inactive|I just can't wait to face you.`);
+			this.add(`c|%Hurl|underoos`);
 		},
 		onSwitchOut() {
-			this.add(`c|+inactive|I'll keep an eye out for you next time...`);
+			this.add(`c|%Hurl|/me hurls out`);
 		},
 		onFaint() {
-			this.add(`c|+inactive|/me turns to stone`);
+			this.add(`c|%Hurl|i disappoint people a lot`);
 		},
 	},
-	irritated: {
+	imagi: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|+irritated|Glhf`);
+			this.add(`c|+imagi|/me is eating tiramisu!`);
+		},
+		onSwitchOut() {
+			this.add(`c|+imagi|/me is eating more tiramisu!`);
 		},
 		onFaint() {
-			this.add(`c|+irritated|wtf hax`);
+			this.add(`c|+imagi|/me descends into food coma. x_x`);
+		},
+	},
+	imas: {
+		noCopy: true,
+		onStart(pokemon) {
+			let foe = pokemon.side.foe.active[0];
+			this.add(`c|%imas|${foe.name} more like suck`);
+		},
+		onSwitchOut() {
+			this.add(`c|%imas|oops`);
+		},
+		onFaint() {
+			this.add(`c|%imas|oh no`);
 		},
 	},
 	iyarito: {
@@ -705,28 +641,25 @@ let BattleStatuses = {
 			this.add(`c|&Iyarito|RIP Patrona`);
 		},
 	},
-	jolteonite: {
+	jdarden: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|+Jolteonite|**Time to electrify you**`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Jolteonite|__I'll be coming back for you!__`);
+			this.add(`c|+jdarden|I've cultivated some mass during my hibernation`);
 		},
 		onFaint() {
-			this.add(`c|+Jolteonite|I'm shocked that you mere mortal actually defeated __me__`);
+			this.add(`c|+jdarden|Back to my natural state`);
 		},
 	},
 	kaijubunny: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|@Kaiju Bunny|￣( ÒㅅÓ)￣ Thump Thump Motherfucker`);
+			this.add(`c|%Kaiju Bunny|Hey there! Good luck!`);
 		},
 		onSwitchOut() {
-			this.add(`c|@Kaiju Bunny|￣( >ㅅ>)￣ Holding me back, I see how it is`);
+			this.add(`c|%Kaiju Bunny|Don't keep her from battling for too long!`);
 		},
 		onFaint() {
-			this.add(`c|@Kaiju Bunny|￣( ‘xㅅx)￣Time to take a 10 hour power nap`);
+			this.add(`c|%Kaiju Bunny|She tried her best... ;;`);
 		},
 		// Kaiju Rage Innate
 		// onUpdate so toxic orb can activate after. Code mainly copied from Power Construct.
@@ -745,35 +678,6 @@ let BattleStatuses = {
 			this.add('-message', pokemon.name + '\'s item is now a Toxic Orb!');
 			this.add('-message', pokemon.name + '\'s ability is now Poison Heal!');
 			this.boost({atk: 2, spe: 1}, pokemon);
-		},
-	},
-	kalalokki: {
-		noCopy: true,
-		onStart(target) {
-			this.add(`c|@Kalalokki|(•_•)`);
-			this.add(`c|@Kalalokki|( •_•)>⌐■-■`);
-			this.add(`c|@Kalalokki|(⌐■_■)`);
-			if (target.illusion) return;
-			this.field.setWeather('raindance');
-		},
-		onFaint() {
-			this.add(`c|@Kalalokki|(⌐■_■)`);
-			this.add(`c|@Kalalokki|( •_•)>⌐■-■`);
-			this.add(`c|@Kalalokki|(x_x)`);
-		},
-	},
-	kaori: {
-		noCopy: true,
-		onStart(pokemon) {
-			this.add(`c|%kaori|(~￣³￣)~`);
-			if (pokemon.illusion) return;
-			this.boost({spd: 2}, pokemon);
-		},
-		onSwitchOut() {
-			this.add(`c|%kaori|ಠ_ಠ`);
-		},
-		onFaint() {
-			this.add(`c|%kaori|(◕ ᥥ ◕✿)`);
 		},
 	},
 	kay: {
@@ -797,18 +701,6 @@ let BattleStatuses = {
 			}
 		},
 	},
-	kie: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|%Kie|Wherever there is hope, there is most definitely despair.`);
-		},
-		onSwitchOut() {
-			this.add(`c|%Kie|Still better than Aeonic, btw.`);
-		},
-		onFaint() {
-			this.add(`c|%Kie|https://www.youtube.com/watch?v=Hyw6kKMjp5A`);
-		},
-	},
 	kingswordyt: {
 		noCopy: true,
 		onStart() {
@@ -821,96 +713,64 @@ let BattleStatuses = {
 			this.add(`c|@KingSwordYT|BUAAAAAA IYA AYÚDAME :(`);
 		},
 	},
-	kipkluif: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Kipkluif|I like bacon.`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Kipkluif|Run away da, run run away da`);
-		},
-		onFaint() {
-			this.add(`c|+Kipkluif|Aah! Well, at least I have chicken.`);
-		},
-		// Footballer innate
-		onBasePowerPriority: 8,
-		onBasePower(basePower, pokemon, target, move) {
-			if (move.name.includes('Kick') && !pokemon.transformed && !pokemon.illusion) {
-				this.chainModify(1.75);
-			}
-		},
-	},
-	kris: {
-		noCopy: true,
-		onStart(pokemon) {
-			this.add(`c|+Kris|glhf`);
-			if (pokemon.illusion) return;
-			for (const target of pokemon.side.foe.active) {
-				if (!target || target.fainted) continue;
-				for (const moveSlot of target.moveSlots) {
-					const move = this.getMove(moveSlot.move);
-					const moveType = move.id === 'hiddenpower' ? target.hpType : move.type;
-					if (move.category !== 'Status' && (this.getImmunity(moveType, pokemon) && this.getEffectiveness(moveType, pokemon) > 0 || move.ohko)) {
-						this.add('-ability', pokemon, 'Anticipation');
-						return;
-					}
-				}
-			}
-		},
-		onSwitchOut() {
-			this.add(`c|+Kris|lol bye`);
-		},
-		onFaint() {
-			this.add(`c|+Kris|While you were playing Pokemon, I was studying the blade.`);
-		},
-	},
 	level51: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|%Level 51|Calculating chance of victory!`);
+			this.add(`c|@Level 51|Calculating chance of victory!`);
 		},
 		onSwitchOut() {
-			this.add(`c|%Level 51|chance_victory < 1. Recalibrating...`);
+			this.add(`c|@Level 51|chance_victory < 1. Recalibrating...`);
 		},
 		onFaint() {
-			this.add(`c|%Level 51|**IndexError**: list index out of range`);
+			this.add(`c|@Level 51|**IndexError**: list index out of range`);
 		},
 	},
 	lifeisdank: {
 		noCopy: true,
 		onStart(target) {
-			this.add(`c|@LifeisDANK|!!!ლ(⁰⊖⁰ლ) Peent Peent.`);
+			this.add(`c|~LifeisDANK|!!!ლ(⁰⊖⁰ლ) Peent Peent.`);
 			if (target.illusion) return;
 			this.boost({spe: 2}, target);
 		},
 		onSwitchOut() {
-			this.add(`c|@LifeisDANK|!(•⌔• ) Peent Peent.`);
+			this.add(`c|~LifeisDANK|!(•⌔• ) Peent Peent.`);
 		},
 		onFaint() {
-			this.add(`c|@LifeisDANK|(•⌔•. ) Peent.`);
+			this.add(`c|~LifeisDANK|(•⌔•. ) Peent.`);
 		},
-		// Mountaineer innate
-		onDamage(damage, target, source, effect) {
-			if (effect && effect.id === 'stealthrock') {
-				return false;
+		// Aerilate innate
+		onModifyMovePriority: -1,
+		onModifyMove(move, pokemon) {
+			if (pokemon.illusion) return;
+			if (move.type === 'Normal' && !['judgment', 'multiattack', 'naturalgift', 'revelationdance', 'technoblast', 'weatherball'].includes(move.id) && !(move.isZ && move.category !== 'Status')) {
+				move.type = 'Flying';
+				move.aerilateBoosted = true;
 			}
 		},
-		onTryHit(target, source, move) {
-			if (move.type === 'Rock' && !target.activeTurns) {
-				this.add('-immune', target, '[from] ability: Mountaineer');
-				return null;
-			}
+		onBasePowerPriority: 8,
+		onBasePower(basePower, pokemon, target, move) {
+			if (move.aerilateBoosted) return this.chainModify([0x1333, 0x1000]);
+		},
+	},
+	lionyx: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+Lionyx|Let the storm rage on... for Arendelle!`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Lionyx|/me turns away and slams the door`);
+		},
+		onFaint() {
+			this.add(`c|+Lionyx|Can't hold it back anymore...`);
 		},
 	},
 	lostseso: {
 		noCopy: true,
-		onStart(pokemon) {
+		onStart() {
 			this.add(`c|+Lost Seso|<3 ( ͡° ͜ʖ ͡°) DANCE WITH ME ( ͡° ͜ʖ ͡°) <3`);
-			if (pokemon.illusion) return;
 			this.effectData.danceMultiplier = 0;
 		},
 		onAfterMove(pokemon, target, move) {
-			if (pokemon.illusion) return;
 			if (move.flags.dance) this.effectData.danceMultiplier++;
 		},
 		onSwitchOut() {
@@ -929,19 +789,6 @@ let BattleStatuses = {
 			this.add(`c|@MacChaeger|im gonna pyuk`);
 		},
 	},
-	madmonty: {
-		noCopy: true,
-		onStart(pokemon) {
-			this.add(`c|+Mad Monty ¾°|/me puts on a coat, to protect himself from the cold.`);
-			this.add(`c|+Mad Monty ¾°|Don't get eaten by llamas!`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Mad Monty ¾°|Oh, I see how it is. Ok, fine. Be that way. I'll just be over here, then.`);
-		},
-		onFaint() {
-			this.add(`c|+Mad Monty ¾°|I take it back- I hope you DO get eaten by llamas. Toodles!`);
-		},
-	},
 	majorbowman: {
 		noCopy: true,
 		onStart() {
@@ -952,18 +799,6 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|@MajorBowman|THEY GOT ME, GAL`);
-		},
-	},
-	marshmallon: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|@Marshmallon|What a wonderful day at the beach!`);
-		},
-		onSwitchOut() {
-			this.add(`c|@Marshmallon|__C..c...cooold >w<__`);
-		},
-		onFaint() {
-			this.add(`c|@Marshmallon|I got hit by a thunderbolt!`);
 		},
 	},
 	martha: {
@@ -1003,16 +838,40 @@ let BattleStatuses = {
 			this.add(`c|@Megazard|Better luck next thyme`);
 		},
 	},
+	mickthespud: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|%MicktheSpud|Woah!`);
+		},
+		onSwitchOut() {
+			this.add(`c|%MicktheSpud|Woah!`);
+		},
+		onFaint() {
+			this.add(`c|%MicktheSpud|Woah!`);
+		},
+	},
 	mitsuki: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|@Mitsuki|SSSSSSSSSSSSS`);
+			this.add(`c|%Mitsuki|SSSSSSSSSSSSS`);
 		},
 		onSwitchOut() {
-			this.add(`c|@Mitsuki|sssssssssssss`);
+			this.add(`c|%Mitsuki|sssssssssssss`);
 		},
 		onFaint() {
-			this.add(`c|@Mitsuki|sss`);
+			this.add(`c|%Mitsuki|sss`);
+		},
+	},
+	moo: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+moo|/me moo`);
+		},
+		onSwitchOut() {
+			this.add(`c|+moo|/me moo`);
+		},
+		onFaint() {
+			this.add(`c|+moo|/me moo`);
 		},
 	},
 	morfent: {
@@ -1066,18 +925,34 @@ let BattleStatuses = {
 			this.add(`c|@OM|${["Oh god I rolled a 1", "Killed Night 1, seriously?"][this.random(2)]}`);
 		},
 	},
-	overneat: {
+	osiris: {
 		noCopy: true,
-		onStart(source) {
-			this.add(`c|+Overneat|[muffled eurobeat playing in the distance]`);
-			if (source.template.speciesid !== 'absolmega' || source.illusion) return;
-			this.add('-start', source, 'typeadd', 'Fairy');
+		onStart() {
+			this.add(`c|+Osiris|THE SECRET INGREDIENT IS`);
 		},
 		onSwitchOut() {
-			this.add(`c|+Overneat|Time to take a siesta.`);
+			this.add(`c|+Osiris|god's plan`);
 		},
 		onFaint() {
-			this.add(`c|+Overneat|I gotta go, but friendly reminder to drink water after this battle.`);
+			this.add(`c|+Osiris|I'm getting too old for this x_x`);
+		},
+		onSourceModifyDamage(damage, source, target, move) {
+			if (target.getMoveHitData(move).typeMod > 0 && !target.illusion) {
+				this.debug('Solid Rock neutralize');
+				return this.chainModify(0.75);
+			}
+		},
+	},
+	overneat: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+Overneat|[muffled eurobeat playing in the distance]`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Overneat|Time to take a rest`);
+		},
+		onFaint() {
+			this.add(`c|+Overneat|It’s over for me?`);
 		},
 	},
 	pablo: {
@@ -1104,18 +979,6 @@ let BattleStatuses = {
 			this.add(`c|@Paradise|⠠⠽⠕⠥’⠗⠑⠀⠋⠥⠉⠅⠊⠝⠛⠀⠙⠑⠁⠙,⠀⠅⠊⠙⠙⠕.`);
 		},
 	},
-	pirateprincess: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|%Pirate Princess|Ahoy!`);
-		},
-		onSwitchOut() {
-			this.add(`c|%Pirate Princess|You will always remember this as the day that you almost caught Captain Ja- Pirate Princess!`);
-		},
-		onFaint() {
-			this.add(`c|%Pirate Princess|Erm… Parley?`);
-		},
-	},
 	pluviometer: {
 		noCopy: true,
 		onStart() {
@@ -1126,54 +989,6 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|@pluviometer|${["Follow SmogonU on Facebook! https://www.facebook.com/SmogonU", "Follow SmogonU on Twitter! https://twitter.com/SmogonU"][this.random(2)]}`);
-		},
-	},
-	pokemondeadchannel: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+PokemonDeadChannel|づ∧＿∧づﾀﾞﾗﾗﾗ`);
-			this.add(`c|+PokemonDeadChannel|づ｀･ω･)づ∴“`);
-			this.add(`c|+PokemonDeadChannel|づづづづづ∴≒`);
-			this.add(`c|+PokemonDeadChannel|づづづづづづ∵`);
-			this.add(`c|+PokemonDeadChannel|(_／⌒ヽ_)∴`);
-			this.add(`c|+PokemonDeadChannel|ORA ORA ORA ORA ORA !!!`);
-		},
-		onSwitchOut() {
-			this.add(`c|+PokemonDeadChannel|Bye Losers`);
-			this.add(`c|+PokemonDeadChannel|　＜⌒／ヽ-､_＿_`); // eslint-disable-line no-irregular-whitespace
-			this.add(`c|+PokemonDeadChannel|／＜_/＿＿＿＿／`);
-			this.add(`c|+PokemonDeadChannel|￣￣￣￣￣￣￣`);
-		},
-		onFaint() {
-			this.add(`c|+PokemonDeadChannel|∧,,,∧`);
-			this.add(`c|+PokemonDeadChannel|( ⁻ω⁻)`);
-			this.add(`c|+PokemonDeadChannel|( つとﾉ  旦`);
-			this.add(`c|+PokemonDeadChannel|￣￣￣￣￣`);
-			this.add(`c|+PokemonDeadChannel|I hate you all`);
-		},
-	},
-	pohjis: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Pohjis|thats pohjis`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Pohjis|ÖPÖOLÖL`);
-		},
-		onFaint() {
-			this.add(`c|+Pohjis|rly enjoyed that`);
-		},
-	},
-	pre: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|~pre|let's go, in and out, 20 minute adventure`);
-		},
-		onSwitchOut() {
-			this.add(`c|~pre|sometimes science is more art than science`);
-		},
-		onFaint() {
-			this.add(`c|~pre|LAMBS TO THE COSMIC SLAUGHTER!!`);
 		},
 	},
 	ptoad: {
@@ -1223,46 +1038,6 @@ let BattleStatuses = {
 			}
 		},
 	},
-	rach: {
-		noCopy: true,
-		onStart(target, source) {
-			this.add(`c|%Rach|BURN IT DOWN!`);
-			if (source.illusion) return;
-			this.add('-start', source, 'typeadd', 'Fighting');
-			this.boost({spe: 1}, source);
-		},
-		onSwitchOut() {
-			this.add(`c|%Rach|Tag!`);
-		},
-		onFaint() {
-			this.add(`c|%Rach|I oversold your move`);
-		},
-	},
-	rageuser: {
-		noCopy: true,
-		onStart(pokemon) {
-			this.add(`c|+Rage|I'm about to ruin this mans whole career`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Rage|Ain't supposed to be like that chief, we out`);
-		},
-		onFaint() {
-			this.add(`c|+Rage|/me quits`);
-		},
-	},
-	raid: {
-		noCopy: true,
-		// No messages provided
-	},
-	ransei: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|@Ransei| Sup! I have been brought from the world of Hackmons to give you a preview of our characteristics. I’ve been genetically engineered to beat you at all costs. Expect to lose this fight!`);
-		},
-		onFaint() {
-			this.add(`c|@Ransei|ripsei`);
-		},
-	},
 	rorymercury: {
 		noCopy: true,
 		onStart(pokemon) {
@@ -1277,6 +1052,18 @@ let BattleStatuses = {
 			this.add(`c|+Rory Mercury|/me shook af`);
 		},
 	},
+	saburo: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+Saburo|Look beyond what you see`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Saburo|Gotta go teleport somewhere brb`);
+		},
+		onFaint() {
+			this.add(`c|+Saburo|...you see too much`);
+		},
+	},
 	samjo: {
 		noCopy: true,
 		onStart() {
@@ -1287,18 +1074,6 @@ let BattleStatuses = {
 		},
 		onFaint() {
 			this.add(`c|+SamJo|Oof, gotta get thiccer……. ;(`);
-		},
-	},
-	schiavetto: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Schiavetto|Aight, sis, guess I'm parking.`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Schiavetto|Someone help me press this.`);
-		},
-		onFaint() {
-			this.add(`c|+Schiavetto|Read my ISOs when I'm dead`);
 		},
 	},
 	scotteh: {
@@ -1315,18 +1090,6 @@ let BattleStatuses = {
 		onFaint() {
 			this.add(`c|@Scotteh|▄███████▄.▲.▲.▲.▲.▲.▲`);
 			this.add(`c|@Scotteh|█████████████████████▀▀`);
-		},
-	},
-	seraphus: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Seraphus|The angel of stall descends upon the battlefield.`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Seraphus|The angel of stall has decided upon a tactical retreat.`);
-		},
-		onFaint() {
-			this.add(`c|+Seraphus|Regenerator is a perfectly balanced ability.`);
 		},
 	},
 	shiba: {
@@ -1395,40 +1158,28 @@ let BattleStatuses = {
 			this.add(`c|@SpaceBass|bg`);
 		},
 	},
-	sparksblade: {
+	sungodvolcarona: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|%SparksBlade|this team looks marsh weak`);
+			this.add(`c|+SunGodVolcarona|Praise the Sun and live a happy life.`);
 		},
 		onSwitchOut() {
-			this.add(`c|%SparksBlade|we lose`);
+			this.add(`c|+SunGodVolcarona|You dare switch out a god?`);
 		},
 		onFaint() {
-			this.add(`c|%SparksBlade|i don't even play this game`);
-		},
-	},
-	sunny: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Sunny|Now, we are really going to have a bad time. >:)`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Sunny|I'll spare you for now.`);
-		},
-		onFaint() {
-			this.add(`c|+Sunny|..that's it, huh? Don't say I didn't warn you.`);
+			this.add(`c|+SunGodVolcarona|All Suns have to set at one point.`);
 		},
 	},
 	teclis: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|@Teclis|The Emperor protects.`);
+			this.add(`c|@Teclis|Sometimes you have to fight to get your point across.`);
 		},
 		onSwitchOut() {
-			this.add(`c|@Teclis|Only in death does duty end.`);
+			this.add(`c|@Teclis|You deserve a break.`);
 		},
 		onFaint() {
-			this.add(`c|@Teclis|Success is commemorated; Failure merely remembered.`);
+			this.add(`c|@Teclis|I'm convinced !`);
 		},
 	},
 	tennisace: {
@@ -1499,16 +1250,28 @@ let BattleStatuses = {
 			this.add(`c|+The Leprechaun|This ain't it chief`);
 		},
 	},
+	tiksi: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|@Tiksi|Hakkaa päälle! For the King of the Woodland!`);
+		},
+		onSwitchOut() {
+			this.add(`c|@Tiksi|TI rigged this ok`);
+		},
+		onFaint(pokemon) {
+			this.add(`c|@Tiksi|You rotten ${pokemon.side.foe.name}! I'll send you to the Tiksi branch!`);
+		},
+	},
 	torkool: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|+torkool|:peepodetective:`);
+			this.add(`c|%torkool|:peepodetective:`);
 		},
 		onSwitchOut() {
-			this.add(`c|+torkool|i cba`);
+			this.add(`c|%torkool|i cba`);
 		},
 		onFaint() {
-			this.add(`c|+torkool|I don't deserve this...`);
+			this.add(`c|%torkool|I don't deserve this...`);
 		},
 	},
 	trickster: {
@@ -1526,25 +1289,37 @@ let BattleStatuses = {
 	unleashourpassion: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|%UnleashOurPassion|Hi I'm here to participate in a totally serious conversation`);
+			this.add(`c|%UnleashOurPassion|1v1 me if real`);
 		},
 		onSwitchOut() {
-			this.add(`c|%UnleashOurPassion|Okay that's enough shitposting for now`);
+			this.add(`c|%UnleashOurPassion|Tfw you remember switching exists`);
 		},
 		onFaint() {
-			this.add(`c|%UnleashOurPassion|Fine I'll go back to work...`);
+			this.add(`c|%UnleashOurPassion|That's hax! You were supposed to miss`);
 		},
 	},
-	vivalospride: {
+	urkerab: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|+vivalospride|bet`);
+			this.add(`j|+urkerab`);
 		},
 		onSwitchOut() {
-			this.add(`c|+vivalospride|tuh`);
+			this.add(`l|+urkerab`);
 		},
 		onFaint() {
-			this.add(`c|+vivalospride|THERE IT IS!!`);
+			this.add(`l|+urkerab`);
+		},
+	},
+	uselesscrab: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+Uselesscrab|/me !`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Uselesscrab|hilarious`);
+		},
+		onFaint() {
+			this.add(`c|+Uselesscrab|i love pokemon`);
 		},
 	},
 	volco: {
@@ -1571,37 +1346,6 @@ let BattleStatuses = {
 			this.add(`c|+Xayah|All out of second dances...`);
 		},
 	},
-	xfix: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|&xfix|destroy the world!`);
-		},
-		onSwitchOut() {
-			this.add(`c|&xfix|brb i need to rethink my plan`);
-		},
-		onFaint() {
-			this.add(`c|&xfix|but the world refused`);
-		},
-	},
-	xjoelituh: {
-		noCopy: true,
-		onStart(source) {
-			this.add(`c|@xJoelituh|h-hi, im joel, not joe, tyvm`);
-			// Terrifying Demeanor Innate
-			if (source.illusion) return;
-			let target = source.side.foe.active[0];
-			if (target.getStat('spe', true, true) > source.getStat('spe', true, true)) this.boost({spe: -1}, target, source);
-		},
-		onSwitchOut() {
-			this.add(`c|@xJoelituh|if that's what you want, s-sure`);
-		},
-		onFaint() {
-			// Random Gibberish Generator
-			let gibberish = '';
-			for (let j = 0; j < 10; j++) gibberish += String.fromCharCode(48 + this.random(79));
-			this.add(`c|@xJoelituh|${gibberish}`);
-		},
-	},
 	xprienzo: {
 		noCopy: true,
 		onStart() {
@@ -1617,25 +1361,13 @@ let BattleStatuses = {
 	yuki: {
 		noCopy: true,
 		onStart() {
-			this.add(`c|%Yuki|My ice may be a little __cold__, but your plan has been put completely on __hold__!`);
+			this.add(`c|+Yuki|My ice may be a little __cold__, but your plan has been put completely on __hold__!`);
 		},
 		onSwitchOut() {
-			this.add(`c|%Yuki|I-It's too hot in here!`);
+			this.add(`c|+Yuki|I-It's too hot in here!`);
 		},
 		onFaint() {
-			this.add(`c|%Yuki|I'm melting...`);
-		},
-	},
-	zalm: {
-		noCopy: true,
-		onStart() {
-			this.add(`c|+Zalm|<(:O)000>`);
-		},
-		onSwitchOut() {
-			this.add(`c|+Zalm|Woah`);
-		},
-		onFaint() {
-			this.add(`c|+Zalm|Tfw still no mega weedle`);
+			this.add(`c|+Yuki|I'm melting...`);
 		},
 	},
 	zarel: {
@@ -1647,6 +1379,58 @@ let BattleStatuses = {
 			this.add(`c|~Zarel|Your mom`);
 			// message is shown after the "Zarel Fainted!" message
 			this.add('message', 'Zarel used your mom!');
+		},
+	},
+	zyguser: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+Zyg|/me sighs`);
+		},
+		onSwitchOut() {
+			this.add(`c|+Zyg|/me sighs`);
+		},
+		onFaint() {
+			this.add(`c|+Zyg|Brexit means Brexit`);
+		},
+	},
+	// Custom effect for Yuki
+	cutietrap: {
+		duration: 5,
+		noCopy: true,
+		onStart(pokemon, source) {
+			if (!this.runEvent('Attract', pokemon, source)) {
+				this.debug('Attract event failed');
+				return false;
+			}
+			this.add('-start', pokemon, 'Attract', '[from] move: Cutie Trap', '[of] ' + source);
+			this.add('-message', `${pokemon.name} was trapped by love!`);
+		},
+		onBeforeMovePriority: 2,
+		onBeforeMove(pokemon) {
+			this.add('-activate', pokemon, 'move: Attract', '[of] ' + this.effectData.source);
+			if (this.randomChance(1, 2)) {
+				this.add('cant', pokemon, 'Attract');
+				return false;
+			}
+		},
+		onTrapPokemon(pokemon) {
+			pokemon.tryTrap();
+		},
+		onEnd(pokemon) {
+			this.add('-end', pokemon, 'Attract', '[silent]');
+			this.add('-message', `${pokemon.name} is no longer trapped by love.`);
+		},
+	},
+	// Modified hail for Yuki
+	hail: {
+		inherit: true,
+		onStart(battle, source, effect) {
+			if (effect && effect.effectType === 'Ability') {
+				if (this.gen <= 5 || effect.id === 'snowstorm') this.effectData.duration = 0;
+				this.add('-weather', 'Hail', '[from] ability: ' + effect, '[of] ' + source);
+			} else {
+				this.add('-weather', 'Hail');
+			}
 		},
 	},
 	// boostreplacement condition for nui's zmove
@@ -1689,145 +1473,6 @@ let BattleStatuses = {
 				}
 			}
 			return [type];
-		},
-	},
-	// weight doubling volatile for trickster
-	weightdoubler: {
-		noCopy: true,
-		onStart(pokemon) {
-			this.add('-message', pokemon.name + '\'s weight has doubled.');
-		},
-		onModifyWeight(weight) {
-			return weight * 2;
-		},
-	},
-	// Gooey volatile for Decem's move
-	gooey: {
-		onStart(pokemon, source) {
-			this.add('-start', pokemon, 'Gooey', '[of] ' + source);
-		},
-		onResidualOrder: 10,
-		onResidual(pokemon) {
-			this.damage(pokemon.maxhp / 4);
-		},
-	},
-	// Custom effect for Cleo
-	fullattract: {
-		noCopy: true,
-		onStart(pokemon, source) {
-			if (!this.runEvent('Attract', pokemon, source)) {
-				this.debug('Attract event failed');
-				return false;
-			}
-			this.add('-start', pokemon, 'Attract', '[from] move: Cutie Trap', '[of] ' + source);
-		},
-		onBeforeMovePriority: 2,
-		onBeforeMove(pokemon) {
-			this.add('-activate', pokemon, 'move: Attract', '[of] ' + this.effectData.source);
-			if (this.randomChance(1, 2)) {
-				this.add('cant', pokemon, 'Attract');
-				return false;
-			}
-		},
-		onEnd(pokemon) {
-			this.add('-end', pokemon, 'Attract', '[silent]');
-		},
-	},
-	// Custom Acid Rain weather for Pirate Princess
-	acidrain: {
-		name: 'AcidRain',
-		id: 'acidrain',
-		num: 0,
-		effectType: 'Weather',
-		duration: 5,
-		onModifySpDPriority: 10,
-		onModifySpD(spd, pokemon) {
-			if (pokemon.hasType('Poison') && this.field.isWeather('acidrain')) {
-				return this.modify(spd, 1.5);
-			}
-		},
-		onStart(battle, source, effect) {
-			if (effect && effect.effectType === 'Ability') {
-				if (this.gen <= 5) this.effectData.duration = 0;
-				this.add('-weather', 'AcidRain', '[from] ability: ' + effect, '[of] ' + source);
-			} else {
-				this.add('-weather', 'AcidRain');
-			}
-		},
-		onResidualOrder: 1,
-		onResidual() {
-			this.add('-weather', 'AcidRain', '[upkeep]');
-			if (this.field.isWeather('acidrain')) this.eachEvent('Weather');
-		},
-		onWeather(target) {
-			if (target.hasType('Poison')) return;
-			this.damage(target.maxhp / 16);
-		},
-		onModifyMovePriority: -5,
-		onModifyMove(move) {
-			if (!move.ignoreImmunity) move.ignoreImmunity = {};
-			if (move.ignoreImmunity !== true) {
-				move.ignoreImmunity['Steel'] = true;
-			}
-		},
-		onEnd() {
-			this.add('-weather', 'none');
-		},
-	},
-	// Custom effect for Rage's multihit
-	enrageeeeed: {
-		onStart(pokemon, source) {
-			this.add('-message', `${pokemon.name}'s next attack will hit multiple times!`);
-		},
-		onPrepareHit(source, target, move) {
-			if (move.category !== 'Status') {
-				move.multihit = [2, 5];
-				move.basePower = 25;
-				this.effectData.usedup = true;
-			}
-		},
-		onAfterMove(pokemon, source) {
-			if (this.effectData.usedup) pokemon.removeVolatile('enrageeeeed');
-		},
-	},
-	// Custom effect for Yuki
-	cutietrap: {
-		duration: 5,
-		noCopy: true,
-		onStart(pokemon, source) {
-			if (!this.runEvent('Attract', pokemon, source)) {
-				this.debug('Attract event failed');
-				return false;
-			}
-			this.add('-start', pokemon, 'Attract', '[from] move: Cutie Trap', '[of] ' + source);
-			this.add('-message', `${pokemon.name} was trapped by love!`);
-		},
-		onBeforeMovePriority: 2,
-		onBeforeMove(pokemon) {
-			this.add('-activate', pokemon, 'move: Attract', '[of] ' + this.effectData.source);
-			if (this.randomChance(1, 2)) {
-				this.add('cant', pokemon, 'Attract');
-				return false;
-			}
-		},
-		onTrapPokemon(pokemon) {
-			pokemon.tryTrap();
-		},
-		onEnd(pokemon) {
-			this.add('-end', pokemon, 'Attract', '[silent]');
-			this.add('-message', `${pokemon.name} is no longer trapped by love.`);
-		},
-	},
-	// Modified hail for Yuki
-	hail: {
-		inherit: true,
-		onStart(battle, source, effect) {
-			if (effect && effect.effectType === 'Ability') {
-				if (this.gen <= 5 || effect.id === 'snowstorm') this.effectData.duration = 0;
-				this.add('-weather', 'Hail', '[from] ability: ' + effect, '[of] ' + source);
-			} else {
-				this.add('-weather', 'Hail');
-			}
 		},
 	},
 };
