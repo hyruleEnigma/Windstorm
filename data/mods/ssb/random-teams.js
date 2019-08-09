@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 /** @typedef {{[name: string]: SSBSet}} SSBSets */
 /**
@@ -169,10 +169,10 @@ class RandomStaffBrosTeams extends RandomTeams {
 				evs: {atk: 252, spd: 4, spe: 252}, nature: 'Jolly',
 			},
 			'Brandon': {
-				species: 'Shaymin', ability: 'Gracidea Mastery', item: 'Red Card', gender: 'N',
-				moves: ['Seed Flare', ['Earth Power', 'Moonblast', 'Psychic'], ['Oblivion Wing', 'Strength Sap']],
+				species: 'Shaymin-Sky', ability: 'Gracidea Mastery', item: ['Red Card', 'Life Orb', 'Grassium Z'], gender: 'N',
+				moves: ['Seed Flare', ['Earth Power', 'Aura Sphere', 'Psyshock'], ['Oblivion Wing', 'Synthesis']],
 				signatureMove: 'Blustery Winds',
-				evs: {spa: 252, spd: 4, spe: 252}, ivs: {atk: 0}, nature: ['Modest', 'Timid'],
+				evs: {spa: 252, spd: 4, spe: 252}, ivs: {atk: 0}, nature: 'Timid',
 			},
 			'bumbadadabum': {
 				species: 'Slowbro', ability: 'Regenerator', item: 'Leftovers', gender: 'M',
@@ -185,6 +185,12 @@ class RandomStaffBrosTeams extends RandomTeams {
 				moves: ['Headbutt', 'Shadow Strike', 'Roost'],
 				signatureMove: 'Sparce Dance',
 				evs: {hp: 252, def: 4, spe: 252}, nature: 'Jolly',
+			},
+			'c.kilgannon': {
+				species: 'Yveltal', ability: 'Dark Aura', item: 'Leftovers', gender: 'N',
+				moves: ['Taunt', 'Oblivion Wing', 'Sucker Punch'],
+				signatureMove: 'Insidious Assault',
+				evs: {atk: 84, spa: 172, spe: 252}, nature: 'Naive',
 			},
 			'cant say': {
 				species: 'Aegislash', ability: 'Stance Change', item: ['Leftovers', 'Terrain Extender', 'Muscle Band'], gender: 'M',

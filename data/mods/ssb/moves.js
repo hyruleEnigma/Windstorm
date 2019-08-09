@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 // Used for bumbadadabum and Snaquaza's move
 const RandomStaffBrosTeams = require('./random-teams');
@@ -896,7 +896,7 @@ let BattleMovedex = {
 	// Brandon
 	blusterywinds: {
 		accuracy: 100,
-		basePower: 60,
+		basePower: 70,
 		category: "Special",
 		desc: "Removes Reflect, Light Screen, Aurora Veil, Safeguard, Mist, Spikes, Toxic Spikes, Stealth Rock, and Sticky Web from both sides, and it removes any active weather condition or Terrain.",
 		shortDesc: "Removes all field conditions and hazards.",
@@ -1010,6 +1010,7 @@ let BattleMovedex = {
 		target: "self",
 		type: "Psychic",
 	},
+<<<<<<< HEAD
 	// Cake
 	sparcedance: {
 		accuracy: true,
@@ -1033,6 +1034,32 @@ let BattleMovedex = {
 		secondary: null,
 		target: "self",
 		type: "Normal",
+	},
+	// c.kilgannon
+	insidiousassault: {
+		accuracy: 100,
+		basePower: 70,
+		category: "Special",
+		desc: "This move's category becomes physical if the opponent's Defense stat is lower than its Special Defense stat. This move's Base Power is doubled if this move is physical.",
+		shortDesc: "Physical and power doubles if foe's Def < SpD.",
+		id: "insidiousassault",
+		name: "Insidious Assault",
+		isNonstandard: "Custom",
+		pp: 5,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+			this.add('-anim', source, 'Black Hole Eclipse', target);
+		},
+		onModifyMove(move, pokemon, target) {
+			if (target.getStat('def', false, true) > target.getStat('spd', false, true)) move.category = 'Physical';
+		},
+		onBasePower(basePower, source, target, move) {
+			if (move.category === 'Physical') {
+				return this.chainModify(2);
+			}
+		},
+		target: "normal",
+		type: "Dark",
 	},
 	// cant say
 	aesthetislash: {

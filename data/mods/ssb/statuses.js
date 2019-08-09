@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 /**@type {{[k: string]: ModdedPureEffectData}} */
 let BattleStatuses = {
@@ -318,6 +318,18 @@ let BattleStatuses = {
 			if (!pokemon.transformed && !pokemon.illusion) {
 				return this.chainModify(1.5);
 			}
+		},
+	},
+	ckilgannon: {
+		noCopy: true,
+		onStart() {
+			this.add(`c|+c.kilgannon|Hope you're not afraid of the dark!`);
+		},
+		onSwitchOut() {
+			this.add(`c|+c.kilgannon|/me growls`);
+		},
+		onFaint() {
+			this.add(`c|+c.kilgannon|Your time will come.`);
 		},
 	},
 	cantsay: {
