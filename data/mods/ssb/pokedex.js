@@ -9,10 +9,15 @@ let BattlePokedex = {
 		baseStats: {hp: 100, atk: 100, def: 100, spa: 100, spd: 100, spe: 100}, // the base stats for the pokemon
 	},
 	*/
-	// Andy
-	absolmega: {
+	// ACakeWearingAHat
+	dunsparce: {
 		inherit: true,
-		abilities: {0: "Adaptability"},
+		types: ['Normal', 'Ghost'],
+	},
+	// Akiamara
+	croagunk: {
+		inherit: true,
+		baseStats: {hp: 83, atk: 106, def: 65, spa: 86, spd: 65, spe: 85},
 	},
 	// Arrested
 	blastoisemega: {
@@ -35,31 +40,67 @@ let BattlePokedex = {
 		abilities: {0: 'Stark Mountain'},
 		types: ['Steel', 'Ground', 'Fire'],
 	},
+	// Elgino
+	mimikyubusted: {
+		inherit: true,
+		abilities: {0: 'Gib love pls'},
+	},
 	// eternally
 	ducklett: {
 		inherit: true,
-		// Doubled spa and spe
-		baseStats: {hp: 62, atk: 44, def: 50, spa: 88, spd: 50, spe: 110},
+		// Doubled def, spa, spd and spe
+		baseStats: {hp: 62, atk: 44, def: 100, spa: 88, spd: 100, spe: 110},
+	},
+	// fart
+	kartana: {
+		inherit: true,
+		types: ['Fairy', 'Steel'],
 	},
 	// grimAuxiliatrix
 	aggronmega: {
 		inherit: true,
 		abilities: {0: 'Intimidate'},
 	},
+	// guishark
+	sharpedomega: {
+		inherit: true,
+		abilities: {0: 'gz guishark'},
+	},
 	// Kaiju Bunny
 	gliscor: {
 		inherit: true,
 		abilities: {0: 'Poison Heal'}, 	// Ability change is permanent
 	},
+	// Kris
+	rotomfan: {
+		inherit: true,
+		abilities: {0: "Adaptability"},
+		baseStats: {hp: 50, atk: 65, def: 127, spa: 145, spd: 127, spe: 106},
+	},
+	rotomfrost: {
+		inherit: true,
+		abilities: {0: "Adaptability"},
+		baseStats: {hp: 50, atk: 65, def: 127, spa: 145, spd: 127, spe: 106},
+	},
+	rotomheat: {
+		inherit: true,
+		abilities: {0: "Adaptability"},
+		baseStats: {hp: 50, atk: 65, def: 127, spa: 145, spd: 127, spe: 106},
+	},
+	rotommow: {
+		inherit: true,
+		abilities: {0: "Adaptability"},
+		baseStats: {hp: 50, atk: 65, def: 127, spa: 145, spd: 127, spe: 106},
+	},
+	rotomwash: {
+		inherit: true,
+		abilities: {0: "Adaptability"},
+		baseStats: {hp: 50, atk: 65, def: 127, spa: 145, spd: 127, spe: 106},
+	},
 	// Level 51
 	porygon2: {
 		inherit: true,
 		abilities: {0: 'Stamina'},
-	},
-	// Lionyx
-	gardevoirmega: {
-		inherit: true,
-		abilities: {0: 'Frozen Skin'},
 	},
 	// MacChaeger
 	mantyke: {
@@ -76,20 +117,67 @@ let BattlePokedex = {
 		inherit: true,
 		abilities: {0: 'Comatose'},
 	},
+	// OM
+	flareon: {
+		inherit: true,
+		types: ['Fire', 'Fairy'],
+	},
+	// Overneat
+	absolmega: {
+		inherit: true,
+		abilities: {0: 'Filter'},
+		types: ['Dark', 'Fairy'],
+	},
+	// Pirate Princess
+	gulpin: {
+		inherit: true,
+		baseStats: {hp: 70, atk: 43, def: 53, spa: 86, spd: 53, spe: 40},
+	},
+	// PokemonDeadChannel
+	charizardmegax: {
+		inherit: true,
+		abilities: {0: 'Moxie'},
+	},
+	charizardmegay: {
+		inherit: true,
+		abilities: {0: 'Soul Heart'},
+	},
+	// pre
+	deoxys: {
+		inherit: true,
+		abilities: {0: 'Optimize'},
+	},
+	deoxysattack: {
+		inherit: true,
+		abilities: {0: 'Optimize'},
+	},
+	deoxysdefense: {
+		inherit: true,
+		abilities: {0: 'Optimize'},
+	},
+	deoxysspeed: {
+		inherit: true,
+		abilities: {0: 'Optimize'},
+	},
 	// Psynergy
 	blazikenmega: {
 		inherit: true,
 		abilities: {0: 'Wrath'},
 	},
-	// Saburo
-	metagrossmega: {
+	// Rach
+	pikachulibre: {
 		inherit: true,
-		abilities: {0: 'Levitate'},
+		types: ['Electric', 'Fighting'],
 	},
-	// Teclis
-	gallademega: {
+	// Sunny
+	sceptilemega: {
 		inherit: true,
-		abilities: {0: 'Natural Cure'},
+		abilities: {0: 'Contrary'},
+	},
+	// Zalm
+	weedle: {
+		inherit: true,
+		baseStats: {hp: 105, atk: 130, def: 90, spa: 20, spd: 90, spe: 90},
 	},
 };
 
