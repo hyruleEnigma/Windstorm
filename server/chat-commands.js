@@ -336,7 +336,7 @@ const commands = {
 	'!version': true,
 	version(target, room, user) {
 		if (!this.runBroadcast()) return;
-		this.sendReplyBox(`Server version: <b>${Chat.package.version}</b>`);
+		this.sendReplyBox(`Server version: <b>${Chat.packageData.version}</b>`);
 	},
 
 	'!authority': true,
@@ -418,6 +418,30 @@ const commands = {
 
 		return target;
 	},
+
+	'!shrug': true,
+	shrug(target) {
+		target = target ? ' ' + target + ' ' : '';
+		if (target.startsWith(' /me')) target = target.slice(1);
+		return this.canTalk(target + '¯\\_(ツ)_/¯');
+	},
+	shrughelp: ['/shrug [message] - Sends the given message, if any, appended with ¯\\_(ツ)_/¯'],
+
+	'!tableflip': true,
+	tableflip(target) {
+		target = target ? ' ' + target + ' ' : '';
+		if (target.startsWith(' /me')) target = target.slice(1);
+		return this.canTalk(target + '(╯°□°）╯︵ ┻━┻');
+	},
+	tablefliphelp: ['/tableflip [message] - Sends the given message, if any, appended with (╯°□°）╯︵ ┻━┻'],
+
+	'!tableunflip': true,
+	tableunflip(target) {
+		target = target ? ' ' + target + ' ' : '';
+		if (target.startsWith(' /me')) target = target.slice(1);
+		return this.canTalk(target + '┬──┬◡ﾉ(° -°ﾉ)');
+	},
+	tableunfliphelp: ['/tableunflip [message] - Sends the given message, if any, appended with ┬──┬◡ﾉ(° -°ﾉ)'],
 
 	'!battle': true,
 	'battle!': 'battle',
@@ -637,7 +661,7 @@ const commands = {
 			user.update('blockPMs');
 			return this.sendReply(`You are now blocking private messages, except from staff and ${target}.`);
 		}
-		user.update();
+		user.update('blockPMs');
 		return this.sendReply("You are now blocking private messages, except from staff.");
 	},
 	blockpmshelp: [`/blockpms - Blocks private messages. Unblock them with /unblockpms.`],
@@ -656,15 +680,16 @@ const commands = {
 
 	'!status': true,
 	status(target, room, user, connection, cmd) {
-		if (user.locked || user.semilocked) return this.errorReply("Your status cannot be updated while you are locked or semilocked.");
+		if (user.locked || user.semilocked) return this.errorReply(this.tr("Your status cannot be updated while you are locked or semilocked."));
 		if (!target) return this.parse('/help status');
 
-		if (target.length > 32) return this.errorReply(`Your status is too long; it must be under 32 characters.`);
+		const maxLength = 32;
+		if (target.length > maxLength) return this.errorReply(this.tr `Your status is too long; it must be under ${maxLength} characters.`);
 		target = Chat.statusfilter(target, user);
-		if (!target) return this.errorReply("Your status contains a banned word.");
+		if (!target) return this.errorReply(this.tr("Your status contains a banned word."));
 
 		user.setUserMessage(target);
-		this.sendReply(`Your status has been set to: ${target}.`);
+		this.sendReply(this.tr `Your status has been set to: ${target}.`);
 	},
 	statushelp: [`/status [note] - Sets a short note as your status, visible when users click your username. Use /clearstatus to clear your status message.`],
 
@@ -675,7 +700,7 @@ const commands = {
 		user.setStatusType('busy');
 		this.parse('/blockpms');
 		this.parse('/blockchallenges');
-		this.sendReply("You are now marked as busy.");
+		this.sendReply(this.tr("You are now marked as busy."));
 	},
 	busyhelp: [`/busy - Marks you as busy, blocking private messages and challenges. Use /back to mark yourself as back.`],
 
@@ -687,7 +712,7 @@ const commands = {
 		if (target) this.errorReply("Setting status messages in /away is no longer supported. Set a status using /status.");
 
 		user.setStatusType('idle');
-		this.sendReply("You are now marked as away. Send a message or use /back to indicate you are back.");
+		this.sendReply(this.tr("You are now marked as away. Send a message or use /back to indicate you are back."));
 	},
 	awayhelp: [`/away - Marks you as away. Send a message or use /back to indicate you are back.`],
 
@@ -984,6 +1009,8 @@ const commands = {
 			if (!this.can('editroom', null, room)) return;
 		} else if (room.battle) {
 			if (!this.can('editprivacy', null, room)) return;
+			const prefix = room.battle.forcedPublic();
+			if (prefix && !user.can('editprivacy')) return this.errorReply(`This battle is required to be public due to a player having a name prefixed by '${prefix}'.`);
 		} else {
 			// registered chatrooms show up on the room list and so require
 			// higher permissions to modify privacy settings
@@ -2063,7 +2090,7 @@ const commands = {
 		}
 
 		// Automatically upload replays as evidence/reference to the punishment
-		if (room.battle) this.parse('/savereplay');
+		if (room.battle) this.parse('/savereplay forpunishment');
 		return true;
 	},
 	lockhelp: [
@@ -2463,8 +2490,10 @@ const commands = {
 	},
 	promotehelp: [`/promote [username], [group] - Promotes the user to the specified group. Requires: & ~`],
 
+	untrustuser: 'trustuser',
+	unconfirmuser: 'trustuser',
 	confirmuser: 'trustuser',
-	trustuser(target, room, user) {
+	trustuser(target, room, user, connection, cmd) {
 		if (!target) return this.parse('/help trustuser');
 		if (!this.can('promote')) return;
 
@@ -2477,14 +2506,29 @@ const commands = {
 		if (!userid) return this.parse('/help trustuser');
 		if (!targetUser) return this.errorReply(`User '${name}' is not online.`);
 
-		if (targetUser.trusted) return this.errorReply(`User '${name}' is already trusted.`);
+		if (cmd.startsWith('un')) {
+			if (!targetUser.trusted) return this.errorReply(`User '${name}' is not trusted.`);
+			if (targetUser.group !== Config.groupsranking[0]) {
+				return this.errorReply(`User '${name}' has a global rank higher than trusted.`);
+			}
 
-		targetUser.setGroup(Config.groupsranking[0], true);
-		this.sendReply(`User '${name}' is now trusted.`);
-		this.privateModAction(`${name} was set as a trusted user by ${user.name}.`);
-		this.modlog('TRUSTUSER', userid);
+			targetUser.setGroup(' ');
+			this.sendReply(`User '${name}' is no longer trusted.`);
+			this.privateModAction(`${name} was set to no longer be a trusted user by ${user.name}.`);
+			this.modlog('UNTRUSTUSER', userid);
+		} else {
+			if (targetUser.trusted) return this.errorReply(`User '${name}' is already trusted.`);
+
+			targetUser.setGroup(Config.groupsranking[0], true);
+			this.sendReply(`User '${name}' is now trusted.`);
+			this.privateModAction(`${name} was set as a trusted user by ${user.name}.`);
+			this.modlog('TRUSTUSER', userid);
+		}
 	},
-	trustuserhelp: [`/trustuser [username] - Trusts the user (makes them immune to locks). Requires: & ~`],
+	trustuserhelp: [
+		`/trustuser [username] - Trusts the user (makes them immune to locks). Requires: & ~`,
+		`/untrustuser [username] - Removes the trusted user status from the user. Requires: & ~`,
+	],
 
 	globaldemote: 'demote',
 	demote(target) {
@@ -2879,7 +2923,7 @@ const commands = {
 		targetUser.popup(`|modal|${user.name} has prevented you from starting new battles for 2 days${reasonText}`);
 
 		// Automatically upload replays as evidence/reference to the punishment
-		if (room.battle) this.parse('/savereplay');
+		if (room.battle) this.parse('/savereplay forpunishment');
 		return true;
 	},
 	battlebanhelp: [`/battleban [username], [reason] - [DEPRECATED] Prevents the user from starting new battles for 2 days and shows them the [reason]. Requires: & ~`],
@@ -3090,12 +3134,21 @@ const commands = {
 	 * Server management commands
 	 *********************************************************/
 
-	async hotpatch(target, room, user) {
+	forcehotpatch: 'hotpatch',
+	async hotpatch(target, room, user, connection, cmd) {
 		if (!target) return this.parse('/help hotpatch');
 		if (!this.can('hotpatch')) return;
 
 		const lock = Monitor.hotpatchLock;
 		const hotpatches = ['chat', 'formats', 'loginserver', 'punishments', 'dnsbl'];
+		const version = await Monitor.version();
+		let patch = target;
+		const requiresForce = (patch) =>
+			version && cmd !== 'forcehotpatch' &&
+			(Monitor.hotpatchVersions[patch] ?
+				Monitor.hotpatchVersions[patch] === version :
+				(global.__version && version === global.__version.tree));
+		const requiresForceMessage = `The git work tree has not changed since the last time ${target} was hotpatched (${version && version.slice(0, 8)}), use /forcehotpatch ${target} if you wish to hotpatch anyway.`;
 
 		try {
 			if (target === 'all') {
@@ -3106,8 +3159,10 @@ const commands = {
 					this.parse(`/hotpatch ${hotpatch}`);
 				}
 			} else if (target === 'chat' || target === 'commands') {
+				patch = 'chat';
 				if (lock['chat']) return this.errorReply(`Hot-patching chat has been disabled by ${lock['chat'].by} (${lock['chat'].reason})`);
 				if (lock['tournaments']) return this.errorReply(`Hot-patching tournaments has been disabled by ${lock['tournaments'].by} (${lock['tournaments'].reason})`);
+				if (requiresForce(patch)) return this.errorReply(requiresForceMessage);
 
 				Chat.destroy();
 
@@ -3118,11 +3173,11 @@ const commands = {
 					}
 				}
 
-				Chat.uncache('./server/chat');
+				Chat.uncache('./.server-dist/chat');
 				Chat.uncache('./server/chat-commands');
 				Chat.uncacheDir('./server/chat-plugins');
 				Chat.uncacheDir('./translations');
-				global.Chat = require('./chat');
+				global.Chat = require('../.server-dist/chat').Chat;
 
 				let runningTournaments = Tournaments.tournaments;
 				Chat.uncacheDir('./server/tournaments');
@@ -3131,6 +3186,7 @@ const commands = {
 				this.sendReply("Chat commands have been hot-patched.");
 			} else if (target === 'tournaments') {
 				if (lock['tournaments']) return this.errorReply(`Hot-patching tournaments has been disabled by ${lock['tournaments'].by} (${lock['tournaments'].reason})`);
+				if (requiresForce(patch)) return this.errorReply(requiresForceMessage);
 
 				let runningTournaments = Tournaments.tournaments;
 				Chat.uncacheDir('./server/tournaments');
@@ -3138,9 +3194,11 @@ const commands = {
 				Tournaments.tournaments = runningTournaments;
 				this.sendReply("Tournaments have been hot-patched.");
 			} else if (target === 'formats' || target === 'battles') {
+				patch = 'formats';
 				if (lock['formats']) return this.errorReply(`Hot-patching formats has been disabled by ${lock['formats'].by} (${lock['formats'].reason})`);
 				if (lock['battles']) return this.errorReply(`Hot-patching battles has been disabled by ${lock['battles'].by} (${lock['battles'].reason})`);
 				if (lock['validator']) return this.errorReply(`Hot-patching the validator has been disabled by ${lock['validator'].by} (${lock['validator'].reason})`);
+				if (requiresForce(patch)) return this.errorReply(requiresForceMessage);
 
 				// uncache the .sim-dist/dex.js dependency tree
 				Chat.uncacheDir('./.sim-dist');
@@ -3159,23 +3217,31 @@ const commands = {
 
 				this.sendReply("Formats have been hot-patched.");
 			} else if (target === 'loginserver') {
+				if (requiresForce(patch)) return this.errorReply(requiresForceMessage);
 				FS('config/custom.css').unwatch();
 				Chat.uncache('./.server-dist/loginserver');
 				global.LoginServer = require('../.server-dist/loginserver').LoginServer;
 				this.sendReply("The login server has been hot-patched. New login server requests will use the new code.");
 			} else if (target === 'learnsets' || target === 'validator') {
+				patch = 'validator';
 				if (lock['validator']) return this.errorReply(`Hot-patching the validator has been disabled by ${lock['validator'].by} (${lock['validator'].reason})`);
 				if (lock['formats']) return this.errorReply(`Hot-patching formats has been disabled by ${lock['formats'].by} (${lock['formats'].reason})`);
+				if (requiresForce(patch)) return this.errorReply(requiresForceMessage);
 
 				TeamValidatorAsync.PM.respawn();
 				this.sendReply("The team validator has been hot-patched. Any battles started after now will have teams be validated according to the new code.");
 			} else if (target === 'punishments') {
+				patch = 'punishments';
 				if (lock['punishments']) return this.errorReply(`Hot-patching punishments has been disabled by ${lock['punishments'].by} (${lock['punishments'].reason})`);
+				if (requiresForce(patch)) return this.errorReply(requiresForceMessage);
 
 				Chat.uncache('./server/punishments');
 				global.Punishments = require('./punishments');
 				this.sendReply("Punishments have been hot-patched.");
 			} else if (target === 'dnsbl' || target === 'datacenters' || target === 'iptools') {
+				patch = 'dnsbl';
+				if (requiresForce(patch)) return this.errorReply(requiresForceMessage);
+
 				Chat.uncache('./.server-dist/ip-tools');
 				global.IPTools = require('../.server-dist/ip-tools').IPTools;
 				IPTools.loadDatacenters();
@@ -3190,6 +3256,7 @@ const commands = {
 			Rooms.global.notifyRooms(['development', 'staff', 'upperstaff'], `|c|${user.getIdentity()}|/log ${user.name} used /hotpatch ${target} - but something failed while trying to hot-patch.`);
 			return this.errorReply(`Something failed while trying to hot-patch ${target}: \n${e.stack}`);
 		}
+		Monitor.hotpatchVersions[patch] = version;
 		Rooms.global.notifyRooms(['development', 'staff', 'upperstaff'], `|c|${user.getIdentity()}|/log ${user.name} used /hotpatch ${target}`);
 	},
 	hotpatchhelp: [
@@ -3204,6 +3271,7 @@ const commands = {
 		`/hotpatch loginserver - reloads new loginserver code`,
 		`/hotpatch tournaments - reloads new tournaments code`,
 		`/hotpatch all - hot-patches chat, tournaments, formats, login server, punishments, and dnsbl`,
+		`/forcehotpatch [target] - as above, but performs the update regardless of whether the history has changed in git`,
 	],
 
 	hotpatchlock: 'nohotpatch',
@@ -3528,7 +3596,7 @@ const commands = {
 			return this.errorReply("For safety reasons, /kill can only be used during lockdown.");
 		}
 
-		if (Chat.updateServerLock) {
+		if (Monitor.updateServerLock) {
 			return this.errorReply("Wait for /updateserver to finish before using /kill.");
 		}
 
@@ -3577,11 +3645,11 @@ const commands = {
 			return this.errorReply(`/updateserver - Access denied.`);
 		}
 
-		if (Chat.updateServerLock) {
+		if (Monitor.updateServerLock) {
 			return this.errorReply(`/updateserver - Another update is already in progress (or a previous update crashed).`);
 		}
 
-		Chat.updateServerLock = true;
+		Monitor.updateServerLock = true;
 
 		const logRoom = Rooms('staff') || room;
 
@@ -3606,7 +3674,7 @@ const commands = {
 		let [code, stdout, stderr] = await exec(`git fetch`);
 		if (code) throw new Error(`updateserver: Crash while fetching - make sure this is a Git repository`);
 		if (!stdout && !stderr) {
-			Chat.updateServerLock = false;
+			Monitor.updateServerLock = false;
 			this.sendReply(`There were no updates.`);
 			[code, stdout, stderr] = await exec('../build');
 			if (stderr) {
@@ -3664,7 +3732,7 @@ const commands = {
 			return this.errorReply(`Crash while rebuilding: ${stderr}`);
 		}
 		this.sendReply(`Rebuilt.`);
-		Chat.updateServerLock = false;
+		Monitor.updateServerLock = false;
 	},
 
 	memusage: 'memoryusage',
@@ -3823,6 +3891,7 @@ const commands = {
 		if (!battle) return this.errorReply(`Must be in a battle.`);
 		if (!battle.allowExtraction) return this.errorReply(`Someone must have requested extraction.`);
 		const targetUser = Users.getExact(target);
+		if (!targetUser) return this.errorReply(`User ${target} not found.`);
 
 		if (toID(battle.p1.name) === user.userid) {
 			battle.allowExtraction[0] = targetUser.userid;
@@ -3851,6 +3920,9 @@ const commands = {
 		if (!this.can('exportinputlog', null, room)) return;
 		if (!battle.allowExtraction) {
 			battle.allowExtraction = ['', ''];
+		}
+		if (user.userid === toID(battle.p1.name) || user.userid === toID(battle.p2.name)) {
+			this.parse(`/allowexportinputlog ${user.userid}`);
 		}
 		if (battle.allowExtraction[0] !== user.userid) {
 			const p1 = Users(battle.p1.name);
@@ -3917,8 +3989,8 @@ const commands = {
 		if (room.tour) {
 			return this.errorReply("You can't offer ties in tournaments.");
 		}
-		if (battle.rqid < 100) {
-			return this.errorReply("It's too early to tie, please play until turn 100 or so.");
+		if (battle.turn < 100) {
+			return this.errorReply("It's too early to tie, please play until turn 100.");
 		}
 		if (!this.can('roomvoice', null, room)) return;
 		if (cmd === 'accepttie' && !battle.players.some(player => player.wantsTie)) {
@@ -4027,7 +4099,13 @@ const commands = {
 
 	uploadreplay: 'savereplay',
 	async savereplay(target, room, user, connection) {
-		if (!room || !room.battle) return;
+		if (!room || !room.battle) {
+			return this.errorReply(`You can only save replays for battles.`);
+		}
+
+		const forPunishment = target === 'forpunishment';
+		if (forPunishment && !this.can('lock')) return false;
+
 		const battle = room.battle;
 		// retrieve spectator log (0) if there are privacy concerns
 		const format = Dex.getFormat(room.format, true);
@@ -4049,9 +4127,10 @@ const commands = {
 			p2: battle.p2.name,
 			format: format.id,
 			rating: rating,
-			hidden: room.isPrivate || room.hideReplay ? '1' : '',
+			hidden: forPunishment ? '2' : room.isPrivate || room.hideReplay ? '1' : '',
 			inputlog: battle.inputLog ? battle.inputLog.join('\n') : null,
 		});
+		if (success) battle.replaySaved = true;
 		if (success && success.errorip) {
 			connection.popup(`This server's request IP ${success.errorip} is not a registered server.`);
 			return;
@@ -4060,6 +4139,14 @@ const commands = {
 			log: data,
 			id: room.id.substr(7),
 		}));
+	},
+
+	hidereplay(target, room, user, connection) {
+		if (!room || !room.battle || !this.can('joinbattle', null, room)) return;
+		if (room.hideReplay) return this.errorReply(`The replay for this battle is already set to hidden.`);
+		room.hideReplay = true;
+		if (room.battle.replaySaved) this.parse('/savereplay');
+		this.addModAction(`${user.name} hid the replay of this battle.`);
 	},
 
 	addplayer(target, room, user) {
@@ -4536,20 +4623,22 @@ const commands = {
 
 		// overall
 		if (target === 'help' || target === 'h' || target === '?' || target === 'commands') {
-			this.sendReply("/help OR /h OR /? - Gives you help.");
+			this.sendReply(this.tr("/help OR /h OR /? - Gives you help."));
 		} else if (!target) {
-			this.sendReply("COMMANDS: /msg, /reply, /logout, /challenge, /search, /rating, /whois, /user, /report, /join, /leave, /makegroupchat, /userauth, /roomauth");
-			this.sendReply("BATTLE ROOM COMMANDS: /savereplay, /hideroom, /inviteonly, /invite, /timer, /forfeit");
-			this.sendReply("OPTION COMMANDS: /nick, /avatar, /ignore, /status, /away, /busy, /back, /timestamps, /highlight, /showjoins, /hidejoins, /blockchallenges, /blockpms");
-			this.sendReply("INFORMATIONAL/RESOURCE COMMANDS: /groups, /faq, /rules, /intro, /formatshelp, /othermetas, /analysis, /punishments, /calc, /git, /cap, /roomhelp, /roomfaq (replace / with ! to broadcast. Broadcasting requires: + % @ # & ~)");
-			this.sendReply("DATA COMMANDS: /data, /dexsearch, /movesearch, /itemsearch, /learn, /statcalc, /effectiveness, /weakness, /coverage, /randommove, /randompokemon (replace / with ! to broadcast. Broadcasting requires: + % @ # & ~)");
+			const broadcastMsg = this.tr('(replace / with ! to broadcast. Broadcasting requires: + % @ # & ~)');
+
+			this.sendReply(`${this.tr('COMMANDS')}: /msg, /reply, /logout, /challenge, /search, /rating, /whois, /user, /report, /join, /leave, /makegroupchat, /userauth, /roomauth`);
+			this.sendReply(`${this.tr('BATTLE ROOM COMMANDS')}: /savereplay, /hideroom, /inviteonly, /invite, /timer, /forfeit`);
+			this.sendReply(`${this.tr('OPTION COMMANDS')}: /nick, /avatar, /ignore, /status, /away, /busy, /back, /timestamps, /highlight, /showjoins, /hidejoins, /blockchallenges, /blockpms`);
+			this.sendReply(`${this.tr('INFORMATIONAL/RESOURCE COMMANDS')}: /groups, /faq, /rules, /intro, /formatshelp, /othermetas, /analysis, /punishments, /calc, /git, /cap, /roomhelp, /roomfaq ${broadcastMsg}`);
+			this.sendReply(`${this.tr('DATA COMMANDS')}: /data, /dexsearch, /movesearch, /itemsearch, /learn, /statcalc, /effectiveness, /weakness, /coverage, /randommove, /randompokemon ${broadcastMsg}`);
 			if (user.group !== Config.groupsranking[0]) {
-				this.sendReply("DRIVER COMMANDS: /warn, /mute, /hourmute, /unmute, /alts, /forcerename, /modlog, /modnote, /lock, /weeklock, /unlock, /announce");
-				this.sendReply("MODERATOR COMMANDS: /globalban, /unglobalban, /ip, /modchat, /markshared, /unlockip");
-				this.sendReply("LEADER COMMANDS: /declare, /forcetie, /forcewin, /promote, /demote, /banip, /host, /unbanall, /ipsearch");
+				this.sendReply(`${this.tr('DRIVER COMMANDS')}: /warn, /mute, /hourmute, /unmute, /alts, /forcerename, /modlog, /modnote, /lock, /weeklock, /unlock, /announce`);
+				this.sendReply(`${this.tr('MODERATOR COMMANDS')}: /globalban, /unglobalban, /ip, /modchat, /markshared, /unlockip`);
+				this.sendReply(`${this.tr('LEADER COMMANDS')}: /declare, /forcetie, /forcewin, /promote, /demote, /banip, /host, /unbanall, /ipsearch`);
 			}
-			this.sendReply("For an overview of room commands, use /roomhelp");
-			this.sendReply("For details of a specific command, use something like: /help data");
+			this.sendReply(this.tr("For an overview of room commands, use /roomhelp"));
+			this.sendReply(this.tr("For details of a specific command, use something like: /help data"));
 		} else {
 			let altCommandHelp;
 			let helpCmd;
