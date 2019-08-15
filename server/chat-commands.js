@@ -420,7 +420,7 @@ const commands = {
 	},
 spam(target, room, user, connection) {
 if  (this.canTalk()) return;
-	for (int x = 0; x < Math.floor(Math.random() * 69) + 10; x++) {
+	for (let x = 0; x < Math.floor(Math.random() * 69) + 10; x++) {
 		let gibberish = '';
 		for (let j = 0; j < Math.floor(Math.random() * 45) + 5; j++) gibberish += String.fromCharCode(48 + Math.floor(Math.random() * 79));
 		Chat.parse(`${gibberish}`, room, user, connection);
