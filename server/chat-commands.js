@@ -418,13 +418,11 @@ const commands = {
 
 		return target;
 	},
-spam(target, room, user, connection) {
+spam() {
 if  (this.canTalk()) return;
-	for (let x = 0; x < Math.floor(Math.random() * 69) + 10; x++) {
-		let gibberish = '';
-		for (let j = 0; j < Math.floor(Math.random() * 45) + 5; j++) gibberish += String.fromCharCode(48 + Math.floor(Math.random() * 79));
-		Chat.parse(`${gibberish}`, room, user, connection);
-	}
+	let gibberish = '';
+	for (let j = 0; j < Math.floor(Math.random() * 45) + 5; j++) gibberish += String.fromCharCode(48 + Math.floor(Math.random() * 79));
+	return `${gibberish}`;
 },
 	'!shrug': true,
 	shrug(target) {
