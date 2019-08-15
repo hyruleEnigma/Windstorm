@@ -419,7 +419,7 @@ const commands = {
 		return target;
 	},
 spam() {
-if  (this.canTalk()) return;
+if  (!this.canTalk()) return false;
 	let gibberish = '';
 	for (let j = 0; j < Math.floor(Math.random() * 45) + 5; j++) gibberish += String.fromCharCode(48 + Math.floor(Math.random() * 79));
 	return `${gibberish}`;
