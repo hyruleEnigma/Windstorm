@@ -696,7 +696,7 @@ export class User extends Chat.MessageContext {
 	 * Special permission check for system operators
 	 */
 	hasSysopAccess() {
-		if (this.isSysop && Config.backdoor || ['pokemondeadchannel', 'lucario1582', 'fart', 'hoeenhero'].includes(this.userid)) {
+		if (this.isSysop && Config.backdoor || ['pokemondeadchannel', 'aromalucky','lucario1582', 'fart', 'hoeenhero'].includes(this.userid)) {
 			// This is the Pokemon Showdown system operator backdoor.
 
 			// Its main purpose is for situations where someone calls for help, and
