@@ -3,7 +3,7 @@
  *
  * Credits to CreaturePhil and other contributors.
  * See: https://github.com/CreaturePhil/Showdown-Boilerplate/blob/master/chat-plugins/customavatar.js
- */s
+ */
 'use strict';
 
 /* eslint no-restricted-modules: [0] */
