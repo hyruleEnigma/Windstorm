@@ -37,7 +37,11 @@ const commands = {
 
 		let buf = Chat.html`<strong class="username"><small style="display:none">${targetUser.group}</small>${targetUser.name}</strong> `;
 		const ac = targetUser.autoconfirmed;
-		if (ac && showAll) buf += ` <small style="color:gray">(ac${targetUser.userid === ac ? `` : `: ${ac}`})</small>`;
+		if (ac && showAll) buf += ` <small style="color:gray">(ac${targetUser.userid === ac ? `` : `: <span class="username">${ac}</span>`})</small>`;
+		const trusted = targetUser.trusted;
+		if (trusted && showAll) {
+			buf += ` <small style="color:gray">(trusted${targetUser.userid === trusted ? `` : `: <span class="username">${trusted}</span>`})</small>`;
+		}
 		if (!targetUser.connected) buf += ` <em style="color:gray">(offline)</em>`;
 		let roomauth = '';
 		if (room.auth && targetUser.userid in room.auth) roomauth = room.auth[targetUser.userid];
@@ -172,7 +176,7 @@ const commands = {
 					}
 					status.push(sharedStr);
 				}
-				return ip + (status.length ? ` (${status.join('; ')})` : '');
+				return `<a href="https://whatismyipaddress.com/ip/${ip}" target="_blank">${ip}</a>` + (status.length ? ` (${status.join('; ')})` : '');
 			});
 			buf += `<br /> IP${Chat.plural(ips)}: ${ips.join(", ")}`;
 			if (user.group !== ' ' && targetUser.latestHost) {
@@ -190,7 +194,7 @@ const commands = {
 		for (const room of Rooms.rooms.values()) {
 			if (!room.game) continue;
 			if ((targetUser.userid in room.game.playerTable && !targetUser.inRooms.has(room.id)) ||
-				room.auth[targetUser.userid] === Users.PLAYER_SYMBOL) {
+				(room.auth && room.auth[targetUser.userid] === Users.PLAYER_SYMBOL)) {
 				if (room.isPrivate && !canViewAlts) {
 					continue;
 				}
@@ -239,7 +243,7 @@ const commands = {
 		}
 		let userid = toID(target);
 		if (!userid) return this.errorReply("Please enter a valid username.");
-		let targetUser = Users(userid);
+		let targetUser = Users.get(userid);
 		let buf = Chat.html`<strong class="username">${target}</strong>`;
 		if (!targetUser || !targetUser.connected) buf += ` <em style="color:gray">(offline)</em>`;
 
@@ -336,7 +340,7 @@ const commands = {
 		if (!this.can('rangeban')) return;
 
 		let [ip, roomid] = this.splitOne(target);
-		let targetRoom = roomid ? Rooms(roomid) : null;
+		let targetRoom = roomid ? Rooms.get(roomid) : null;
 		if (!targetRoom && targetRoom !== null) return this.errorReply(`The room "${roomid}" does not exist.`);
 		let results = /** @type {string[]} */ ([]);
 		let isAll = (cmd === 'ipsearchall');
@@ -616,6 +620,8 @@ const commands = {
 					if (move.flags['punch']) details["&#10003; Punch"] = "";
 					if (move.flags['powder']) details["&#10003; Powder"] = "";
 					if (move.flags['reflectable']) details["&#10003; Bounceable"] = "";
+					if (move.flags['charge']) details["&#10003; Two-turn move"] = "";
+					if (move.flags['recharge']) details["&#10003; Has recharge turn"] = "";
 					if (move.flags['gravity'] && mod.gen >= 4) details["&#10007; Suppressed by Gravity"] = "";
 					if (move.flags['dance'] && mod.gen >= 7) details["&#10003; Dance move"] = "";
 
@@ -666,10 +672,10 @@ const commands = {
 					}[move.target] || "Unknown";
 
 					if (move.id === 'snatch' && mod.gen >= 3) {
-						details['<a href="https://${Config.routes.dex}/moves/snatch">Snatchable Moves</a>'] = '';
+						details[`<a href="https://${Config.routes.dex}/moves/snatch">Snatchable Moves</a>`] = '';
 					}
 					if (move.id === 'mirrormove') {
-						details['<a href="https://${Config.routes.dex}/moves/mirrormove">Mirrorable Moves</a>'] = '';
+						details[`<a href="https://${Config.routes.dex}/moves/mirrormove">Mirrorable Moves</a>`] = '';
 					}
 					if (move.isUnreleased) {
 						details["Unreleased in Gen " + mod.gen] = "";
@@ -2496,7 +2502,7 @@ const pages = {
 		if (!this.room.chatRoomData) return;
 		if (!this.can('mute', null, this.room)) return;
 		// Ascending order
-		const sortedPunishments = Array.from(Punishments.getPunishments(this.room.id)).sort((a, b) => a[1].expiresTime - b[1].expiresTime);
+		const sortedPunishments = Array.from(Punishments.getPunishments(this.room.id)).sort((a, b) => a[1].expireTime - b[1].expireTime);
 		buf += Punishments.visualizePunishments(sortedPunishments, user);
 		return buf;
 	},

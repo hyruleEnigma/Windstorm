@@ -4,6 +4,7 @@
 const FS = require(/** @type {any} */('../../.lib-dist/fs')).FS;
 
 const ROOMFAQ_FILE = 'config/chat-plugins/faqs.json';
+const MAX_ROOMFAQ_LENGTH = 8192;
 
 /** @type {{[k: string]: {[k: string]: string}}} */
 let roomFaqs = {};
@@ -19,7 +20,7 @@ function saveRoomFaqs() {
 }
 
 /**
- * @param {string} roomid
+ * @param {RoomID} roomid
  * @param {string} key
  *
  * Aliases are implemented as a "regular" FAQ entry starting with a >. EX: {a: "text", b: ">a"}
@@ -40,7 +41,7 @@ const commands = {
 		if (!target) return this.parse('/help roomfaq');
 
 		target = target.trim();
-		let input = Chat.filter(this, target, user, room, connection);
+		let input = this.filter(target);
 		if (target !== input) return this.errorReply("You are not allowed to use fitered words in roomfaq entries.");
 		let [topic, ...rest] = input.split(',');
 
@@ -48,7 +49,7 @@ const commands = {
 		if (!(topic && rest.length)) return this.parse('/help roomfaq');
 		let text = rest.join(',').trim();
 		if (topic.length > 25) return this.errorReply("FAQ topics should not exceed 25 characters.");
-		if (Chat.stripFormatting(text).length > 500) return this.errorReply("FAQ entries should not exceed 500 characters.");
+		if (Chat.stripFormatting(text).length > MAX_ROOMFAQ_LENGTH) return this.errorReply(`FAQ entries should not exceed ${MAX_ROOMFAQ_LENGTH} characters.`);
 
 		text = text.replace(/^>/, '&gt;');
 
@@ -102,7 +103,7 @@ const commands = {
 
 		if (!this.runBroadcast()) return;
 		this.sendReplyBox(Chat.formatText(roomFaqs[room.id][topic], true));
-		if (!this.broadcasting && user.can('declare', null, room)) {
+		if (!this.broadcasting && user.can('ban', null, room)) {
 			const src = Chat.escapeHTML(roomFaqs[room.id][topic]).replace(/\n/g, `<br />`);
 			let extra = `<code>/addfaq ${topic}, ${src}</code>`;
 			const aliases = Object.keys(roomFaqs[room.id]).filter(val => getAlias(room.id, val) === topic);
