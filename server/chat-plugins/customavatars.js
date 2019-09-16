@@ -70,7 +70,7 @@ exports.commands = {
 			downloadImage(avatarUrl, name, ext);
 			this.sendReply("|raw|" + name + "'s avatar was successfully set. Avatar:<br /><img src='" + avatarUrl + "' width='80' height='80'>");
 			Monitor.adminlog(name + "'s avatar was successfully set by " + user.name + "."); //no reason to show the avatar in upper staff
-			if (Users(name)) Users(name).popup("|html|" + user.name + " set your custom avatar.<br /><center><img src='" + avatarUrl + "' width='80' height='80'></center><br /> Refresh your page if you don't see it.");
+			if (Users.get(name)) Users.get(name).popup("|html|" + user.name + " set your custom avatar.<br /><center><img src='" + avatarUrl + "' width='80' height='80'></center><br /> Refresh your page if you don't see it.");
 		},
 
 		remove: 'delete',
@@ -90,7 +90,7 @@ exports.commands = {
 					console.error(err);
 				}
 
-				if (Users(userid)) Users(userid).popup("|html|" + user.name + " has deleted your custom avatar.");
+				if (Users.get(userid)) Users.get(userid).popup("|html|" + user.name + " has deleted your custom avatar.");
 				this.sendReply(target + "'s avatar has been successfully removed.");
 				Monitor.adminlog(target + "'s avatar has been successfully removed by " + user.name + ".");
 			});
