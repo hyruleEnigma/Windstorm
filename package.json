@@ -13,8 +13,7 @@
     "node-oom-heapdump": "^1.1.4",
     "node-static": "^0.7.11",
     "nodemailer": "^6.2.1",
-    "permessage-deflate": "^0.1.6",
-    "githubhook": "^1.9.3",
+    "permessage-deflate": "^0.1.6"
   },
   "engines": {
     "node": ">=7.7.0"
