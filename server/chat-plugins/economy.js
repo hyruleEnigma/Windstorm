@@ -299,28 +299,6 @@ exports.commands = {
 	},
 	resetmoneyhelp: ['/resetmoney [user] - Resets target user\'s currency to 0. Requires: &, ~'],
 
-	customsymbol: function (target, room, user) {
-		let bannedSymbols = ['!', '|', '‽', '\u2030', '\u534D', '\u5350', '\u223C'];
-		for (let u in Config.groups) if (Config.groups[u].symbol) bannedSymbols.push(Config.groups[u].symbol);
-		if (!user.canCustomSymbol && !user.can('vip')) return this.sendReply('You need to buy this item from the shop to use.');
-		if (!target || target.length > 1) return this.sendReply('/customsymbol [symbol] - changes your symbol (usergroup) to the specified symbol. The symbol can only be one character');
-		if (target.match(/([a-zA-Z 0-9])/g) || bannedSymbols.indexOf(target) >= 0) {
-			return this.sendReply('This symbol is banned.');
-		}
-		user.customSymbol = target;
-		user.updateIdentity();
-		user.canCustomSymbol = false;
-		this.sendReply('Your symbol is now ' + target + '. It will be saved until you log off for more than an hour, or the server restarts. You can remove it with /resetsymbol');
-	},
-
-	removesymbol: 'resetsymbol',
-	resetsymbol: function (target, room, user) {
-		if (!user.customSymbol) return this.sendReply("You don't have a custom symbol!");
-		delete user.customSymbol;
-		user.updateIdentity();
-		this.sendReply('Your symbol has been removed.');
-	},
-
 	economy: 'economystats',
 	currency: 'economystats',
 	stardust: 'economystats',
