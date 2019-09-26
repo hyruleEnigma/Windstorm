@@ -110,7 +110,7 @@ let BattleItems = {
 		zMoveFrom: "Poison Jab",
 		zMoveUser: ["Scolipede"],
 		gen: 7,
-		desc: "If helb by a Scolipede with Poison Jab, it can use Plurshift.",
+		desc: "If held by a Scolipede with Poison Jab, it can use Plurshift.",
 	},
 	// Snaquaza
 	fakeclaimiumz: {
@@ -155,7 +155,7 @@ let BattleItems = {
 		zMove: "Bleh Flame",
 		zMoveFrom: "Blue Flare",
 		zMoveUser: ["Reshiram"],
-		desc: "Holder's Fire-type attacks have 1.2x power. If held by a Reshiram with Blue Flare, it can use Bleh Flame.",
+		desc: "Fire-type attacks have 1.2x power. Reshiram with Blue Flare can use Bleh Flame.",
 	},
 };
 

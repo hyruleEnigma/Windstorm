@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 /**@type {{[k: string]: ModdedAbilityData}} */
 let BattleAbilities = {
@@ -16,7 +16,7 @@ let BattleAbilities = {
 	// Please keep abilites organized alphabetically based on staff member name!
 	// 5gen
 	seasonsgift: {
-		desc: "If Sunny Day is active, this Pokemon's Attack is 1.5x, and its Speed is doubled.",
+		desc: "If Sunny Day is active, this Pokemon's Attack is 1.5x and its Speed is doubled.",
 		shortDesc: "If Sunny Day is active, this Pokemon's Attack is 1.5x and its Speed is doubled.",
 		id: "seasonsgift",
 		name: "Season's Gift",
@@ -35,7 +35,7 @@ let BattleAbilities = {
 	// Aeonic
 	dummythicc: {
 		desc: "This ability gives the effects of the abilities Fur Coat, Magic Bounce, Infiltrator, and Sturdy.",
-		shortDesc: "Fur Coat + Magic Bounce + Infiltrator + Sturdy",
+		shortDesc: "Fur Coat + Magic Bounce + Infiltrator + Sturdy.",
 		id: "dummythicc",
 		name: "Dummy Thicc",
 		isNonstandard: "Custom",
@@ -58,7 +58,7 @@ let BattleAbilities = {
 			let newMove = this.getActiveMove(move.id);
 			newMove.hasBounced = true;
 			newMove.pranksterBoosted = false;
-			this.useMove(newMove, target, source);
+			this.useMove(newMove, target, source, this.getAbility('magicbounce'));
 			return null;
 		},
 		onAllyTryHitSide(target, source, move) {
@@ -68,7 +68,7 @@ let BattleAbilities = {
 			let newMove = this.getActiveMove(move.id);
 			newMove.hasBounced = true;
 			newMove.pranksterBoosted = false;
-			this.useMove(newMove, this.effectData.target, source);
+			this.useMove(newMove, this.effectData.target, source, this.getAbility('magicbounce'));
 			return null;
 		},
 		onDamagePriority: -100,
@@ -84,24 +84,24 @@ let BattleAbilities = {
 	},
 	// Aethernum
 	awakening: {
-		desc: "On switch in, Atk and Speed are lowered by -3, while Def and Spdef are increased by 3. At the end of each turn, Atk and Spe get +1 while Def and Spdef get -1.",
-		shortDesc: "Atk & spe -3; def & spd +3; end turn: Atk & Spe +1; Def & Spd -1",
+		desc: "On switch-in, Attack and Speed are lowered by three stages, while Defense and Special Defense are increased by three stages. At the end of each turn, Attack and Speed are increased by one stage while Defense and Special Defense are decreased by one stage.",
+		shortDesc: "Atk & Spe -3; Def & SpD +3; each turn: Atk & Spe +1; Def & SpD -1.",
 		id: "awakening",
 		name: "Awakening",
 		isNonstandard: "Custom",
 		onStart(pokemon) {
-			this.boost({atk: -3, def: 3, spd: 3, spe: -3});
+			this.boost({atk: -3, spe: -3, def: 3, spd: 3});
 		},
 		onResidualOrder: 26,
 		onResidualSubOrder: 1,
 		onResidual(pokemon) {
-			this.boost({atk: 1, def: -1, spd: -1, spe: 1});
+			this.boost({atk: 1, spe: 1, def: -1, spd: -1});
 		},
 	},
 	// Akiamara
 	toxicswap: {
-		desc: "On switch-in, this Pokemon swaps all stat changes with the opponent. Ignores abilities.",
-		shortDesc: "On switch-in, swaps all stat changes with opponent. Ignores abilities.",
+		desc: "On switch-in, this Pokemon swaps all stat changes with the foe. Ignores abilities.",
+		shortDesc: "On switch-in, swaps all stat changes with foe. Ignores abilities.",
 		isNonstandard: "Custom",
 		id: "toxicswap",
 		name: "Toxic Swap",
@@ -143,8 +143,8 @@ let BattleAbilities = {
 	},
 	// Alpha
 	osolemio: {
-		desc: "If Sun is active, this Pokemon restores 1/16 of its maximum HP, rounded down, at the end of each turn.",
-		shortDesc: "If Sun is active, this Pokemon heals 1/16 of its max HP each turn.",
+		desc: "If Sunny Day is active, this Pokemon restores 1/16 of its maximum HP, rounded down, at the end of each turn.",
+		shortDesc: "If Sunny Day is active, this Pokemon heals 1/16 of its max HP each turn.",
 		id: "osolemio",
 		name: "O SOLE MIO",
 		isNonstandard: "Custom",
@@ -167,8 +167,8 @@ let BattleAbilities = {
 	},
 	// Anubis
 	distortionworld: {
-		desc: "For 5 turns, speed becomes the same for all pokemon. The power of Ghott-type attacks made by Pokemon is multiplied by 1.5.",
-		shortDesc: "5 turns. Speed Ties. +Ghost Power",
+		desc: "For 5 turns, Speed becomes the same for all Pokemon. The power of Ghost-type attacks made by Pokemon is multiplied by 1.5.",
+		shortDesc: "5 turns. Speed ties. +Ghost power.",
 		id: "distortionworld",
 		name: "Distortion World",
 		isNonstandard: "Custom",
@@ -178,7 +178,7 @@ let BattleAbilities = {
 	},
 	// A Quag To The Past
 	careless: {
-		desc: "This Pokemon blocks certain status moves and instead uses the move against the original user. This Pokemon also ignores other Pokemon's Attack, Special Attack, and accuracy stat stages when taking damage, and ignores other Pokemon's Defense, Special Defense, and evasiveness stat stages when dealing damage.",
+		desc: "This Pokemon blocks certain status moves and instead uses them against the original user. This Pokemon also ignores other Pokemon's Attack, Special Attack, and accuracy stat stages when taking damage, and ignores other Pokemon's Defense, Special Defense, and evasiveness stat stages when dealing damage.",
 		shortDesc: "Bounces certain status moves and ignores other Pokemon's stat changes.",
 		id: "careless",
 		name: "Careless",
@@ -242,8 +242,8 @@ let BattleAbilities = {
 	arabesque: {
 		id: "arabesque",
 		name: "Arabesque",
-		desc: "On switch-in, this Pokemon switches to a different oricorio form.",
-		shortDesc: "On switch-in, this Pokemon switches to a different oricorio form.",
+		desc: "On switch-in, this Pokemon switches to a different Oricorio forme.",
+		shortDesc: "On switch-in, this Pokemon switches to a different Oricorio forme.",
 		isNonstandard: "Custom",
 		onStart(source) {
 			let formes = ['oricorio', 'oricoriosensu', 'oricoriopompom', 'oricoriopau'];
@@ -256,7 +256,7 @@ let BattleAbilities = {
 	},
 	// Brandon
 	gracideamastery: {
-		desc: "If this Pokemon is a Shaymin-Sky, it will transform into Shaymin before using a status move or upon being attacked. After using the move, if this Pokemon was originally in its base forme, it will transform back into Shaymin-Sky.",
+		desc: "If this Pokemon is Shaymin-Sky, it will transform into Shaymin before using a status move or upon being attacked. After using the move or taking attack damage, if this Pokemon was originally in its base forme, it will transform back into Shaymin-Sky.",
 		shortDesc: "Transforms into Shaymin when using status moves/being attacked.",
 		id: "gracideamastery",
 		name: "Gracidea Mastery",
@@ -290,42 +290,29 @@ let BattleAbilities = {
 			pokemon.formeChange('Shaymin-Sky', this.effect);
 		},
 	},
-	// Cleo
-	adrenalinerush: {
-		desc: "As this Pokemon switches in, its Special Attack and Speed are doubled for 5 turns. After five turns have passed, these effects are removed.",
-		shortDesc: "On switch-in, this Pokemon's Special Attack and Speed are doubled for 5 turns.",
-		id: "adrenalinerush",
-		name: "Adrenaline Rush",
+	// Darth
+	seraphicregeneration: {
+		desc: "When this Pokemon switches out, it regains 33% of its HP, then its replacement recovers 33% of its HP.",
+		shortDesc: "Upon switching out, this Pokemon and its replacement regain 33% of their HP.",
+		onSwitchOut(pokemon) {
+			pokemon.heal(pokemon.maxhp / 3);
+			pokemon.side.addSlotCondition(pokemon, 'seraphicregeneration');
+		},
+		id: "seraphicregeneration",
+		name: "Seraphic Regeneration",
 		isNonstandard: "Custom",
-		onStart(pokemon) {
-			pokemon.addVolatile('adrenalinerush');
-		},
-		onEnd(pokemon) {
-			delete pokemon.volatiles['adrenalinerush'];
-			this.add('-end', pokemon, 'Adrenaline Rush', '[silent]');
-		},
 		effect: {
-			duration: 5,
-			onStart(pokemon) {
-				this.add('-start', pokemon, 'Adrenaline Rush', '[silent]');
-				this.add('-message', `${pokemon.name}'s Adrenaline Rush has begun.`);
-			},
-			onModifySpAPriority: 5,
-			onModifySpA(spa, pokemon) {
-				return this.chainModify(2);
-			},
-			onModifySpe(spe, pokemon) {
-				return this.chainModify(2);
-			},
-			onEnd(pokemon) {
-				this.add('-end', pokemon, 'Adrenaline Rush', '[silent]');
-				this.add('-message', `${pokemon.name}'s Adrenaline Rush has ended.`);
+			duration: 1,
+			onSwitchInPriority: -1,
+			onSwitchIn(pokemon) {
+				pokemon.heal(pokemon.maxhp / 3);
+				this.add('-heal', pokemon, pokemon.getHealth, '[silent]');
 			},
 		},
 	},
 	// DaWoblefet
 	shadowartifice: {
-		desc: "Prevents adjacent opposing Pokemon from choosing to switch out unless they are immune to trapping or also have this Ability or Shadow Tag. If this Pokemon is knocked out with a move, that move's user loses HP equal to the amount of damage inflicted on this Pokemon.",
+		desc: "Prevents adjacent opposing Pokemon from choosing to switch out unless they are immune to trapping or also have this ability or Shadow Tag. If this Pokemon is knocked out with an attack, that attack's user loses HP equal to the amount of damage inflicted on this Pokemon.",
 		shortDesc: "Prevents adjacent foes from switching. If KOed, that move's user loses equal HP.",
 		id: "shadowartifice",
 		name: "Shadow Artifice",
@@ -350,8 +337,8 @@ let BattleAbilities = {
 	},
 	// Decem
 	miraclescale: {
-		desc: "This Pokemon's Dragon type moves have their priority increased by 1.",
-		shortDesc: "+1 Priority to Dragon type moves.",
+		desc: "This Pokemon's Dragon-type moves have their priority increased by 1.",
+		shortDesc: "+1 Priority to Dragon-type moves.",
 		id: "miraclescale",
 		name: "Miracle Scale",
 		isNonstandard: "Custom",
@@ -361,8 +348,8 @@ let BattleAbilities = {
 	},
 	// deetah
 	radioactive: {
-		desc: "If this Pokemon is statused, its Attack is 1.5x; ignores burn halving physical damage. This Pokemon heals 1/8 of its max HP when poisoned. This Pokemon is immune to Ground-type moves.",
-		shortDesc: "1.5x Atk if statused. Heals 1/8 if poisoned. Ground immune.",
+		desc: "If this Pokemon has a major status condition, its Attack is 1.5x; ignores burn halving physical damage. This Pokemon heals 1/8 of its max HP when poisoned.",
+		shortDesc: "1.5x Atk if statused. Heals 1/8 if poisoned.",
 		id: "radioactive",
 		name: "Radioactive",
 		isNonstandard: "Custom",
@@ -381,8 +368,8 @@ let BattleAbilities = {
 	},
 	// E4 Flint
 	starkmountain: {
-		desc: "The user summons Sunny Day when it switches in. In addition, Water-type attacks do halved damage against this Pokemon.",
-		shortDesc: "On switch-in, summons Sunny Day. Water power against this Pokemon is halved.",
+		desc: "The user summons Sunny Day when it switches in. In addition, the Base Power of Water-type attacks is multiplied by 0.5 against this Pokemon.",
+		shortDesc: "Summons Sunny Day on switch-in. Base Power of foe's Water moves is halved.",
 		id: "starkmountain",
 		name: "Stark Mountain",
 		isNonstandard: "Custom",
@@ -397,7 +384,7 @@ let BattleAbilities = {
 	},
 	// Elgino
 	giblovepls: {
-		desc: "This Pokemon's Defense is raised 1 stage and heals 20% after it is damaged by a contact move.",
+		desc: "After being damaged by a contact move, this Pokemon is healed by 20% of its maximum HP and has its Defense raised by one stage.",
 		shortDesc: "Defense +1 and heal 20% after hit by contact move.",
 		onAfterDamage(damage, target, source, effect) {
 			if (effect && effect.flags['contact']) {
@@ -410,8 +397,8 @@ let BattleAbilities = {
 	},
 	// fart
 	risefromthegases: {
-		desc: "The power of Fire- and Ground-type attacks against this Pokemon is halved.",
-		shortDesc: "The power of Fire- and Ground-type attacks is halved.",
+		desc: "The power of Fire-type and Ground-type attacks against this Pokemon is halved.",
+		shortDesc: "The power of Fire-type and Ground-type attacks is halved against this Pokemon.",
 		id: "risefromthegases",
 		name: "Rise from the Gases",
 		isNonstandard: "Custom",
@@ -427,8 +414,8 @@ let BattleAbilities = {
 	},
 	// Flare
 	superillusion: {
-		desc: "When this Pokemon switches in, it appears as the last unfainted Pokemon in its party until it takes supereffective direct damage from another Pokemon's attack. This Pokemon's actual level and HP are displayed instead of those of the mimicked Pokemon.",
-		shortDesc: "This Pokemon appears as the last Pokemon in the party until it takes a supereffective hit.",
+		desc: "When this Pokemon switches in, it appears as the last unfainted Pokemon in its party until it takes super effective direct damage from another Pokemon's attack. This Pokemon's actual level and HP are displayed instead of those of the mimicked Pokemon.",
+		shortDesc: "Appears as the last Pokemon in the party until it takes a supereffective hit.",
 		id: "superillusion",
 		name: "Super Illusion",
 		isNonstandard: "Custom",
@@ -477,14 +464,14 @@ let BattleAbilities = {
 	},
 	// Gallant Spear
 	trombe: {
-		desc: "On switch in, this Pokemon summons Light Screen or Reflect and is guaranteed to move first.",
+		desc: "On switch-in, this Pokemon summons Light Screen or Reflect and is guaranteed to move first for one turn.",
 		shortDesc: "On switch, 1 screen + priority.",
 		id: "trombe",
 		name: "Trombe!",
 		isNonstandard: "Custom",
 		onSwitchIn(pokemon) {
 			this.add('-activate', pokemon, 'ability: Trombe!');
-			if (Math.round(this.random())) {
+			if (this.random(2)) {
 				pokemon.side.addSideCondition('lightscreen');
 			} else {
 				pokemon.side.addSideCondition('reflect');
@@ -494,24 +481,56 @@ let BattleAbilities = {
 			if (move && pokemon.activeTurns === 1) return priority + 1;
 		},
 	},
+	// Gimm1ck
+	"russianrush": {
+		desc: "If Hail is active, this Pokemon's Speed and accuracy are doubled.",
+		shortDesc: "If Hail is active, this Pokemon's Speed and accuracy are doubled.",
+		onModifySpe(spe, pokemon) {
+			if (this.field.isWeather('hail')) {
+				return this.chainModify(2);
+			}
+		},
+		onSourceModifyAccuracy(accuracy) {
+			if (this.field.isWeather('hail')) {
+				if (typeof accuracy !== 'number') return;
+				this.debug('russianrush - enhancing accuracy');
+				return accuracy * 2;
+			}
+		},
+		id: "russianrush",
+		name: "Russian Rush",
+		isNonstandard: "Custom",
+	},
+	// GMars
+	mysteryshell: {
+		desc: "If this Pokemon is a Minior in its Meteor forme, it cannot be afflicted by a status condition. This Pokemon cannot be hit with a critical hit.",
+		shortDesc: "Status immunity while in Meteor forme, crit immunity.",
+		id: "mysteryshell",
+		name: "Mystery Shell",
+		isNonstandard: "Custom",
+		onCriticalHit: false,
+		onSetStatus(status, target, source, effect) {
+			if (target.template.speciesid !== 'miniormeteor' || target.transformed) return;
+			if (!effect || !effect.status) return false;
+			this.add('-immune', target, '[from] ability: Mystery Shell');
+			return false;
+		},
+	},
 	// guishark
 	gzguishark: {
-		desc: "Boosts Attack by 1 stage upon switch-in/Mega Evolution.",
+		desc: "Boosts Attack by one stage upon switch-in or Mega Evolution.",
 		shortDesc: "Boosts Attack by 1 stage upon switch-in/Mega Evolution.",
 		id: "gzguishark",
 		name: "gz guishark",
 		isNonstandard: "Custom",
-		onSwitchIn(pokemon) {
-			this.boost({atk: 1}, pokemon);
-		},
-		onAfterMega(pokemon) {
+		onStart(pokemon) {
 			this.boost({atk: 1}, pokemon);
 		},
 	},
 	// HoeenHero
 	scripter: {
-		desc: "If Scripted Terrain is active, this Pokemon's Speed is doubled, and its moves have 1.5x power.",
-		shortDesc: "If Scripted Terrain is active, this Pokemon's Speed doubles and attack power is 1.5x.",
+		desc: "If Scripted Terrain is active, this Pokemon's Speed is doubled and its moves deal 1.5x damage.",
+		shortDesc: "If Scripted Terrain is active, this Pokemon's Speed doubles and it deals 1.5x damage.",
 		id: "scripter",
 		name: "Scripter",
 		isNonstandard: "Custom",
@@ -529,7 +548,7 @@ let BattleAbilities = {
 	},
 	// inactive
 	souleater: {
-		desc: "Attacking moves heal the user 33% of damage dealt.",
+		desc: "Attacking moves heal the user by 33% of damage dealt.",
 		shortDesc: "Attacking moves heal the user 33% of damage dealt.",
 		id: "souleater",
 		name: "Soul Eater",
@@ -596,8 +615,8 @@ let BattleAbilities = {
 	},
 	// KingSwordYT
 	kungfupanda: {
-		desc: "This Pokemon's punch-based attacks have their power multiplied by 1.2, and this Pokemon's Speed is raised by 1 stage after it is damaged by a contact move.",
-		shortDesc: "This Pokemon's punch-based moves have 1.2x power. +1 Spe when a foe makes contact.",
+		desc: "This Pokemon's punch-based attacks have their power multiplied by 1.2, and this Pokemon's Speed is raised by one stage after it is damaged by a contact move.",
+		shortDesc: "Punch-based moves have 1.2x power. +1 Spe when a foe makes contact.",
 		id: "kungfupanda",
 		name: "Kung Fu Panda",
 		isNonstandard: "Custom",
@@ -616,11 +635,12 @@ let BattleAbilities = {
 	},
 	// Mad Monty ¾°
 	minnesnowta: {
-		desc: "This Pokemon is immune to Ice-type moves. Its Ice and Electric type attacks have their power multiplied by 1.2x.",
-		shortDesc: "This Pokemon's Ice and Electric attacks  have their power multiplied by 1.2; Ice immunity.",
+		desc: "This Pokemon is immune to Ice-type moves. Its Ice- and Electric-type attacks have their power multiplied by 1.2x.",
+		shortDesc: "This Pokemon's Ice and Electric attacks have 1.2x power; Ice immunity.",
 		onTryHit(target, source, move) {
 			if (target !== source && move.type === 'Ice') {
 				this.add('-immune', target, '[from] ability: Minnesnowta');
+				return null;
 			}
 		},
 		onBasePowerPriority: 8,
@@ -635,8 +655,8 @@ let BattleAbilities = {
 	},
 	// Marshmallon
 	sightseeing: {
-		desc: "If this Pokemon is a Castform, its type and moves changes to the current weather condition's type, except Sandstorm. The user's Defense, Special Attack, Special Defense, Speed, and Accuracy are all boosted 1.5x during weather.",
-		shortDesc: "Castform's type & moves changes to the current weather condition's type, except Sandstorm.",
+		desc: "If this Pokemon is a Castform, its type changes to the current weather condition's type, and its moveset changes to the one associated with the current weather, except during Sandstorm and Acid Rain. The user's Defense, Special Attack, Special Defense, Speed, and accuracy are all boosted 1.5x during weather.",
+		shortDesc: "Castform adapts to current weather; in weather, Def, SpA, SpD, Spe, accuracy 1.5x.",
 		id: "sightseeing",
 		name: "Sightseeing",
 		isNonstandard: "Custom",
@@ -689,7 +709,7 @@ let BattleAbilities = {
 				const sets = {
 					'Castform-Sunny': ['Fire Blast', 'Solar Beam', 'Synthesis', 'Weather Forecast'],
 					'Castform-Rainy': ['Hydro Pump', 'Hurricane', 'Thunder', 'Weather Forecast'],
-					'Castform-Snowy': ['Blizzard', 'Thunder', 'Quiver Dance', 'Weather Forecast'],
+					'Castform-Snowy': ['Blizzard', 'Thunder', 'Earth Power', 'Weather Forecast'],
 					'Castform': ['Rain Dance', 'Sunny Day', 'Hail', 'Weather Forecast'],
 				};
 				// Store percentage of PP left for each moveSlot
@@ -722,8 +742,8 @@ let BattleAbilities = {
 	},
 	// Megazard
 	standuptall: {
-		desc: "This Pokemon's Attack, Defense, and Special Defense is raised by 1 stage at the end of each full turn it is on the field.",
-		shortDesc: "Raises Atk, Def, and Spd by 1, after each full turn on the field.",
+		desc: "This Pokemon's Attack, Defense, and Special Defense are raised by one stage at the end of each full turn it is on the field.",
+		shortDesc: "Raises Atk, Def, and SpD by 1 at the end of each full turn on the field.",
 		id: "standuptall",
 		name: "Stand Up Tall",
 		isNonstandard: "Custom",
@@ -783,9 +803,21 @@ let BattleAbilities = {
 		id: "acidrain",
 		name: "Acid Rain",
 	},
+	// PokemonDeadChannel
+	numbnumbjuice: {
+		desc: "This Pokemon is immune to volatile statuses.",
+		shortDesc: "This Pokemon is immune to volatile statuses.",
+		onTryAddVolatile(status, target) {
+			if (toID(target.name).includes(status.id)) return;
+			this.add('-immune', target, '[from] ability: Numb Numb Juice');
+			return null;
+		},
+		id: "numbnumbjuice",
+		name: "Numb Numb Juice",
+	},
 	// pre
 	optimize: {
-		desc: "This Pokemon changes forme and sets depending on which attack it uses, before the attack takes place. If this Pokemon uses Psycho Boost, it first changes to Deoxys-Attack. If this Pokemon uses Recover, it first changes to Deoxys-Defense. If this Pokemon uses Extreme Speed, it first changes to Deoxys-Speed. If this Pokemon uses Refactor, it first changes to Deoxys.",
+		desc: "This Pokemon changes forme and sets depending on which attack it uses, before the attack takes place. If this Pokemon uses Psycho Boost, it first changes to its Attack forme. If this Pokemon uses Recover, it first changes to its Defense forme. If this Pokemon uses Extreme Speed, it first changes to its Speed forme. If this Pokemon uses Refactor, it first changes to its Base forme.",
 		shortDesc: "This Pokemon changes forme and set depending on which attack it uses.",
 		id: "optimize",
 		name: "Optimize",
@@ -865,7 +897,7 @@ let BattleAbilities = {
 	},
 	// Raid
 	tempest: {
-		desc: "This pokemon's Flying type moves have 1.3x base power and will always hit.",
+		desc: "This Pokemon's Flying-type moves have 1.3x Base Power and will always hit.",
 		shortDesc: "Flying type moves have 1.3x power and always hit.",
 		id: "tempest",
 		name: "Tempest",
@@ -882,8 +914,8 @@ let BattleAbilities = {
 	},
 	// Ransei
 	superguarda: {
-		desc: "This user's Attack is doubled until it is hit by a super effective attack. If this Pokemon is statused, its Attack is 1.5x; ignores burn halving physical damage. This Pokemon can only be damaged by direct attacks.",
-		shortDesc: "Atk 2x until hit by SE move. 1.5x Atk if statused. Immune to indirect dmg.",
+		desc: "This user's Attack is doubled until it is hit by a super effective attack. If this Pokemon has a major status condition, its Attack is 1.5x; burn halving physical damage is ignored. This Pokemon can only be damaged by direct attacks.",
+		shortDesc: "Atk 2x until hit by SE move. 1.5x Atk if statused. Immune to indirect damage.",
 		id: "superguarda",
 		name: "Superguarda",
 		isNonstandard: "Custom",
@@ -968,27 +1000,9 @@ let BattleAbilities = {
 			return false;
 		},
 	},
-	// Seraphus
-	seraphicregeneration: {
-		shortDesc: "When this Pokemon switches out, it regains 33% of its HP, then its replacement recovers 33% of its health.",
-		onSwitchOut(pokemon) {
-			pokemon.heal(pokemon.maxhp / 3);
-			pokemon.side.addSlotCondition(pokemon, 'seraphicregeneration');
-		},
-		id: "seraphicregeneration",
-		name: "Seraphic Regeneration",
-		isNonstandard: "Custom",
-		effect: {
-			duration: 1,
-			onSwitchIn(pokemon) {
-				pokemon.heal(pokemon.maxhp / 3);
-				this.add('-heal', pokemon, pokemon.getHealth, '[silent]');
-			},
-		},
-	},
 	// Schiavetto
 	rvs: {
-		desc: "This Pokemon has two random stats raised by 1 stages and another stat lowered by 1 stage at the end of each turn.",
+		desc: "This Pokemon has two random stats except accuracy and evasion raised by one stage and another stat other than accuracy and evasion lowered by one stage at the end of each turn.",
 		shortDesc: "Raises a 2 random stats by 1 and lowers another stat by 1 at the end the turn.",
 		id: "rvs",
 		name: "RVS",
@@ -999,6 +1013,7 @@ let BattleAbilities = {
 			let stats = [];
 			let boost = {};
 			for (let statPlus in pokemon.boosts) {
+				if (statPlus === 'accuracy' || statPlus === 'evasion') continue;
 				// @ts-ignore
 				if (pokemon.boosts[statPlus] < 6) {
 					stats.push(statPlus);
@@ -1018,8 +1033,9 @@ let BattleAbilities = {
 
 			stats = [];
 			for (let statMinus in pokemon.boosts) {
+				if (statMinus === 'accuracy' || statMinus === 'evasion') continue;
 				// @ts-ignore
-				if (pokemon.boosts[statMinus] > -6 && statMinus !== randomStat) {
+				if (pokemon.boosts[statMinus] > -6 && !(statMinus in boost)) {
 					stats.push(statMinus);
 				}
 			}
@@ -1044,7 +1060,7 @@ let BattleAbilities = {
 	// Teremiare
 	notprankster: {
 		desc: "This Pokemon's status moves have their priority raised by 1.",
-		shortDesc: "This Pokemon's Status moves have priority raised by 1.",
+		shortDesc: "This Pokemon's status moves have priority raised by 1.",
 		id: "notprankster",
 		name: "Not Prankster",
 		isNonstandard: "Custom",
@@ -1056,8 +1072,8 @@ let BattleAbilities = {
 	},
 	// The Immortal
 	beastboost2: {
-		desc: "This Pokemon's two highest stats are raised by 1 if it attacks and KOes another Pokemon.",
-		shortDesc: "This Pokemon's 2 highest stats are raised by 1 if it attacks and KOes another Pokemon.",
+		desc: "This Pokemon's two highest stats are raised by one stage if it attacks and KOes another Pokemon.",
+		shortDesc: "The user's 2 highest stats are raised by 1 if it attacks and KOes another Pokemon.",
 		id: "beastboost2",
 		name: "Beast Boost 2",
 		isNonstandard: "Custom",
@@ -1102,8 +1118,8 @@ let BattleAbilities = {
 	},
 	// vivalospride
 	trashvivwebs: {
-		desc: "This Pokemon's attacking stat is doubled while using a Water-type attack. If a Pokemon uses a Fire-type attack against this Pokemon, that Pokemon's attacking stat is halved when calculating the damage to this Pokemon. This Pokemon cannot be burned. Gaining this Ability while burned cures it. Sets Sticky Web on switching in.",
-		shortDesc: "User's Water power is 2x; can't be burned; Fire power is halved. Sets web.",
+		desc: "This Pokemon's attacking stat is doubled while it uses a Water-type attack. If a Pokemon uses a Fire-type attack against this Pokemon, that Pokemon's attacking stat is halved when calculating the damage to this Pokemon. This Pokemon cannot be burned. Gaining this Ability while burned cures it. Sets Sticky Web the first time it switches in.",
+		shortDesc: "Attack stat using Water 2x; burn immunity; foe's attack using Fire 0.5x; Sticky Web.",
 		onStart(pokemon) {
 			if (!pokemon.m.stickyweb) {
 				this.useMove("stickyweb", pokemon);
@@ -1149,6 +1165,7 @@ let BattleAbilities = {
 	},
 	// xJoelituh
 	clubexpertise: {
+		desc: "This Pokemon's bone moves have their Base Power multiplied by 1.3.",
 		shortDesc: "This Pokemon's bone moves have their power multiplied by 1.3.",
 		id: "clubexpertise",
 		name: "Club Expertise",
@@ -1162,8 +1179,8 @@ let BattleAbilities = {
 	},
 	// Yuki
 	snowstorm: {
-		desc: "As it switches in, this Pokemon summons hail that remains in effect until replaced by another weather or suppressed by the effects of Cloud Nine, Air Lock, or Delta Stream.",
-		shortDesc: "On switch-in, this Pokemon summons hail which remains active until replaced.",
+		desc: "As it switches in, this Pokemon summons Hail that remains in effect until replaced by another weather or suppressed by the effects of Cloud Nine, Air Lock, or Delta Stream.",
+		shortDesc: "On switch-in, this Pokemon summons Hail which remains active until replaced.",
 		id: "snowstorm",
 		name: "Snow Storm",
 		isNonstandard: "Custom",
@@ -1194,16 +1211,6 @@ let BattleAbilities = {
 						pokemon.addVolatile(toID(pokemon.name), pokemon);
 					}
 				}
-			}
-		},
-	},
-	// Modified Prankster to not boost Army of Mushrooms
-	prankster: {
-		inherit: true,
-		onModifyPriority(priority, pokemon, target, move) {
-			if (move && move.category === 'Status' && move.id !== 'armyofmushrooms') {
-				move.pranksterBoosted = true;
-				return priority + 1;
 			}
 		},
 	},

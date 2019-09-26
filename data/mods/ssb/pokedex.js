@@ -41,11 +41,6 @@ let BattlePokedex = {
 		inherit: true,
 		abilities: {0: "Arabesque"},
 	},
-	// deg
-	gengarmega: {
-		inherit: true,
-		abilities: {0: "Bad Dreams"},
-	},
 	// E4 Flint
 	steelixmega: {
 		inherit: true,
@@ -67,6 +62,15 @@ let BattlePokedex = {
 	kartana: {
 		inherit: true,
 		types: ['Fairy', 'Steel'],
+	},
+	// GMars
+	minior: {
+		inherit: true,
+		abilities: {0: 'mysteryshell'},
+	},
+	miniormeteor: {
+		inherit: true,
+		abilities: {0: 'mysteryshell'},
 	},
 	// grimAuxiliatrix
 	aggronmega: {
@@ -145,15 +149,6 @@ let BattlePokedex = {
 		inherit: true,
 		baseStats: {hp: 70, atk: 43, def: 53, spa: 86, spd: 53, spe: 40},
 	},
-	// PokemonDeadChannel
-	charizardmegax: {
-		inherit: true,
-		abilities: {0: 'Moxie'},
-	},
-	charizardmegay: {
-		inherit: true,
-		abilities: {0: 'Soul Heart'},
-	},
 	// pre
 	deoxys: {
 		inherit: true,
@@ -189,7 +184,7 @@ let BattlePokedex = {
 	// Zalm
 	weedle: {
 		inherit: true,
-		baseStats: {hp: 105, atk: 130, def: 90, spa: 20, spd: 90, spe: 90},
+		baseStats: {hp: 85, atk: 100, def: 90, spa: 20, spd: 90, spe: 90},
 	},
 };
 
