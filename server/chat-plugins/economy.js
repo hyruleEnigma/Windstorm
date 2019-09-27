@@ -8,8 +8,8 @@ const FS = require("../lib/fs.js");
 // Ideally, this should be zero.
 const DEFAULT_AMOUNT = 0;
 
-global.currencyName = 'Crystal';
-global.currencyPlural = 'Crystals';
+global.currencyName = 'Feather';
+global.currencyPlural = 'Feathers';
 
 let Economy = global.Economy = {
 	/**
@@ -131,7 +131,8 @@ exports.commands = {
 		});
 	},
 
-	givecrystals: 'givecurrency',
+	gf: 'givecurrency',
+	givefeathers: 'givecurrency',
 	gc: 'givecurrency',
 	givecurrency: function (target, room, user, connection, cmd) {
 		if (!this.can('economy')) return false;
@@ -165,7 +166,8 @@ exports.commands = {
 		});
 	},
 
-	takecrystals: 'takecurrency',
+	tf: 'takecurrency',
+	takefeathers: 'takecurrency',
 	tc: 'takecurrency',
 	takecurrency: function (target, room, user, connection, cmd) {
 		if (!this.can('economy')) return false;
@@ -199,8 +201,8 @@ exports.commands = {
 		});
 	},
 
-	confirmtransfercrystals: 'transfercurrency',
-	transfercrystals: 'transfercurrency',
+	confirmtransferfeathers: 'transfercurrency',
+	transferfeathers: 'transfercurrency',
 	confirmtransfercurrency: 'transfercurrency',
 	transfercurrency: function (target, room, user, connection, cmd) {
 		if (!target) return this.sendReply("Usage: /" + cmd + " [user], [amount]");
@@ -218,7 +220,7 @@ exports.commands = {
 		if (amount < 1) return this.sendReply("/" + cmd + " - You can't transfer less than one " + currencyName + ".");
 		Economy.readMoney(user.userid, money => {
 			if (money < amount) return this.sendReply("/" + cmd + " - You can't transfer more " + currencyName + " than you have.");
-			if (cmd !== 'confirmtransfercurrency' && cmd !== 'confirmtransfercrystals') {
+			if (cmd !== 'confirmtransfercurrency' && cmd !== 'confirmtransferfeathers') {
 				return this.popupReply('|html|<center>' +
 					'<button class = "card-td button" name = "send" value = "/confirmtransfercurrency ' + toId(targetUser) + ', ' + amount + '"' +
 					'style = "outline: none; width: 200px; font-size: 11pt; padding: 10px; border-radius: 14px ; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.4) inset; transition: all 0.2s;">' +
@@ -287,7 +289,7 @@ exports.commands = {
 		this.sendReplyBox(rankLadder('Richest Users', currencyPlural, keys.slice(0, target), 'money') + '</div>');
 	},
 
-	resetcrystals: 'resetmoney',
+	resetfeathers: 'resetmoney',
 	resetmoney: function (target, room, user) {
 		if (!this.can('economy')) return false;
 		if (!target) return this.parse('/help resetmoney');
@@ -299,7 +301,7 @@ exports.commands = {
 
 	economy: 'economystats',
 	currency: 'economystats',
-	crystals: 'economystats',
+	feathers: 'economystats',
 	economystats: function (target, room, user) {
 		if (!this.runBroadcast()) return;
 		const users = Db.currency.keys().map(curUser => ({amount: Db.currency.get(curUser)}));
