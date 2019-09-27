@@ -135,7 +135,7 @@ exports.commands = {
 	givefeathers: 'givecurrency',
 	gc: 'givecurrency',
 	givecurrency: function (target, room, user, connection, cmd) {
-		if (!this.can('economy')) return false;
+		if (!this.can('forcewin')) return false;
 		if (!target) return this.sendReply("Usage: /" + cmd + " [user], [amount]");
 		let splitTarget = target.split(',');
 		if (!splitTarget[2]) return this.sendReply("Usage: /" + cmd + " [user], [amount], [reason]");
@@ -170,7 +170,7 @@ exports.commands = {
 	takefeathers: 'takecurrency',
 	tc: 'takecurrency',
 	takecurrency: function (target, room, user, connection, cmd) {
-		if (!this.can('economy')) return false;
+		if (!this.can('forcewin')) return false;
 		if (!target) return this.sendReply("Usage: /" + cmd + " [user], [amount]");
 		let splitTarget = target.split(',');
 		if (!splitTarget[2]) return this.sendReply("Usage: /" + cmd + " [user], [amount], [reason]");
@@ -248,7 +248,7 @@ exports.commands = {
 	},
 
 	moneylog: function (target, room, user) {
-		if (!this.can('economy')) return false;
+		if (!this.can('forcewin')) return false;
 		if (!target) return this.sendReply("Usage: /moneylog [number] to view the last x lines OR /moneylog [text] to search for text.");
 		let word = false;
 		if (isNaN(Number(target))) word = true;
@@ -291,7 +291,7 @@ exports.commands = {
 
 	resetfeathers: 'resetmoney',
 	resetmoney: function (target, room, user) {
-		if (!this.can('economy')) return false;
+		if (!this.can('forcewin')) return false;
 		if (!target) return this.parse('/help resetmoney');
 		target = toID(target);
 		Economy.writeMoney(target, 0);
