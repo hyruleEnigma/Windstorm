@@ -22,7 +22,7 @@ let Economy = global.Economy = {
  	*/
 	readMoney: function (userid, callback) {
 		// In case someone forgot to turn `userid` into an actual ID...
-		userid = toId(userid);
+		userid = toID(userid);
 		if (userid.substring(0, 5) === 'guest') return 0;
 
 		let amount = Db.currency.get(userid, DEFAULT_AMOUNT);
@@ -46,7 +46,7 @@ let Economy = global.Economy = {
  	*/
 	writeMoney: function (userid, amount, callback) {
 		// In case someone forgot to turn `userid` into an actual ID...
-		userid = toId(userid);
+		userid = toID(userid);
 		if (userid.substring(0, 5) === 'guest') return;
 
 		// In case someone forgot to make sure `amount` was a Number...
@@ -121,7 +121,7 @@ exports.commands = {
 	wallet: function (target, room, user) {
 		if (!target) target = user.name;
 		if (!this.runBroadcast()) return;
-		let userid = toId(target);
+		let userid = toID(target);
 		if (userid.length < 1) return this.sendReply("/wallet - Please specify a user.");
 		if (userid.length > 19) return this.sendReply("/wallet - [user] can't be longer than 19 characters.");
 
@@ -142,8 +142,8 @@ exports.commands = {
 		for (let u in splitTarget) splitTarget[u] = splitTarget[u].trim();
 
 		let targetUser = splitTarget[0];
-		if (toId(targetUser).length < 1) return this.sendReply("/" + cmd + " - [user] may not be blank.");
-		if (toId(targetUser).length > 19) return this.sendReply("/" + cmd + " - [user] can't be longer than 19 characters");
+		if (toID(targetUser).length < 1) return this.sendReply("/" + cmd + " - [user] may not be blank.");
+		if (toID(targetUser).length > 19) return this.sendReply("/" + cmd + " - [user] can't be longer than 19 characters");
 
 		let amount = Math.round(Number(splitTarget[1]));
 		if (isNaN(amount)) return this.sendReply("/" + cmd + "- [amount] must be a number.");
@@ -152,7 +152,7 @@ exports.commands = {
 
 		let reason = splitTarget[2];
 		if (reason.length > 100) return this.errorReply("Reason may not be longer than 100 characters.");
-		if (toId(reason).length < 1) return this.errorReply("Please specify a reason to give " + currencyName + ".");
+		if (toID(reason).length < 1) return this.errorReply("Please specify a reason to give " + currencyName + ".");
 
 		Economy.writeMoney(targetUser, amount, () => {
 			Economy.readMoney(targetUser, newAmount => {
@@ -177,8 +177,8 @@ exports.commands = {
 		for (let u in splitTarget) splitTarget[u] = splitTarget[u].trim();
 
 		let targetUser = splitTarget[0];
-		if (toId(targetUser).length < 1) return this.sendReply("/" + cmd + " - [user] may not be blank.");
-		if (toId(targetUser).length > 19) return this.sendReply("/" + cmd + " - [user] can't be longer than 19 characters");
+		if (toID(targetUser).length < 1) return this.sendReply("/" + cmd + " - [user] may not be blank.");
+		if (toID(targetUser).length > 19) return this.sendReply("/" + cmd + " - [user] can't be longer than 19 characters");
 
 		let amount = Math.round(Number(splitTarget[1]));
 		if (isNaN(amount)) return this.sendReply("/" + cmd + "- [amount] must be a number.");
@@ -187,7 +187,7 @@ exports.commands = {
 
 		let reason = splitTarget[2];
 		if (reason.length > 100) return this.errorReply("Reason may not be longer than 100 characters.");
-		if (toId(reason).length < 1) return this.errorReply("Please specify a reason to give " + currencyName + ".");
+		if (toID(reason).length < 1) return this.errorReply("Please specify a reason to give " + currencyName + ".");
 
 		Economy.writeMoney(targetUser, -amount, () => {
 			Economy.readMoney(targetUser, newAmount => {
@@ -211,8 +211,8 @@ exports.commands = {
 		if (!splitTarget[1]) return this.sendReply("Usage: /" + cmd + " [user], [amount]");
 
 		let targetUser = (Users.getExact(splitTarget[0]) ? Users.getExact(splitTarget[0]).name : splitTarget[0]);
-		if (toId(targetUser).length < 1) return this.sendReply("/" + cmd + " - [user] may not be blank.");
-		if (toId(targetUser).length > 18) return this.sendReply("/" + cmd + " - [user] can't be longer than 18 characters.");
+		if (toID(targetUser).length < 1) return this.sendReply("/" + cmd + " - [user] may not be blank.");
+		if (toID(targetUser).length > 18) return this.sendReply("/" + cmd + " - [user] can't be longer than 18 characters.");
 
 		let amount = Math.round(Number(splitTarget[1]));
 		if (isNaN(amount)) return this.sendReply("/" + cmd + " - [amount] must be a number.");
@@ -222,7 +222,7 @@ exports.commands = {
 			if (money < amount) return this.sendReply("/" + cmd + " - You can't transfer more " + currencyName + " than you have.");
 			if (cmd !== 'confirmtransfercurrency' && cmd !== 'confirmtransferfeathers') {
 				return this.popupReply('|html|<center>' +
-					'<button class = "card-td button" name = "send" value = "/confirmtransfercurrency ' + toId(targetUser) + ', ' + amount + '"' +
+					'<button class = "card-td button" name = "send" value = "/confirmtransfercurrency ' + toID(targetUser) + ', ' + amount + '"' +
 					'style = "outline: none; width: 200px; font-size: 11pt; padding: 10px; border-radius: 14px ; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.4) inset; transition: all 0.2s;">' +
 					'Confirm transfer to <br><b style = "color:' + WL.hashColor(targetUser) + '; text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8)">' + Chat.escapeHTML(targetUser) + '</b></button></center>'
 				);
@@ -293,7 +293,7 @@ exports.commands = {
 	resetmoney: function (target, room, user) {
 		if (!this.can('economy')) return false;
 		if (!target) return this.parse('/help resetmoney');
-		target = toId(target);
+		target = toID(target);
 		Economy.writeMoney(target, 0);
 		this.sendReply(target + " now has 0 " + currencyName + ".");
 	},
