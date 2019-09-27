@@ -156,7 +156,7 @@ exports.commands = {
 
 		Economy.writeMoney(targetUser, amount, () => {
 			Economy.readMoney(targetUser, newAmount => {
-				if (Users(targetUser) && Users(targetUser).connected) {
+				if (Users.get(targetUser) && Users.get(targetUser).connected) {
 					Users.get(targetUser).popup('|html|You have received ' + amount + ' ' + (amount === 1 ? currencyName : currencyPlural) +
 					' from ' + WL.nameColor(user.userid, true) + '.');
 				}
@@ -191,7 +191,7 @@ exports.commands = {
 
 		Economy.writeMoney(targetUser, -amount, () => {
 			Economy.readMoney(targetUser, newAmount => {
-				if (Users(targetUser) && Users(targetUser).connected) {
+				if (Users.get(targetUser) && Users.get(targetUser).connected) {
 					Users.get(targetUser).popup('|html|' + WL.nameColor(user.userid, true) + ' has removed ' + amount + ' ' + (amount === 1 ? currencyName : currencyPlural) +
 					' from you.<br />');
 				}
