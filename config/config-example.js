@@ -401,13 +401,6 @@ exports.replsocketmode = 0o600;
  */
 exports.disablehotpatchall = false;
 
-// GitHub repo config
-exports.github = {
-	secret: "", // Your repo secret
-	port: "", // Desired port, must be unused and above 1000
-	room: "", // Desired room
-};
-
 /**
  * forcedpublicprefixes - user ID prefixes which will be forced to battle publicly.
  * Battles involving user IDs which begin with one of the prefixes configured here
