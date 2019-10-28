@@ -403,13 +403,14 @@ let BattleStatuses = {
 	pokemondeadchannel: {
 		noCopy: true, 
 		onStart: function (source) {
-			this.add(`c|+PokemonDeadChannel|u aint shit lol`);
+			this.add(`c|+PokemonDeadChannel|/me changes names`);
 		},
 		onSwitchOut: function () {
-			this.add(`c|+PokemonDeadChannel|lol rip`);
+			this.add(`c|+PokemonDeadChannel|>im not broken`);
+			this.add(`c|+PokemonDeadChannel|ok guess I gotta buff myself :^)`);
 		},
 		onFaint: function () {
-			this.add(`c|+PokemonDeadChannel|free my nigga 6ix9ine`);
+			this.add(`c|+PokemonDeadChannel|bullies :(`);
 		},
 	},
 	flare: {
