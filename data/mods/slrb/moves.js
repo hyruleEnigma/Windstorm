@@ -179,6 +179,44 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Fairy",
 	},
+	// Aus Elise
+	"Zwischenzung": {
+		accuracy: 100,
+		basePower: 120,
+		category: "Special",
+		desc: "Deals damage two turns after this move is used. At the end of that turn, the damage is calculated at that time and dealt to the opponent.",
+		shortDesc: "Hits two turns after being used.",
+		id: 'zwischenzung',
+		name: "Zwischenzung".
+		pp: 5,
+		priority: 0,
+		flags: {},
+		isFutureMove: true,
+		onTry(source, target) {
+			if (!target.side.addSlotCondition(target, 'futuremove')) return false;
+			Object.assign(target.side.slotConditions[target.position]['futuremove'], {
+			move: 'zwischenzung',
+			source: source,
+			moveData: {
+				id: 'zwischenzung',
+				name: "Zwischenzung",
+				accuracy: 100,
+				basePower: 120, 
+				category: "Special",
+				priority: 0,
+				flags: {},
+				effectType: 'Move',
+				isFutureMove: true,
+				type: 'Fairy',
+				},
+			});
+			this.add('-start', source, 'Doom Desire');
+			return null;
+		},
+		secondary: null,
+		target: "normal",
+		type: "Fairy"
+	},
 	// BetaDog
 	"snuggles": {
 		accuracy: 100,
