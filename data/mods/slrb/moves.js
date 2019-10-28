@@ -210,7 +210,7 @@ let BattleMovedex = {
 				type: 'Fairy',
 				},
 			});
-			this.add('-start', source, 'Doom Desire');
+			this.add('-start', source, 'Future Sight');
 			return null;
 		},
 		secondary: null,
