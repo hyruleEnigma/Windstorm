@@ -8,7 +8,7 @@ const Pokemon = require(/** @type {any} */ ('../../../.sim-dist/pokemon')).Pokem
 let BattleMovedex = {
 	/*
 	// Example
-   	"moveid": {
+   "moveid": {
 		accuracy: 100, // a number or true for always hits
 		basePower: 100, // Not used for Status moves, base power of the move, number
 		category: "Physical", // "Physical", "Special", or "Status"
@@ -180,14 +180,14 @@ let BattleMovedex = {
 		type: "Fairy",
 	},
 	// Aus Elise
-	"zwischenzung": {
+	"zwischenzug": {
 		accuracy: 100,
 		basePower: 120,
 		category: "Special",
 		desc: "Deals damage two turns after this move is used. At the end of that turn, the damage is calculated at that time and dealt to the opponent.",
 		shortDesc: "Hits two turns after being used.",
-		id: 'zwischenzung',
-		name: "Zwischenzung",
+		id: 'zwischenzug',
+		name: "Zwischenzug",
 		pp: 5,
 		priority: 0,
 		flags: {},
@@ -198,8 +198,8 @@ let BattleMovedex = {
 			move: 'zwischenzung',
 			source: source,
 			moveData: {
-				id: 'zwischenzung',
-				name: "Zwischenzung",
+				id: 'zwischenzug',
+				name: "Zwischenzug",
 				accuracy: 100,
 				basePower: 120, 
 				category: "Special",
@@ -221,8 +221,8 @@ let BattleMovedex = {
 		accuracy: true,
 		basePower: 0,
 		category: "Physical",
-		desc: "Uses Zwischenzung and Wish, then switches out both the user and the target.",
-		shortDesc: "Zwischenzung + Wish, switches target and user out.",
+		desc: "Uses Zwischenzug and Wish, then switches out both the user and the target.",
+		shortDesc: "Zwischenzug + Wish, switches target and user out.",
 		id: "trarklang",
 		name: "Traürklang",
 		isNonstandard: "Custom",
