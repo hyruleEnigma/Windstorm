@@ -3,6 +3,19 @@
 /**@type {{[k: string]: ModdedItemData}} */
 let BattleItems = {
 	
+	// Aus Elise
+	eliziumz: {
+		id: "eliziumz",
+		name: "Elizium Z",
+		isNonstandard: "Custom",
+		onTakeItem: false,
+		zMove: "Traürklang",
+		zMoveFrom: "Zwischenzung",
+		zMoveUser: ["Meowstic-F"],
+		gen: 7,
+		desc: "If held by a Meowstic-F with Zwischenzung, it can use Traürklang.",
+	},
+	
 	// brownisaur
 	browniumz: {
 		id: "browniumz",
