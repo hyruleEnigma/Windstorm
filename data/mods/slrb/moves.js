@@ -217,6 +217,32 @@ let BattleMovedex = {
 		target: "normal",
 		type: "Fairy"
 	},
+	Traürklang: {
+	//ü can be swapped for &uuml; if needed (wasn't sure)
+		accuracy: true,
+		basePower: 0,
+		category: "Physical",
+		desc: "Uses Zwischenzung and Wish, then switches out both the user and the target.",
+		shortDesc: "Zwischenzung + Wish, switches target and user out.",
+		id: "traurklang",
+		name: "Traürklang",
+		isNonstandard: "Custom",
+		pp: 1,
+		priority: 0,
+		flags: {mirror: 1, authentic: 1},
+		onTryMove() {
+			this.attrLastMove('[still]');
+		},
+		onHit(target, source) {
+			this.useMove('wish', source, target);
+			let move = this.dex.getActiveMove('zwischenzung');
+			this.useMove(move, source, target);
+		},
+		secondary: null,
+		target: "normal",
+		type: "Fairy",
+		isZ: eliziumz,
+	},
 	// BetaDog
 	"snuggles": {
 		accuracy: 100,
