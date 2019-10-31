@@ -10,10 +10,10 @@ let BattleItems = {
 		isNonstandard: "Custom",
 		onTakeItem: false,
 		zMove: "Traürklang",
-		zMoveFrom: "Zwischenzung",
+		zMoveFrom: "Zwischenzug",
 		zMoveUser: ["Meowstic-F"],
 		gen: 7,
-		desc: "If held by a Meowstic-F with Zwischenzung, it can use Traürklang.",
+		desc: "If held by a Meowstic-F with Zwischenzug, it can use Traürklang.",
 	},
 	
 	// brownisaur
