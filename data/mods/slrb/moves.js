@@ -180,7 +180,7 @@ let BattleMovedex = {
 		type: "Fairy",
 	},
 	// Aus Elise
-	"zwischenzug": {
+	"Zwischenzug": {
 		accuracy: 100,
 		basePower: 120,
 		category: "Special",
