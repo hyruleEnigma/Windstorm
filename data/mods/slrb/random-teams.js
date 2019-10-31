@@ -65,6 +65,11 @@ class RandomStaffBrosTeams extends RandomTeams {
 				signatureMove: 'Nerd Slandering',
 				evs: {spa: 252, spd:4, spe: 252}, nature: 'Timid',
 			},
+			'Aus Elise': {
+				species: 'Meowsticf', ability: 'Regenerator', item: 'Elizium Z', gender: 'F',
+				moves: ['Calm Mind', 'Wish', 'Parting Shot'],
+				signatureMove: 'Zwischenzug',
+				evs: {hp: 248, def: 8, spa: 252}, nature: 'Modest',
 			'barton': {
 				species: 'Clefable', ability: 'Vibrant', item: 'Satsuma', gender: 'M',
 				moves: ['Calm Mind', 'Moonlight', 'Heal Bell'],
