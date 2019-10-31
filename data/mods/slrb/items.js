@@ -4,7 +4,7 @@
 let BattleItems = {
 	
 	// Aus Elise
-	eliziumz: {
+	'eliziumz': {
 		id: "eliziumz",
 		name: "Elizium Z",
 		isNonstandard: "Custom",
