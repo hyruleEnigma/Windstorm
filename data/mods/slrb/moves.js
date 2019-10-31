@@ -241,7 +241,7 @@ let BattleMovedex = {
 		secondary: null,
 		target: "normal",
 		type: "Fairy",
-		isZ: eliziumz,
+		isZ: "eliziumz",
 	},
 	// BetaDog
 	"snuggles": {
